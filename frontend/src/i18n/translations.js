@@ -66,6 +66,11 @@ export const translations = {
     auth: {
       loginTitle: "Login to Your Account",
       registerTitle: "Create New Account",
+      login: "Sign In",
+      register: "Create Account",
+      signIn: "Sign In",
+      signUp: "Sign Up",
+      signOut: "Sign Out",
       email: "Email",
       username: "Username", 
       displayName: "Display Name",
@@ -78,7 +83,18 @@ export const translations = {
       switchToLogin: "Already have an account? Login",
       logout: "Logout",
       profile: "Profile",
-      settings: "Settings"
+      settings: "Settings",
+      emailPlaceholder: "Enter your email",
+      usernamePlaceholder: "Enter your username",
+      displayNamePlaceholder: "Your display name",
+      passwordPlaceholder: "Enter your password",
+      signingIn: "Signing in...",
+      creatingAccount: "Creating account...",
+      noAccount: "Don't have an account?",
+      haveAccount: "Already have an account?",
+      required: "Authentication Required",
+      requiredMessage: "Please sign in to access this feature.",
+      loading: "Loading..."
     },
     
     // Profile
