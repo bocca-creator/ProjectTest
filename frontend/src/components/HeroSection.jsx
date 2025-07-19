@@ -1,7 +1,10 @@
 import React from 'react';
 import { Shield, Users, Gamepad2, Zap } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 const HeroSection = () => {
+  const { t, formatNumber } = useLanguage();
+  
   return (
     <section className="hero-section">
       <div className="hero-background">
@@ -13,41 +16,40 @@ const HeroSection = () => {
         <div className="hero-content">
           <div className="hero-text">
             <h1 className="hero-title">
-              <span className="title-main">Welcome to</span>
+              <span className="title-main">{t('hero.welcome')}</span>
               <span className="title-highlight">ProjectTest</span>
-              <span className="title-subtitle">Gaming Community</span>
+              <span className="title-subtitle">{t('hero.subtitle')}</span>
             </h1>
             
             <p className="hero-description">
-              Join the ultimate cyberpunk gaming experience. Connect with players, 
-              compete in tournaments, and dominate the digital battlefield.
+              {t('hero.description')}
             </p>
 
             <div className="hero-stats">
               <div className="stat-item">
                 <Users size={20} />
-                <span className="stat-number">2,847</span>
-                <span className="stat-label">Active Players</span>
+                <span className="stat-number">{formatNumber(2847)}</span>
+                <span className="stat-label">{t('hero.activePlayersLabel')}</span>
               </div>
               <div className="stat-item">
                 <Gamepad2 size={20} />
-                <span className="stat-number">156</span>
-                <span className="stat-label">Online Now</span>
+                <span className="stat-number">{formatNumber(156)}</span>
+                <span className="stat-label">{t('hero.onlineNowLabel')}</span>
               </div>
               <div className="stat-item">
                 <Zap size={20} />
                 <span className="stat-number">24/7</span>
-                <span className="stat-label">Server Uptime</span>
+                <span className="stat-label">{t('hero.serverUptimeLabel')}</span>
               </div>
             </div>
 
             <div className="hero-actions">
               <button className="btn-primary hero-btn">
-                Join Community
+                {t('hero.joinCommunity')}
                 <Zap size={18} />
               </button>
               <button className="btn-secondary hero-btn">
-                View Servers
+                {t('hero.viewServers')}
               </button>
             </div>
           </div>
@@ -56,17 +58,17 @@ const HeroSection = () => {
             <div className="project-rules-card">
               <div className="card-header">
                 <Shield size={24} />
-                <h3>Project Rules</h3>
+                <h3>{t('rules.title')}</h3>
               </div>
               <div className="card-content">
                 <ul className="rules-list">
-                  <li>✓ Respect all community members</li>
-                  <li>✓ No cheating or exploiting</li>
-                  <li>✓ Follow fair play guidelines</li>
-                  <li>✓ Keep communications civil</li>
-                  <li>✓ Report suspicious activities</li>
+                  <li>✓ {t('rules.respectMembers')}</li>
+                  <li>✓ {t('rules.noCheating')}</li>
+                  <li>✓ {t('rules.fairPlay')}</li>
+                  <li>✓ {t('rules.civilCommunication')}</li>
+                  <li>✓ {t('rules.reportSuspicious')}</li>
                 </ul>
-                <button className="btn-ghost">Read Full Rules</button>
+                <button className="btn-ghost">{t('rules.readFullRules')}</button>
               </div>
             </div>
           </div>
