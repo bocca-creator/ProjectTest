@@ -51,7 +51,7 @@ const MainContent = ({ announcements, reviews, discordData }) => {
         {/* Left Column - Announcements */}
         <div className="left-column">
           <div className="section-header">
-            <h2>Project Updates & Announcements</h2>
+            <h2>{t('announcements.title')}</h2>
             <div className="header-line"></div>
           </div>
           
