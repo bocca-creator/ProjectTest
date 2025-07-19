@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import { LanguageProvider } from './contexts/LanguageContext';
+import { AuthProvider } from './contexts/AuthContext';
 import './App.css';
 import HomePage from './components/HomePage';
 import RulesPage from './components/pages/RulesPage';
@@ -14,18 +15,20 @@ function App() {
   return (
     <LanguageProvider>
       <ThemeProvider>
-        <div className="App">
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/rules" element={<RulesPage />} />
-              <Route path="/faq" element={<FAQPage />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/team" element={<TeamPage />} />
-            </Routes>
-          </BrowserRouter>
-        </div>
+        <AuthProvider>
+          <div className="App">
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/rules" element={<RulesPage />} />
+                <Route path="/faq" element={<FAQPage />} />
+                <Route path="/contact" element={<ContactPage />} />
+                <Route path="/about" element={<AboutPage />} />
+                <Route path="/team" element={<TeamPage />} />
+              </Routes>
+            </BrowserRouter>
+          </div>
+        </AuthProvider>
       </ThemeProvider>
     </LanguageProvider>
   );
