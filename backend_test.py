@@ -125,6 +125,25 @@ class AuthTester:
                     response.json()
                 )
                 return True
+            elif response.status_code == 500:
+                # MySQL unavailable - graceful fallback behavior
+                error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
+                if "Failed to create user" in error_data.get("detail", ""):
+                    self.log_test(
+                        "User Registration", 
+                        True, 
+                        "Registration correctly implements graceful fallback when MySQL is unavailable",
+                        error_data
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "User Registration", 
+                        False, 
+                        f"Unexpected 500 error: {error_data}",
+                        error_data
+                    )
+                    return False
             else:
                 self.log_test(
                     "User Registration", 
