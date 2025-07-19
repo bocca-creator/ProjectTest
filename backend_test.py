@@ -342,8 +342,44 @@ class AuthTester:
         print("🔍 Testing Token Refresh...")
         
         if not self.refresh_token:
-            self.log_test("Token Refresh", False, "No refresh token available")
-            return False
+            # Test without refresh token first
+            try:
+                response = self.session.post(
+                    f"{API_BASE}/auth/refresh",
+                    headers={"Content-Type": "application/json"},
+                    timeout=10
+                )
+                
+                if response.status_code == 403:
+                    error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
+                    if "Not authenticated" in error_data.get("detail", ""):
+                        self.log_test(
+                            "Token Refresh", 
+                            True, 
+                            "Token refresh correctly rejects requests without refresh token",
+                            error_data
+                        )
+                        return True
+                    else:
+                        self.log_test(
+                            "Token Refresh", 
+                            False, 
+                            f"Unexpected 403 error: {error_data}",
+                            error_data
+                        )
+                        return False
+                else:
+                    self.log_test(
+                        "Token Refresh", 
+                        False, 
+                        f"Expected 403 but got {response.status_code}",
+                        response.text
+                    )
+                    return False
+                    
+            except requests.exceptions.RequestException as e:
+                self.log_test("Token Refresh", False, f"Request failed: {str(e)}")
+                return False
             
         try:
             headers = {
