@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { User, LogIn, Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useLanguage } from '../contexts/LanguageContext';
 import ThemeSwitcher from './ThemeSwitcher';
+import LanguageSwitcher from './LanguageSwitcher';
 
 const Navigation = ({ user, onLogin, onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -9,14 +11,15 @@ const Navigation = ({ user, onLogin, onLogout }) => {
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   const menuItems = [
-    { name: 'Home', href: '/', path: '/' },
-    { name: 'Rules', href: '/rules', path: '/rules' },
-    { name: 'FAQ', href: '/faq', path: '/faq' },
-    { name: 'About', href: '/about', path: '/about' },
-    { name: 'Team', href: '/team', path: '/team' },
-    { name: 'Contact', href: '/contact', path: '/contact' }
+    { name: t('nav.home'), href: '/', path: '/' },
+    { name: t('nav.rules'), href: '/rules', path: '/rules' },
+    { name: t('nav.faq'), href: '/faq', path: '/faq' },
+    { name: t('nav.about'), href: '/about', path: '/about' },
+    { name: t('nav.team'), href: '/team', path: '/team' },
+    { name: t('nav.contact'), href: '/contact', path: '/contact' }
   ];
 
   const handleLoginSubmit = (e) => {
@@ -70,8 +73,9 @@ const Navigation = ({ user, onLogin, onLogout }) => {
             ))}
           </div>
 
-          {/* Right section - Theme Switcher and User */}
+          {/* Right section - Language Switcher, Theme Switcher and User */}
           <div className="nav-right">
+            <LanguageSwitcher className="desktop-language-switcher" />
             <ThemeSwitcher className="desktop-theme-switcher" />
             
             <div className="nav-user">
@@ -80,7 +84,7 @@ const Navigation = ({ user, onLogin, onLogout }) => {
                   <img src={user.avatar} alt="Profile" className="user-avatar" />
                   <span className="username">{user.username}</span>
                   <button onClick={onLogout} className="logout-btn">
-                    Logout
+                    {t('nav.logout')}
                   </button>
                 </div>
               ) : (
@@ -89,7 +93,7 @@ const Navigation = ({ user, onLogin, onLogout }) => {
                   className="login-btn"
                 >
                   <LogIn size={18} />
-                  Login / Register
+                  {t('nav.login')} / {t('nav.register')}
                 </button>
               )}
             </div>
@@ -110,10 +114,18 @@ const Navigation = ({ user, onLogin, onLogout }) => {
               </a>
             ))}
             
-            {/* Mobile Theme Switcher */}
-            <div className="mobile-theme-section">
-              <div className="mobile-theme-label">Theme</div>
-              <ThemeSwitcher className="mobile-theme-switcher" />
+            {/* Mobile Language Switcher */}
+            <div className="mobile-controls-section">
+              <div className="mobile-control-group">
+                <div className="mobile-control-label">{t('settings.language')}</div>
+                <LanguageSwitcher className="mobile-language-switcher" />
+              </div>
+              
+              {/* Mobile Theme Switcher */}
+              <div className="mobile-control-group">
+                <div className="mobile-control-label">{t('settings.theme')}</div>
+                <ThemeSwitcher className="mobile-theme-switcher" />
+              </div>
             </div>
           </div>
         )}
@@ -123,12 +135,12 @@ const Navigation = ({ user, onLogin, onLogout }) => {
       {showLoginForm && (
         <div className="modal-overlay" onClick={() => setShowLoginForm(false)}>
           <div className="login-modal" onClick={(e) => e.stopPropagation()}>
-            <h2>Login to ProjectTest</h2>
+            <h2>{t('auth.loginTitle')}</h2>
             <form onSubmit={handleLoginSubmit}>
               <div className="form-group">
                 <input
                   type="text"
-                  placeholder="Username"
+                  placeholder={t('auth.username')}
                   value={loginForm.username}
                   onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
                   className="form-input"
@@ -138,7 +150,7 @@ const Navigation = ({ user, onLogin, onLogout }) => {
               <div className="form-group">
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder={t('auth.password')}
                   value={loginForm.password}
                   onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
                   className="form-input"
@@ -146,13 +158,13 @@ const Navigation = ({ user, onLogin, onLogout }) => {
                 />
               </div>
               <div className="form-actions">
-                <button type="submit" className="btn-primary">Login</button>
+                <button type="submit" className="btn-primary">{t('auth.loginButton')}</button>
                 <button 
                   type="button" 
                   onClick={() => setShowLoginForm(false)}
                   className="btn-secondary"
                 >
-                  Cancel
+                  {t('common.cancel')}
                 </button>
               </div>
             </form>
