@@ -1,13 +1,19 @@
 import React from 'react';
-import { ExternalLink, Heart, Shield, DollarSign, FileText, Phone } from 'lucide-react';
+import { ExternalLink, Heart, Shield, DollarSign, FileText, Phone, HelpCircle, Users, Mail } from 'lucide-react';
 
 const Footer = () => {
   const footerLinks = [
-    { name: 'Contacts', href: '#contacts', icon: Phone },
-    { name: 'VK Group', href: '#vk', icon: ExternalLink },
-    { name: 'Donation', href: '#donation', icon: DollarSign },
-    { name: 'Agreement', href: '#agreement', icon: FileText },
-    { name: 'Rules', href: '#rules', icon: Shield }
+    { name: 'Contact', href: '/contact', icon: Phone },
+    { name: 'Rules', href: '/rules', icon: Shield },
+    { name: 'FAQ', href: '/faq', icon: HelpCircle },
+    { name: 'About', href: '/about', icon: Users },
+    { name: 'Team', href: '/team', icon: Users }
+  ];
+
+  const legalLinks = [
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Service', href: '/terms' },
+    { name: 'Community Guidelines', href: '/rules' }
   ];
 
   return (
@@ -21,6 +27,15 @@ const Footer = () => {
               The ultimate cyberpunk gaming community where players unite, 
               compete, and dominate the digital realm together.
             </p>
+            <div className="footer-social">
+              <h4>Join Our Community</h4>
+              <div className="social-links">
+                <a href="https://discord.gg/projecttest" className="social-link discord" target="_blank" rel="noopener noreferrer">
+                  <div className="discord-icon"></div>
+                  <span>Discord Server</span>
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className="footer-navigation">
@@ -55,6 +70,26 @@ const Footer = () => {
               </div>
             </div>
           </div>
+
+          <div className="footer-support">
+            <h4>Need Help?</h4>
+            <div className="support-info">
+              <a href="/contact" className="support-link">
+                <Mail size={16} />
+                <div>
+                  <span className="support-title">Contact Support</span>
+                  <span className="support-desc">Get help from our team</span>
+                </div>
+              </a>
+              <a href="/faq" className="support-link">
+                <HelpCircle size={16} />
+                <div>
+                  <span className="support-title">FAQ</span>
+                  <span className="support-desc">Quick answers to common questions</span>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Separator */}
@@ -63,8 +98,18 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="footer-bottom">
           <div className="footer-center">
-            <div className="center-brand">CKGaming</div>
+            <div className="center-brand">ProjectTest</div>
             <div className="center-tagline">Powered by passion, driven by community</div>
+          </div>
+          
+          <div className="footer-legal">
+            <div className="legal-links">
+              {legalLinks.map((link, index) => (
+                <a key={index} href={link.href} className="legal-link">
+                  {link.name}
+                </a>
+              ))}
+            </div>
           </div>
           
           <div className="footer-copyright">
@@ -72,7 +117,7 @@ const Footer = () => {
               © 2025 ProjectTest Gaming Community. All rights reserved.
             </p>
             <p className="made-with-love">
-              Made with <Heart size={14} className="heart-icon" /> for gamers
+              Made with <Heart size={14} className="heart-icon" /> for gamers worldwide
             </p>
           </div>
         </div>
