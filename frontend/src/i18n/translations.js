@@ -291,6 +291,14 @@ export const translations = {
       customThemes: "Користувацькі теми",
       createTheme: "Створити тему"
     },
+
+    // User menu
+    user: {
+      profile: "Налаштування профілю",
+      accountSettings: "Налаштування акаунту",
+      logins: "Входи",
+      lastLogin: "Останній вхід"
+    },
     
     // Theme Editor
     themes: {
