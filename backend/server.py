@@ -14,6 +14,7 @@ from datetime import datetime
 from database.mysql import mysql_db
 from routes.auth import router as auth_router
 from routes.themes import router as themes_router
+from routes.steam import router as steam_router
 
 
 ROOT_DIR = Path(__file__).parent
