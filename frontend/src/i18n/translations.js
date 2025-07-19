@@ -112,6 +112,14 @@ export const translations = {
       customThemes: "Custom Themes",
       createTheme: "Create Theme"
     },
+
+    // User menu
+    user: {
+      profile: "Profile Settings",
+      accountSettings: "Account Settings",
+      logins: "Logins",
+      lastLogin: "Last Login"
+    },
     
     // Theme Editor
     themes: {
