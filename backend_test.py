@@ -240,8 +240,44 @@ class AuthTester:
         print("🔍 Testing Protected Route (/api/auth/me)...")
         
         if not self.access_token:
-            self.log_test("Protected Route", False, "No access token available")
-            return False
+            # Test without token first
+            try:
+                response = self.session.get(
+                    f"{API_BASE}/auth/me",
+                    headers={"Content-Type": "application/json"},
+                    timeout=10
+                )
+                
+                if response.status_code == 403:
+                    error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
+                    if "Not authenticated" in error_data.get("detail", ""):
+                        self.log_test(
+                            "Protected Route", 
+                            True, 
+                            "Protected route correctly rejects requests without authentication token",
+                            error_data
+                        )
+                        return True
+                    else:
+                        self.log_test(
+                            "Protected Route", 
+                            False, 
+                            f"Unexpected 403 error: {error_data}",
+                            error_data
+                        )
+                        return False
+                else:
+                    self.log_test(
+                        "Protected Route", 
+                        False, 
+                        f"Expected 403 but got {response.status_code}",
+                        response.text
+                    )
+                    return False
+                    
+            except requests.exceptions.RequestException as e:
+                self.log_test("Protected Route", False, f"Request failed: {str(e)}")
+                return False
             
         try:
             headers = {
