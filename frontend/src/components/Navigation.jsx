@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
-import { User, LogIn, Menu, X } from 'lucide-react';
+import { LogIn, Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useAuth } from '../contexts/AuthContext';
 import ThemeSwitcher from './ThemeSwitcher';
 import LanguageSwitcher from './LanguageSwitcher';
+import UserMenu from './UserMenu';
+import AuthModal from './AuthModal';
 
-const Navigation = ({ user, onLogin, onLogout }) => {
+const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showLoginForm, setShowLoginForm] = useState(false);
-  const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useLanguage();
+  const { user, isAuthenticated, loading } = useAuth();
 
   const menuItems = [
     { name: t('nav.home'), href: '/', path: '/' },
@@ -21,19 +24,6 @@ const Navigation = ({ user, onLogin, onLogout }) => {
     { name: t('nav.team'), href: '/team', path: '/team' },
     { name: t('nav.contact'), href: '/contact', path: '/contact' }
   ];
-
-  const handleLoginSubmit = (e) => {
-    e.preventDefault();
-    if (loginForm.username && loginForm.password) {
-      onLogin({
-        username: loginForm.username,
-        id: Date.now(),
-        avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${loginForm.username}`
-      });
-      setLoginForm({ username: '', password: '' });
-      setShowLoginForm(false);
-    }
-  };
 
   const handleNavigation = (path, e) => {
     e.preventDefault();
@@ -73,27 +63,34 @@ const Navigation = ({ user, onLogin, onLogout }) => {
             ))}
           </div>
 
-          {/* Right section - Language Switcher, Theme Switcher and User */}
+          {/* Right section - Controls and User */}
           <div className="nav-right">
-            <LanguageSwitcher className="desktop-language-switcher" />
-            <ThemeSwitcher className="desktop-theme-switcher" />
+            {/* Theme and Language controls - now properly positioned */}
+            <div className="nav-controls">
+              <LanguageSwitcher className="desktop-language-switcher" />
+              <ThemeSwitcher className="desktop-theme-switcher" />
+            </div>
             
+            {/* User section */}
             <div className="nav-user">
-              {user ? (
-                <div className="user-profile">
-                  <img src={user.avatar} alt="Profile" className="user-avatar" />
-                  <span className="username">{user.username}</span>
-                  <button onClick={onLogout} className="logout-btn">
-                    {t('nav.logout')}
-                  </button>
+              {loading ? (
+                <div className="flex items-center gap-2">
+                  <div className="h-6 w-6 border-2 border-[var(--accent-primary)] border-t-transparent rounded-full animate-spin"></div>
                 </div>
+              ) : isAuthenticated && user ? (
+                <UserMenu />
               ) : (
                 <button 
-                  onClick={() => setShowLoginForm(true)}
-                  className="login-btn"
+                  onClick={() => setAuthModalOpen(true)}
+                  className="login-btn flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)] text-black font-medium transition-colors"
                 >
                   <LogIn size={18} />
-                  {t('nav.login')} / {t('nav.register')}
+                  <span className="hidden sm:inline">
+                    {t('nav.login')} / {t('nav.register')}
+                  </span>
+                  <span className="sm:hidden">
+                    {t('nav.login')}
+                  </span>
                 </button>
               )}
             </div>
@@ -114,63 +111,44 @@ const Navigation = ({ user, onLogin, onLogout }) => {
               </a>
             ))}
             
-            {/* Mobile Language Switcher */}
+            {/* Mobile Controls Section */}
             <div className="mobile-controls-section">
               <div className="mobile-control-group">
                 <div className="mobile-control-label">{t('settings.language')}</div>
                 <LanguageSwitcher className="mobile-language-switcher" />
               </div>
               
-              {/* Mobile Theme Switcher */}
               <div className="mobile-control-group">
                 <div className="mobile-control-label">{t('settings.theme')}</div>
                 <ThemeSwitcher className="mobile-theme-switcher" />
               </div>
             </div>
+
+            {/* Mobile Authentication */}
+            {!isAuthenticated && (
+              <div className="mobile-auth-section p-4 border-t border-[var(--border-subtle)]">
+                <button 
+                  onClick={() => {
+                    setAuthModalOpen(true);
+                    setIsMenuOpen(false);
+                  }}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)] text-black font-medium transition-colors"
+                >
+                  <LogIn size={18} />
+                  {t('nav.login')} / {t('nav.register')}
+                </button>
+              </div>
+            )}
           </div>
         )}
       </nav>
 
-      {/* Login Modal */}
-      {showLoginForm && (
-        <div className="modal-overlay" onClick={() => setShowLoginForm(false)}>
-          <div className="login-modal" onClick={(e) => e.stopPropagation()}>
-            <h2>{t('auth.loginTitle')}</h2>
-            <form onSubmit={handleLoginSubmit}>
-              <div className="form-group">
-                <input
-                  type="text"
-                  placeholder={t('auth.username')}
-                  value={loginForm.username}
-                  onChange={(e) => setLoginForm({...loginForm, username: e.target.value})}
-                  className="form-input"
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <input
-                  type="password"
-                  placeholder={t('auth.password')}
-                  value={loginForm.password}
-                  onChange={(e) => setLoginForm({...loginForm, password: e.target.value})}
-                  className="form-input"
-                  required
-                />
-              </div>
-              <div className="form-actions">
-                <button type="submit" className="btn-primary">{t('auth.loginButton')}</button>
-                <button 
-                  type="button" 
-                  onClick={() => setShowLoginForm(false)}
-                  className="btn-secondary"
-                >
-                  {t('common.cancel')}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      )}
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={authModalOpen}
+        onClose={() => setAuthModalOpen(false)}
+        defaultMode="login"
+      />
     </>
   );
 };
