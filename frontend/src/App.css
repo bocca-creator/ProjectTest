@@ -151,6 +151,24 @@ h1, h2, h3, h4, h5, h6 {
   height: 80px;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
 .nav-logo {
   text-align: center;
 }
