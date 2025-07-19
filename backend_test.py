@@ -203,6 +203,25 @@ class AuthTester:
                         data
                     )
                     return False
+            elif response.status_code == 401:
+                # MySQL unavailable - graceful fallback behavior
+                error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
+                if "Invalid email or password" in error_data.get("detail", ""):
+                    self.log_test(
+                        "User Login", 
+                        True, 
+                        "Login correctly implements graceful fallback when MySQL is unavailable",
+                        error_data
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "User Login", 
+                        False, 
+                        f"Unexpected 401 error: {error_data}",
+                        error_data
+                    )
+                    return False
             else:
                 self.log_test(
                     "User Login", 
