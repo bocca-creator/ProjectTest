@@ -245,6 +245,11 @@ export const translations = {
     auth: {
       loginTitle: "Увійти до вашого акаунту",
       registerTitle: "Створити новий акаунт",
+      login: "Увійти",
+      register: "Створити акаунт",
+      signIn: "Увійти",
+      signUp: "Зареєструватися",
+      signOut: "Вийти",
       email: "Електронна пошта",
       username: "Ім'я користувача",
       displayName: "Відображуване ім'я", 
@@ -257,7 +262,18 @@ export const translations = {
       switchToLogin: "Вже є акаунт? Увійти",
       logout: "Вийти",
       profile: "Профіль",
-      settings: "Налаштування"
+      settings: "Налаштування",
+      emailPlaceholder: "Введіть вашу електронну пошту",
+      usernamePlaceholder: "Введіть ваше ім'я користувача",
+      displayNamePlaceholder: "Ваше відображуване ім'я",
+      passwordPlaceholder: "Введіть ваш пароль",
+      signingIn: "Вхід...",
+      creatingAccount: "Створення акаунту...",
+      noAccount: "Немає акаунту?",
+      haveAccount: "Вже є акаунт?",
+      required: "Потрібна автентифікація",
+      requiredMessage: "Будь ласка, увійдіть, щоб отримати доступ до цієї функції.",
+      loading: "Завантаження..."
     },
     
     // Profile
