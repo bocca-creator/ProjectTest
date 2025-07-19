@@ -216,7 +216,6 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Authentication UI Integration"
     - "Theme Editor Interface"
   stuck_tasks: []
   test_all: false
