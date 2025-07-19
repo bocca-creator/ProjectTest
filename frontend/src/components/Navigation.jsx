@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
 import { User, LogIn, Menu, X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Navigation = ({ user, onLogin, onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const menuItems = [
-    { name: 'Home', href: '#home', active: true },
-    { name: 'Rules', href: '#rules' },
-    { name: 'Store', href: '#store' },
-    { name: 'Forum', href: '#forum' },
-    { name: 'TeamSpeak', href: '#teamspeak' },
-    { name: 'Discord', href: '#discord' },
-    { name: 'Contacts', href: '#contacts' }
+    { name: 'Home', href: '/', path: '/' },
+    { name: 'Rules', href: '/rules', path: '/rules' },
+    { name: 'FAQ', href: '/faq', path: '/faq' },
+    { name: 'About', href: '/about', path: '/about' },
+    { name: 'Team', href: '/team', path: '/team' },
+    { name: 'Contact', href: '/contact', path: '/contact' }
   ];
 
   const handleLoginSubmit = (e) => {
@@ -29,6 +31,12 @@ const Navigation = ({ user, onLogin, onLogout }) => {
     }
   };
 
+  const handleNavigation = (path, e) => {
+    e.preventDefault();
+    navigate(path);
+    setIsMenuOpen(false);
+  };
+
   return (
     <>
       <nav className="navigation">
@@ -42,7 +50,7 @@ const Navigation = ({ user, onLogin, onLogout }) => {
           </button>
 
           {/* Logo */}
-          <div className="nav-logo">
+          <div className="nav-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <div className="logo-text">ProjectTest</div>
             <div className="logo-subtitle">Gaming Community</div>
           </div>
@@ -53,7 +61,8 @@ const Navigation = ({ user, onLogin, onLogout }) => {
               <a
                 key={item.name}
                 href={item.href}
-                className={`nav-item ${item.active ? 'active' : ''}`}
+                onClick={(e) => handleNavigation(item.path, e)}
+                className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
               >
                 {item.name}
               </a>
@@ -89,8 +98,8 @@ const Navigation = ({ user, onLogin, onLogout }) => {
               <a
                 key={item.name}
                 href={item.href}
-                className={`mobile-nav-item ${item.active ? 'active' : ''}`}
-                onClick={() => setIsMenuOpen(false)}
+                onClick={(e) => handleNavigation(item.path, e)}
+                className={`mobile-nav-item ${location.pathname === item.path ? 'active' : ''}`}
               >
                 {item.name}
               </a>
