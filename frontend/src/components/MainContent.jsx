@@ -205,6 +205,14 @@ const MainContent = ({ announcements, reviews, discordData }) => {
               ))}
             </div>
           </div>
+
+          {/* Theme Editor */}
+          <div className="theme-editor-section">
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
+              {t('themes.title')}
+            </h3>
+            <ThemeEditor />
+          </div>
         </div>
       </div>
     </main>
