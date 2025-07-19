@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { User, LogIn, Menu, X } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import ThemeSwitcher from './ThemeSwitcher';
 
 const Navigation = ({ user, onLogin, onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -69,25 +70,29 @@ const Navigation = ({ user, onLogin, onLogout }) => {
             ))}
           </div>
 
-          {/* User section */}
-          <div className="nav-user">
-            {user ? (
-              <div className="user-profile">
-                <img src={user.avatar} alt="Profile" className="user-avatar" />
-                <span className="username">{user.username}</span>
-                <button onClick={onLogout} className="logout-btn">
-                  Logout
+          {/* Right section - Theme Switcher and User */}
+          <div className="nav-right">
+            <ThemeSwitcher className="desktop-theme-switcher" />
+            
+            <div className="nav-user">
+              {user ? (
+                <div className="user-profile">
+                  <img src={user.avatar} alt="Profile" className="user-avatar" />
+                  <span className="username">{user.username}</span>
+                  <button onClick={onLogout} className="logout-btn">
+                    Logout
+                  </button>
+                </div>
+              ) : (
+                <button 
+                  onClick={() => setShowLoginForm(true)}
+                  className="login-btn"
+                >
+                  <LogIn size={18} />
+                  Login / Register
                 </button>
-              </div>
-            ) : (
-              <button 
-                onClick={() => setShowLoginForm(true)}
-                className="login-btn"
-              >
-                <LogIn size={18} />
-                Login / Register
-              </button>
-            )}
+              )}
+            </div>
           </div>
         </div>
 
@@ -104,6 +109,12 @@ const Navigation = ({ user, onLogin, onLogout }) => {
                 {item.name}
               </a>
             ))}
+            
+            {/* Mobile Theme Switcher */}
+            <div className="mobile-theme-section">
+              <div className="mobile-theme-label">Theme</div>
+              <ThemeSwitcher className="mobile-theme-switcher" />
+            </div>
           </div>
         )}
       </nav>
