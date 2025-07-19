@@ -68,9 +68,10 @@ async def health_check():
         "version": "1.0.0"
     }
 
-# Include authentication and theme routes
+# Include authentication, theme, and Steam routes
 api_router.include_router(auth_router)
 api_router.include_router(themes_router)
+api_router.include_router(steam_router)
 
 # Include the router in the main app
 app.include_router(api_router)
