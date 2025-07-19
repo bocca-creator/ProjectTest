@@ -10,6 +10,11 @@ from typing import List
 import uuid
 from datetime import datetime
 
+# Import new modules
+from database.mysql import mysql_db
+from routes.auth import router as auth_router
+from routes.themes import router as themes_router
+
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -20,13 +25,13 @@ client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
 # Create the main app without a prefix
-app = FastAPI()
+app = FastAPI(title="ProjectTest API", version="1.0.0")
 
 # Create a router with the /api prefix
 api_router = APIRouter(prefix="/api")
 
 
-# Define Models
+# Define Models (keeping existing models for backwards compatibility)
 class StatusCheck(BaseModel):
     id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     client_name: str
@@ -38,7 +43,7 @@ class StatusCheckCreate(BaseModel):
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return {"message": "ProjectTest API v1.0.0", "status": "running"}
 
 @api_router.post("/status", response_model=StatusCheck)
 async def create_status_check(input: StatusCheckCreate):
@@ -51,6 +56,20 @@ async def create_status_check(input: StatusCheckCreate):
 async def get_status_checks():
     status_checks = await db.status_checks.find().to_list(1000)
     return [StatusCheck(**status_check) for status_check in status_checks]
+
+# Health check endpoint
+@api_router.get("/health")
+async def health_check():
+    return {
+        "status": "healthy",
+        "mongodb": "connected",
+        "mysql": "connected" if mysql_db.pool else "disconnected",
+        "version": "1.0.0"
+    }
+
+# Include authentication and theme routes
+api_router.include_router(auth_router)
+api_router.include_router(themes_router)
 
 # Include the router in the main app
 app.include_router(api_router)
@@ -70,6 +89,24 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database connections on startup"""
+    logger.info("Starting ProjectTest API...")
+    
+    # Initialize MySQL connection
+    await mysql_db.connect()
+    logger.info("Database connections initialized")
+
 @app.on_event("shutdown")
-async def shutdown_db_client():
+async def shutdown_event():
+    """Clean up database connections on shutdown"""
+    logger.info("Shutting down ProjectTest API...")
+    
+    # Close MongoDB connection
     client.close()
+    
+    # Close MySQL connection
+    await mysql_db.disconnect()
+    
+    logger.info("Database connections closed")
