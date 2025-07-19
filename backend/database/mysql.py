@@ -1,7 +1,7 @@
 import aiomysql
 import os
 import logging
-from contextual import asynccontextmanager
+from contextlib import asynccontextmanager
 from typing import Optional
 
 logger = logging.getLogger(__name__)
