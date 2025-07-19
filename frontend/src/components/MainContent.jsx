@@ -1,5 +1,7 @@
 import React from 'react';
 import { Calendar, Pin, MessageSquare, Users, Star, ThumbsUp, Instagram, Send, Music } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
+import ThemeEditor from './ThemeEditor';
 
 const MainContent = ({ announcements, reviews, discordData }) => {
   const getAnnouncementIcon = (type) => {
