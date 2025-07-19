@@ -4,6 +4,7 @@ import { useLanguage } from '../contexts/LanguageContext';
 import ThemeEditor from './ThemeEditor';
 
 const MainContent = ({ announcements, reviews, discordData }) => {
+  const { t, formatDate } = useLanguage();
   const getAnnouncementIcon = (type) => {
     switch (type) {
       case 'maintenance': return '🔧';
