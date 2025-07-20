@@ -21,14 +21,6 @@ def get_mongo_db():
         logger.error(f"Error connecting to MongoDB: {e}")
         return None
 
-# MongoDB connection will be set by server.py
-mongo_db = None
-
-def set_mongo_db(db):
-    """Set MongoDB connection from server.py"""
-    global mongo_db
-    mongo_db = db
-
 class UserRepository:
     async def create_user(self, user_data: UserCreate) -> Optional[User]:
         """Create a new user in MySQL database or MongoDB as fallback"""
