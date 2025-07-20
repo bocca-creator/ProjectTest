@@ -5,8 +5,21 @@ from models.user import User, UserCreate, UserUpdate, UserPreferences, CustomThe
 from database.mysql import mysql_db
 from services.auth import auth_service
 import logging
+import os
+from motor.motor_asyncio import AsyncIOMotorClient
 
 logger = logging.getLogger(__name__)
+
+# MongoDB connection setup
+def get_mongo_db():
+    """Get MongoDB connection"""
+    try:
+        mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/projecttest')
+        client = AsyncIOMotorClient(mongo_url)
+        return client[os.environ.get('DB_NAME', 'projecttest')]
+    except Exception as e:
+        logger.error(f"Error connecting to MongoDB: {e}")
+        return None
 
 # MongoDB connection will be set by server.py
 mongo_db = None
