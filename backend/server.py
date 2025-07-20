@@ -20,6 +20,8 @@ from routes.auth import router as auth_router
 from routes.themes import router as themes_router
 from routes.steam import router as steam_router
 from routes.cs2_stats import router as cs2_router
+from routes.admin import router as admin_router
+from routes.tiers import router as tiers_router
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
