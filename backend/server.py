@@ -15,6 +15,7 @@ from database.mysql import mysql_db
 from routes.auth import router as auth_router
 from routes.themes import router as themes_router
 from routes.steam import router as steam_router
+from routes.cs2_stats import router as cs2_router
 
 
 ROOT_DIR = Path(__file__).parent
