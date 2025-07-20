@@ -12,7 +12,7 @@ import jwt
 from typing import Dict, Any, Optional
 
 # Configuration
-BACKEND_URL = "https://dd4b5807-b8ef-4fdb-89f6-54213177b758.preview.emergentagent.com"
+BACKEND_URL = "https://adfa3304-7592-4bd5-93f4-e37378cb28c4.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test data
