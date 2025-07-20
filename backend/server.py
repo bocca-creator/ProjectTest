@@ -101,10 +101,6 @@ async def startup_event():
     # Initialize MySQL connection
     await mysql_db.connect()
     
-    # Set MongoDB connection for user repository
-    from repositories.user import set_mongo_db
-    set_mongo_db(db)
-    
     # Initialize CS2 tables and admin user
     try:
         from database.init_cs2_tables import create_cs2_tables, create_admin_user
