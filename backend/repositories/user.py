@@ -5,8 +5,15 @@ from models.user import User, UserCreate, UserUpdate, UserPreferences, CustomThe
 from database.mysql import mysql_db
 from services.auth import auth_service
 import logging
+from motor.motor_asyncio import AsyncIOMotorClient
+import os
 
 logger = logging.getLogger(__name__)
+
+# MongoDB connection for fallback
+mongo_url = os.environ['MONGO_URL']
+mongo_client = AsyncIOMotorClient(mongo_url)
+mongo_db = mongo_client[os.environ['DB_NAME']]
 
 class UserRepository:
     async def create_user(self, user_data: UserCreate) -> Optional[User]:
