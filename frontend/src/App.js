@@ -12,6 +12,7 @@ import AboutPage from './components/pages/AboutPage';
 import TeamPage from './components/pages/TeamPage';
 import LeaderboardPage from './components/pages/LeaderboardPage';
 import AccountPage from './components/pages/AccountPage';
+import PlayerDashboard from './components/PlayerDashboard';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/team" element={<TeamPage />} />
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/account" element={<AccountPage />} />
+                <Route path="/dashboard" element={<PlayerDashboard />} />
               </Routes>
             </BrowserRouter>
           </div>
