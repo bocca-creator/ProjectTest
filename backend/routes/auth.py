@@ -76,13 +76,18 @@ async def register(user_data: UserCreate):
 async def login(login_data: UserLogin):
     """Login user"""
     try:
+        logger.info(f"Login attempt for email: {login_data.email}")
+        
         # Get user
         user = await user_repository.get_user_by_email(login_data.email)
         if not user:
+            logger.warning(f"User not found: {login_data.email}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid email or password"
             )
+        
+        logger.info(f"User found: {user.username}, role: {user.role}")
         
         # Check if user is active
         if not user.is_active:
@@ -93,17 +98,24 @@ async def login(login_data: UserLogin):
         
         # Verify password
         if not auth_service.verify_password(login_data.password, user.password_hash):
+            logger.warning(f"Invalid password for user: {login_data.email}")
             raise HTTPException(
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Invalid email or password"
             )
         
+        logger.info(f"Password verified for user: {user.username}")
+        
         # Update login stats
         await user_repository.update_user_login(user.id)
+        
+        logger.info(f"Creating tokens for user: {user.username}, role: {user.role}")
         
         # Create tokens
         access_token = auth_service.create_access_token(user.id, user.username, user.role)
         refresh_token = auth_service.create_refresh_token(user.id)
+        
+        logger.info(f"Tokens created successfully for user: {user.username}")
         
         # Create user response
         user_response = UserResponse(
