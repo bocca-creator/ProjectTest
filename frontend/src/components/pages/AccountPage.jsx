@@ -104,123 +104,86 @@ const AccountPage = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Profile Section */}
+              {/* Avatar & Profile Section */}
               <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-subtle)] p-6">
-                <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-3">
-                    <Settings className="h-6 w-6 text-[var(--accent-primary)]" />
-                    Profile Information
-                  </h2>
-                  {!editing && (
-                    <button
-                      onClick={() => setEditing(true)}
-                      className="flex items-center gap-2 px-4 py-2 bg-[var(--accent-primary)] text-black rounded-lg hover:bg-[var(--accent-hover)] transition-colors"
-                    >
-                      <Edit className="h-4 w-4" />
-                      Edit
-                    </button>
-                  )}
-                </div>
+                <h2 className="text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-3 mb-6">
+                  <User className="h-6 w-6 text-[var(--accent-primary)]" />
+                  Profile & Avatar
+                </h2>
 
                 <div className="space-y-6">
-                  {/* Username (read-only) */}
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                      Username
-                    </label>
-                    <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-muted)]">
-                      {user?.username}
-                    </div>
-                  </div>
-
-                  {/* Email (read-only) */}
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                      Email
-                    </label>
-                    <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-muted)]">
-                      {user?.email}
-                    </div>
-                  </div>
-
-                  {/* Display Name */}
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                      Display Name
-                    </label>
-                    {editing ? (
+                  {/* Avatar Upload */}
+                  <div className="flex flex-col items-center">
+                    <div className="relative mb-4">
+                      <div className="w-24 h-24 rounded-full bg-[var(--bg-tertiary)] border-2 border-[var(--border-subtle)] flex items-center justify-center overflow-hidden">
+                        {avatar ? (
+                          <img 
+                            src={avatar} 
+                            alt="Avatar" 
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <User className="h-12 w-12 text-[var(--text-muted)]" />
+                        )}
+                      </div>
+                      <label 
+                        htmlFor="avatar-upload" 
+                        className="absolute bottom-0 right-0 bg-[var(--accent-primary)] text-black p-2 rounded-full cursor-pointer hover:bg-[var(--accent-hover)] transition-colors"
+                      >
+                        <Camera className="h-4 w-4" />
+                      </label>
                       <input
-                        type="text"
-                        name="display_name"
-                        value={formData.display_name}
-                        onChange={handleInputChange}
-                        className="w-full px-4 py-3 bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)]"
-                        placeholder="Enter display name"
+                        id="avatar-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={handleAvatarChange}
+                        className="hidden"
+                        disabled={uploading}
                       />
-                    ) : (
+                    </div>
+                    {uploading && (
+                      <p className="text-sm text-[var(--accent-primary)]">Uploading...</p>
+                    )}
+                    <p className="text-xs text-[var(--text-muted)] text-center">
+                      Click the camera icon to change your avatar
+                    </p>
+                  </div>
+
+                  {/* Basic User Info (Read-only) */}
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
+                        Username
+                      </label>
                       <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-primary)]">
-                        {user?.display_name || 'Not set'}
+                        {user?.username}
                       </div>
-                    )}
-                  </div>
+                    </div>
 
-                  {/* Bio */}
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                      Bio
-                    </label>
-                    {editing ? (
-                      <textarea
-                        name="bio"
-                        value={formData.bio}
-                        onChange={handleInputChange}
-                        rows={3}
-                        className="w-full px-4 py-3 bg-[var(--bg-primary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--accent-primary)] resize-none"
-                        placeholder="Tell us about yourself"
-                      />
-                    ) : (
-                      <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-primary)] min-h-[80px]">
-                        {user?.bio || 'No bio added yet'}
+                    <div>
+                      <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
+                        Email
+                      </label>
+                      <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-primary)]">
+                        {user?.email}
                       </div>
-                    )}
-                  </div>
+                    </div>
 
-                  {/* Role */}
-                  <div>
-                    <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                      Role
-                    </label>
-                    <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                        user?.role === 'admin' 
-                          ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' 
-                          : 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
-                      }`}>
-                        {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
-                      </span>
+                    <div>
+                      <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
+                        Role
+                      </label>
+                      <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg">
+                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          user?.role === 'admin' 
+                            ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' 
+                            : 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
+                        }`}>
+                          {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
+                        </span>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Edit Actions */}
-                  {editing && (
-                    <div className="flex gap-3 pt-4">
-                      <button
-                        onClick={handleSaveProfile}
-                        disabled={updating}
-                        className="flex items-center gap-2 px-4 py-2 bg-[var(--accent-primary)] text-black rounded-lg hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      >
-                        <Save className="h-4 w-4" />
-                        {updating ? 'Saving...' : 'Save Changes'}
-                      </button>
-                      <button
-                        onClick={handleCancelEdit}
-                        className="flex items-center gap-2 px-4 py-2 bg-[var(--bg-tertiary)] text-[var(--text-secondary)] rounded-lg hover:bg-[var(--bg-primary)] hover:text-[var(--text-primary)] transition-colors"
-                      >
-                        <X className="h-4 w-4" />
-                        Cancel
-                      </button>
-                    </div>
-                  )}
                 </div>
               </div>
 
