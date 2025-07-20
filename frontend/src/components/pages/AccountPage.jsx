@@ -80,31 +80,6 @@ const AccountPage = () => {
     setEditing(false);
   };
 
-  const getRankColor = (rank) => {
-    const rankColors = {
-      'Global Elite': '#8B5CF6',
-      'Supreme Master First Class': '#EC4899',
-      'Legendary Eagle Master': '#F59E0B',
-      'Legendary Eagle': '#EF4444',
-      'Distinguished Master Guardian': '#10B981',
-      'Master Guardian Elite': '#06B6D4',
-      'Master Guardian II': '#3B82F6',
-      'Master Guardian I': '#6366F1',
-      'Gold Nova Master': '#F59E0B',
-      'Gold Nova III': '#F59E0B',
-      'Gold Nova II': '#F59E0B',
-      'Gold Nova I': '#F59E0B',
-      'Silver Elite Master': '#6B7280',
-      'Silver Elite': '#6B7280',
-      'Silver IV': '#6B7280',
-      'Silver III': '#6B7280',
-      'Silver II': '#6B7280',
-      'Silver I': '#6B7280',
-      'Unranked': '#9CA3AF'
-    };
-    return rankColors[rank] || '#9CA3AF';
-  };
-
   return (
     <ProtectedRoute>
       <div className="min-h-screen bg-[var(--bg-primary)]">
