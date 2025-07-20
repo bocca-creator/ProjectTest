@@ -160,7 +160,7 @@ async def refresh_token(credentials: HTTPAuthorizationCredentials = Depends(secu
             )
         
         # Create new tokens
-        access_token = auth_service.create_access_token(user.id, user.username, user.role.value)
+        access_token = auth_service.create_access_token(user.id, user.username, user.role)
         new_refresh_token = auth_service.create_refresh_token(user.id)
         
         # Create user response
