@@ -124,6 +124,15 @@ class UserRepository:
             return None
 
     async def get_user_by_email(self, email: str) -> Optional[User]:
+        """Get user by email from MySQL database or MongoDB as fallback"""
+        # Try MySQL first
+        if mysql_db.pool:
+            return await self._get_user_by_email_mysql(email)
+        else:
+            # Fall back to MongoDB
+            return await self._get_user_by_email_mongodb(email)
+    
+    async def _get_user_by_email_mysql(self, email: str) -> Optional[User]:
         """Get user by email from MySQL database"""
         try:
             async with mysql_db.get_connection() as conn:
@@ -148,7 +157,20 @@ class UserRepository:
                     return self._row_to_user(row)
                     
         except Exception as e:
-            logger.error(f"Error getting user by email: {e}")
+            logger.error(f"Error getting user by email from MySQL: {e}")
+            return None
+    
+    async def _get_user_by_email_mongodb(self, email: str) -> Optional[User]:
+        """Get user by email from MongoDB as fallback"""
+        try:
+            user_doc = await mongo_db.users.find_one({"email": email})
+            if not user_doc:
+                return None
+            
+            return self._doc_to_user(user_doc)
+            
+        except Exception as e:
+            logger.error(f"Error getting user by email from MongoDB: {e}")
             return None
 
     async def get_user_by_id(self, user_id: str) -> Optional[User]:
