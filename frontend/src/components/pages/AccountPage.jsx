@@ -52,7 +52,6 @@ const AccountPage = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setAvatar(e.target.result);
-        // Here you would typically upload to server
         updateAvatarOnServer(e.target.result);
       };
       reader.readAsDataURL(file);
