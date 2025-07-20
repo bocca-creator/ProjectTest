@@ -13,19 +13,17 @@ const AccountPage = () => {
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editing, setEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    display_name: '',
-    bio: ''
+  const [avatar, setAvatar] = useState(user?.avatar || null);
+  const [uploading, setUploading] = useState(false);
+  const [settings, setSettings] = useState({
+    notifications: true,
+    privacy: true,
+    emailNotifications: false
   });
-  const [updating, setUpdating] = useState(false);
 
   useEffect(() => {
     if (user) {
-      setFormData({
-        display_name: user.display_name || '',
-        bio: user.bio || ''
-      });
+      setAvatar(user.avatar || null);
       fetchStats();
     }
   }, [user]);
@@ -48,36 +46,39 @@ const AccountPage = () => {
     }
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSaveProfile = async () => {
-    setUpdating(true);
-    try {
-      const result = await updateProfile(formData);
-      if (result.success) {
-        setEditing(false);
-      } else {
-        setError(result.error);
-      }
-    } catch (err) {
-      setError('Failed to update profile');
-    } finally {
-      setUpdating(false);
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setAvatar(e.target.result);
+        // Here you would typically upload to server
+        updateAvatarOnServer(e.target.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleCancelEdit = () => {
-    setFormData({
-      display_name: user.display_name || '',
-      bio: user.bio || ''
-    });
-    setEditing(false);
+  const updateAvatarOnServer = async (avatarData) => {
+    setUploading(true);
+    try {
+      const result = await updateProfile({ avatar: avatarData });
+      if (!result.success) {
+        setError(result.error || 'Failed to update avatar');
+      }
+    } catch (err) {
+      setError('Failed to update avatar');
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleSettingChange = (setting) => {
+    setSettings(prev => ({
+      ...prev,
+      [setting]: !prev[setting]
+    }));
+    // Here you would save settings to server
   };
 
   return (
