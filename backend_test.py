@@ -25,7 +25,7 @@ TEST_USER = {
 
 ADMIN_USER = {
     "email": "admin@admin.com",
-    "password": "admin"
+    "password": "admin123"
 }
 
 class CS2StatsTester:
