@@ -68,11 +68,15 @@ class AuthService:
 
     def create_refresh_token(self, user_id: str) -> str:
         """Create a JWT refresh token"""
+        # Create timestamps as integers (Unix timestamps)
+        now = datetime.now(timezone.utc)
+        exp_time = now + self.jwt_refresh_expire
+        
         payload = {
-            'user_id': user_id,
+            'user_id': str(user_id),
             'type': 'refresh',
-            'exp': datetime.now(timezone.utc) + self.jwt_refresh_expire,
-            'iat': datetime.now(timezone.utc)
+            'exp': int(exp_time.timestamp()),
+            'iat': int(now.timestamp())
         }
         return jwt.encode(payload, self.jwt_refresh_secret, algorithm='HS256')
 
