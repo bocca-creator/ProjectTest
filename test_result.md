@@ -437,9 +437,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Multi-language Support Implementation"
-    - "Authentication UI Integration"
-    - "Theme Editor Interface"
+    - "Personal Account Page Simplification & Enhancement"
+    - "Leaderboard Page Functionality Testing"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
