@@ -9,6 +9,7 @@ const UserMenu = () => {
   const { user, logout } = useAuth();
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   if (!user) {
     return null;
