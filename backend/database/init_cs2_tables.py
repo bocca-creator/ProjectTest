@@ -130,11 +130,12 @@ async def create_admin_user():
                 from models.user import UserUpdate
                 await user_repository.update_user(admin_user.id, UserUpdate())
                 # Manually set role (since UserUpdate doesn't include role)
-                async with mysql_db.pool.acquire() as conn:
-                    await conn.execute(
-                        "UPDATE users SET role = ? WHERE id = ?",
-                        (UserRole.ADMIN.value, admin_user.id)
-                    )
+                async with mysql_db.get_connection() as conn:
+                    async with conn.cursor() as cursor:
+                        await cursor.execute(
+                            "UPDATE users SET role = %s WHERE id = %s",
+                            (UserRole.ADMIN.value, admin_user.id)
+                        )
             else:
                 # Update role to admin in MongoDB
                 from repositories.user import get_mongo_db
