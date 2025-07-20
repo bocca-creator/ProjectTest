@@ -121,7 +121,7 @@ class UserRepository:
             
             # Insert into MongoDB
             mongo_db = get_mongo_db()
-            if mongo_db:
+            if mongo_db is not None:
                 await mongo_db.users.insert_one(user_dict)
             
             logger.info(f"User created successfully in MongoDB: {user.username}")
