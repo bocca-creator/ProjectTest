@@ -10,16 +10,16 @@ from typing import List
 import uuid
 from datetime import datetime
 
-# Import new modules
+# Load environment variables BEFORE importing modules that use them
+ROOT_DIR = Path(__file__).parent
+load_dotenv(ROOT_DIR / '.env')
+
+# Import new modules AFTER loading environment variables
 from database.mysql import mysql_db
 from routes.auth import router as auth_router
 from routes.themes import router as themes_router
 from routes.steam import router as steam_router
 from routes.cs2_stats import router as cs2_router
-
-
-ROOT_DIR = Path(__file__).parent
-load_dotenv(ROOT_DIR / '.env')
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
