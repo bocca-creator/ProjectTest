@@ -329,6 +329,8 @@ class UserRepository:
     
     def _doc_to_user(self, doc) -> User:
         """Convert MongoDB document to User object"""
+        from models.user import UserRole
+        
         prefs = doc.get("preferences", {})
         preferences = UserPreferences(
             language=prefs.get("language", "en"),
@@ -338,6 +340,13 @@ class UserRepository:
             steam_profile_public=prefs.get("steam_profile_public", False)
         )
         
+        # Convert role string to UserRole enum
+        role_str = doc.get("role", "member")
+        try:
+            role = UserRole(role_str)
+        except ValueError:
+            role = UserRole.MEMBER
+        
         return User(
             id=doc["id"],
             username=doc["username"],
@@ -346,7 +355,7 @@ class UserRepository:
             display_name=doc.get("display_name"),
             avatar_url=doc.get("avatar_url"),
             bio=doc.get("bio"),
-            role=doc.get("role", "member"),
+            role=role,
             steam_id=doc.get("steam_id"),
             is_active=doc.get("is_active", True),
             is_verified=doc.get("is_verified", False),
