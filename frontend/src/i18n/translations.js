@@ -10,6 +10,7 @@ export const translations = {
       contact: "Contact",
       leaderboard: "Leaderboard",
       rankings: "Rankings",
+      supportUs: "Support Us",
       account: "My Account",
       login: "Login",
       register: "Register",
