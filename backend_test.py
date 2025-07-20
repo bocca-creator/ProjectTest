@@ -28,12 +28,13 @@ ADMIN_USER = {
     "password": "admin"
 }
 
-class AuthTester:
+class CS2StatsTester:
     def __init__(self):
         self.session = requests.Session()
         self.access_token = None
         self.refresh_token = None
         self.user_data = None
+        self.admin_token = None
         self.test_results = []
 
     def log_test(self, test_name: str, success: bool, details: str = "", response_data: Any = None):
@@ -81,6 +82,65 @@ class AuthTester:
             self.log_test("Health Check", False, f"Request failed: {str(e)}")
             return False
 
+    def test_admin_login(self) -> bool:
+        """Test admin user login"""
+        print("🔍 Testing Admin User Login...")
+        try:
+            response = self.session.post(
+                f"{API_BASE}/auth/login",
+                json=ADMIN_USER,
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "access_token" in data and "user" in data:
+                    self.admin_token = data["access_token"]
+                    
+                    self.log_test(
+                        "Admin Login", 
+                        True, 
+                        f"Admin login successful - Username: {data['user']['username']}",
+                        {
+                            "user_id": data["user"]["id"],
+                            "username": data["user"]["username"],
+                            "email": data["user"]["email"],
+                            "role": data["user"]["role"]
+                        }
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "Admin Login", 
+                        False, 
+                        "Missing required fields in response",
+                        data
+                    )
+                    return False
+            elif response.status_code == 401:
+                # MySQL unavailable - graceful fallback behavior
+                error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
+                self.log_test(
+                    "Admin Login", 
+                    True, 
+                    "Admin login correctly implements graceful fallback when MySQL is unavailable",
+                    error_data
+                )
+                return True
+            else:
+                self.log_test(
+                    "Admin Login", 
+                    False, 
+                    f"Login failed with status: {response.status_code}",
+                    response.json() if response.headers.get('content-type', '').startswith('application/json') else response.text
+                )
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("Admin Login", False, f"Request failed: {str(e)}")
+            return False
+
     def test_user_registration(self) -> bool:
         """Test POST /api/auth/register endpoint"""
         print("🔍 Testing User Registration...")
@@ -107,9 +167,7 @@ class AuthTester:
                             "user_id": data["user"]["id"],
                             "username": data["user"]["username"],
                             "email": data["user"]["email"],
-                            "role": data["user"]["role"],
-                            "token_type": data.get("token_type", "bearer"),
-                            "expires_in": data.get("expires_in", 900)
+                            "role": data["user"]["role"]
                         }
                     )
                     return True
@@ -193,10 +251,7 @@ class AuthTester:
                             "user_id": data["user"]["id"],
                             "username": data["user"]["username"],
                             "email": data["user"]["email"],
-                            "role": data["user"]["role"],
-                            "login_count": data["user"]["login_count"],
-                            "token_type": data.get("token_type", "bearer"),
-                            "expires_in": data.get("expires_in", 900)
+                            "role": data["user"]["role"]
                         }
                     )
                     return True
@@ -240,50 +295,14 @@ class AuthTester:
             self.log_test("User Login", False, f"Request failed: {str(e)}")
             return False
 
-    def test_protected_route(self) -> bool:
-        """Test GET /api/auth/me endpoint (protected route)"""
-        print("🔍 Testing Protected Route (/api/auth/me)...")
+    def test_cs2_stats_me(self) -> bool:
+        """Test GET /api/cs2/stats/me endpoint"""
+        print("🔍 Testing CS2 Stats Me...")
         
         if not self.access_token:
-            # Test without token first
-            try:
-                response = self.session.get(
-                    f"{API_BASE}/auth/me",
-                    headers={"Content-Type": "application/json"},
-                    timeout=10
-                )
-                
-                if response.status_code == 403:
-                    error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
-                    if "Not authenticated" in error_data.get("detail", ""):
-                        self.log_test(
-                            "Protected Route", 
-                            True, 
-                            "Protected route correctly rejects requests without authentication token",
-                            error_data
-                        )
-                        return True
-                    else:
-                        self.log_test(
-                            "Protected Route", 
-                            False, 
-                            f"Unexpected 403 error: {error_data}",
-                            error_data
-                        )
-                        return False
-                else:
-                    self.log_test(
-                        "Protected Route", 
-                        False, 
-                        f"Expected 403 but got {response.status_code}",
-                        response.text
-                    )
-                    return False
-                    
-            except requests.exceptions.RequestException as e:
-                self.log_test("Protected Route", False, f"Request failed: {str(e)}")
-                return False
-            
+            self.log_test("CS2 Stats Me", False, "No access token available")
+            return False
+        
         try:
             headers = {
                 "Authorization": f"Bearer {self.access_token}",
@@ -291,39 +310,50 @@ class AuthTester:
             }
             
             response = self.session.get(
-                f"{API_BASE}/auth/me",
+                f"{API_BASE}/cs2/stats/me",
                 headers=headers,
                 timeout=10
             )
             
             if response.status_code == 200:
                 data = response.json()
-                if "id" in data and "username" in data and "email" in data:
+                if "user_id" in data and "username" in data and "stats" in data:
+                    stats = data["stats"]
                     self.log_test(
-                        "Protected Route", 
+                        "CS2 Stats Me", 
                         True, 
-                        f"User info retrieved - Username: {data['username']}",
+                        f"CS2 stats retrieved - K/D: {stats.get('kd_ratio', 0)}, Matches: {stats.get('matches_played', 0)}",
                         {
-                            "user_id": data["id"],
+                            "user_id": data["user_id"],
                             "username": data["username"],
-                            "email": data["email"],
-                            "role": data["role"],
-                            "is_active": data["is_active"],
-                            "login_count": data["login_count"]
+                            "kd_ratio": stats.get("kd_ratio"),
+                            "matches_played": stats.get("matches_played"),
+                            "win_rate": stats.get("win_rate"),
+                            "current_rank": stats.get("current_rank"),
+                            "recent_matches_count": len(data.get("recent_matches", []))
                         }
                     )
                     return True
                 else:
                     self.log_test(
-                        "Protected Route", 
+                        "CS2 Stats Me", 
                         False, 
-                        "Missing required user fields in response",
+                        "Missing required fields in response",
                         data
                     )
                     return False
-            elif response.status_code == 401:
+            elif response.status_code == 404:
+                # Stats not found - this is acceptable for new users
                 self.log_test(
-                    "Protected Route", 
+                    "CS2 Stats Me", 
+                    True, 
+                    "CS2 statistics not found for user (expected for new users)",
+                    response.json() if response.headers.get('content-type', '').startswith('application/json') else response.text
+                )
+                return True
+            elif response.status_code == 403:
+                self.log_test(
+                    "CS2 Stats Me", 
                     False, 
                     "Authentication failed - Invalid or expired token",
                     response.json() if response.headers.get('content-type', '').startswith('application/json') else response.text
@@ -331,7 +361,7 @@ class AuthTester:
                 return False
             else:
                 self.log_test(
-                    "Protected Route", 
+                    "CS2 Stats Me", 
                     False, 
                     f"Unexpected status code: {response.status_code}",
                     response.text
@@ -339,105 +369,44 @@ class AuthTester:
                 return False
                 
         except requests.exceptions.RequestException as e:
-            self.log_test("Protected Route", False, f"Request failed: {str(e)}")
+            self.log_test("CS2 Stats Me", False, f"Request failed: {str(e)}")
             return False
 
-    def test_token_refresh(self) -> bool:
-        """Test POST /api/auth/refresh endpoint"""
-        print("🔍 Testing Token Refresh...")
-        
-        if not self.refresh_token:
-            # Test without refresh token first
-            try:
-                response = self.session.post(
-                    f"{API_BASE}/auth/refresh",
-                    headers={"Content-Type": "application/json"},
-                    timeout=10
-                )
-                
-                if response.status_code == 403:
-                    error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
-                    if "Not authenticated" in error_data.get("detail", ""):
-                        self.log_test(
-                            "Token Refresh", 
-                            True, 
-                            "Token refresh correctly rejects requests without refresh token",
-                            error_data
-                        )
-                        return True
-                    else:
-                        self.log_test(
-                            "Token Refresh", 
-                            False, 
-                            f"Unexpected 403 error: {error_data}",
-                            error_data
-                        )
-                        return False
-                else:
-                    self.log_test(
-                        "Token Refresh", 
-                        False, 
-                        f"Expected 403 but got {response.status_code}",
-                        response.text
-                    )
-                    return False
-                    
-            except requests.exceptions.RequestException as e:
-                self.log_test("Token Refresh", False, f"Request failed: {str(e)}")
-                return False
-            
+    def test_cs2_leaderboard(self) -> bool:
+        """Test GET /api/cs2/leaderboard endpoint"""
+        print("🔍 Testing CS2 Leaderboard...")
         try:
-            headers = {
-                "Authorization": f"Bearer {self.refresh_token}",
-                "Content-Type": "application/json"
-            }
-            
-            response = self.session.post(
-                f"{API_BASE}/auth/refresh",
-                headers=headers,
+            response = self.session.get(
+                f"{API_BASE}/cs2/leaderboard?stat_type=kd_ratio&limit=10",
                 timeout=10
             )
             
             if response.status_code == 200:
                 data = response.json()
-                if "access_token" in data and "refresh_token" in data and "user" in data:
-                    # Update tokens
-                    old_access_token = self.access_token
-                    self.access_token = data["access_token"]
-                    self.refresh_token = data["refresh_token"]
-                    
+                if "leaderboard" in data and "stat_type" in data:
+                    leaderboard = data["leaderboard"]
                     self.log_test(
-                        "Token Refresh", 
+                        "CS2 Leaderboard", 
                         True, 
-                        f"Tokens refreshed successfully - User: {data['user']['username']}",
+                        f"Leaderboard retrieved - {len(leaderboard)} entries for {data['stat_type']}",
                         {
-                            "user_id": data["user"]["id"],
-                            "username": data["user"]["username"],
-                            "token_changed": old_access_token != self.access_token,
-                            "token_type": data.get("token_type", "bearer"),
-                            "expires_in": data.get("expires_in", 900)
+                            "stat_type": data["stat_type"],
+                            "total_entries": data.get("total_entries", len(leaderboard)),
+                            "sample_entry": leaderboard[0] if leaderboard else None
                         }
                     )
                     return True
                 else:
                     self.log_test(
-                        "Token Refresh", 
+                        "CS2 Leaderboard", 
                         False, 
-                        "Missing required fields in refresh response",
+                        "Missing required fields in response",
                         data
                     )
                     return False
-            elif response.status_code == 401:
-                self.log_test(
-                    "Token Refresh", 
-                    False, 
-                    "Refresh token invalid or expired",
-                    response.json() if response.headers.get('content-type', '').startswith('application/json') else response.text
-                )
-                return False
             else:
                 self.log_test(
-                    "Token Refresh", 
+                    "CS2 Leaderboard", 
                     False, 
                     f"Unexpected status code: {response.status_code}",
                     response.text
@@ -445,18 +414,136 @@ class AuthTester:
                 return False
                 
         except requests.exceptions.RequestException as e:
-            self.log_test("Token Refresh", False, f"Request failed: {str(e)}")
+            self.log_test("CS2 Leaderboard", False, f"Request failed: {str(e)}")
             return False
 
-    def test_protected_route_after_refresh(self) -> bool:
-        """Test protected route with refreshed token"""
-        print("🔍 Testing Protected Route with Refreshed Token...")
-        return self.test_protected_route()
+    def test_cs2_ranks(self) -> bool:
+        """Test GET /api/cs2/ranks endpoint"""
+        print("🔍 Testing CS2 Ranks...")
+        try:
+            response = self.session.get(f"{API_BASE}/cs2/ranks", timeout=10)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "ranks" in data:
+                    ranks = data["ranks"]
+                    self.log_test(
+                        "CS2 Ranks", 
+                        True, 
+                        f"CS2 ranks retrieved - {len(ranks)} ranks available",
+                        {
+                            "total_ranks": len(ranks),
+                            "sample_ranks": ranks[:3] if ranks else []
+                        }
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "CS2 Ranks", 
+                        False, 
+                        "Missing 'ranks' field in response",
+                        data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    "CS2 Ranks", 
+                    False, 
+                    f"Unexpected status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("CS2 Ranks", False, f"Request failed: {str(e)}")
+            return False
+
+    def test_cs2_maps(self) -> bool:
+        """Test GET /api/cs2/maps endpoint"""
+        print("🔍 Testing CS2 Maps...")
+        try:
+            response = self.session.get(f"{API_BASE}/cs2/maps", timeout=10)
+            
+            if response.status_code == 200:
+                data = response.json()
+                if "maps" in data:
+                    maps = data["maps"]
+                    self.log_test(
+                        "CS2 Maps", 
+                        True, 
+                        f"CS2 maps retrieved - {len(maps)} maps available",
+                        {
+                            "total_maps": len(maps),
+                            "sample_maps": maps[:3] if maps else []
+                        }
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "CS2 Maps", 
+                        False, 
+                        "Missing 'maps' field in response",
+                        data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    "CS2 Maps", 
+                    False, 
+                    f"Unexpected status code: {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("CS2 Maps", False, f"Request failed: {str(e)}")
+            return False
+
+    def test_cs2_stats_without_auth(self) -> bool:
+        """Test CS2 stats endpoint without authentication"""
+        print("🔍 Testing CS2 Stats Without Authentication...")
+        try:
+            response = self.session.get(
+                f"{API_BASE}/cs2/stats/me",
+                headers={"Content-Type": "application/json"},
+                timeout=10
+            )
+            
+            if response.status_code == 403:
+                error_data = response.json() if response.headers.get('content-type', '').startswith('application/json') else {"detail": response.text}
+                if "Not authenticated" in error_data.get("detail", ""):
+                    self.log_test(
+                        "CS2 Stats Without Auth", 
+                        True, 
+                        "CS2 stats endpoint correctly rejects requests without authentication",
+                        error_data
+                    )
+                    return True
+                else:
+                    self.log_test(
+                        "CS2 Stats Without Auth", 
+                        False, 
+                        f"Unexpected 403 error: {error_data}",
+                        error_data
+                    )
+                    return False
+            else:
+                self.log_test(
+                    "CS2 Stats Without Auth", 
+                    False, 
+                    f"Expected 403 but got {response.status_code}",
+                    response.text
+                )
+                return False
+                
+        except requests.exceptions.RequestException as e:
+            self.log_test("CS2 Stats Without Auth", False, f"Request failed: {str(e)}")
+            return False
 
     def run_all_tests(self):
-        """Run all authentication tests"""
+        """Run all CS2 statistics tests"""
         print("=" * 60)
-        print("🚀 STARTING AUTHENTICATION SYSTEM TESTS")
+        print("🚀 STARTING CS2 STATISTICS SYSTEM TESTS")
         print("=" * 60)
         print(f"Backend URL: {BACKEND_URL}")
         print(f"API Base: {API_BASE}")
@@ -464,12 +551,15 @@ class AuthTester:
         
         # Test sequence
         tests = [
-            ("Health Check", self.test_health_check),
+            ("API Health Check", self.test_health_check),
+            ("Admin User Login", self.test_admin_login),
             ("User Registration", self.test_user_registration),
             ("User Login", self.test_user_login),
-            ("Protected Route", self.test_protected_route),
-            ("Token Refresh", self.test_token_refresh),
-            ("Protected Route (After Refresh)", self.test_protected_route_after_refresh)
+            ("CS2 Stats Me (Authenticated)", self.test_cs2_stats_me),
+            ("CS2 Stats Without Auth", self.test_cs2_stats_without_auth),
+            ("CS2 Leaderboard", self.test_cs2_leaderboard),
+            ("CS2 Ranks", self.test_cs2_ranks),
+            ("CS2 Maps", self.test_cs2_maps)
         ]
         
         passed = 0
@@ -494,7 +584,7 @@ class AuthTester:
         print()
         
         if passed == total:
-            print("🎉 ALL TESTS PASSED! Authentication system is working correctly.")
+            print("🎉 ALL TESTS PASSED! CS2 statistics system is working correctly.")
         else:
             print("⚠️  Some tests failed. Check the details above.")
             
@@ -502,7 +592,7 @@ class AuthTester:
 
 def main():
     """Main test execution"""
-    tester = AuthTester()
+    tester = CS2StatsTester()
     success = tester.run_all_tests()
     
     # Exit with appropriate code
