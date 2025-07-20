@@ -466,7 +466,7 @@ const PlayerDashboard = () => {
               ) : (
                 <div className="flex items-center justify-between px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg">
                   <div className="flex items-center gap-2">
-                    <Steam className="h-4 w-4 text-blue-400" />
+                    <Gamepad2 className="h-4 w-4 text-blue-400" />
                     <span className="text-[var(--text-primary)]">
                       {user?.steam_id || 'Not linked'}
                     </span>
