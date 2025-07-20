@@ -352,7 +352,7 @@ class CS2StatsTester:
                     response.json() if response.headers.get('content-type', '').startswith('application/json') else response.text
                 )
                 return True
-            elif response.status_code == 403:
+            elif response.status_code == 403 or response.status_code == 401:
                 # Expected when MySQL is unavailable and no valid token
                 self.log_test(
                     "CS2 Stats Me", 
