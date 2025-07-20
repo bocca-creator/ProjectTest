@@ -29,7 +29,7 @@ class UserManagementFilter(BaseModel):
     limit: int = 20
 
 class UserRoleUpdate(BaseModel):
-    role: str = Field(..., regex="^(admin|moderator|member|banned)$")
+    role: str = Field(..., pattern=r"^(admin|moderator|member|banned)$")
 
 class UserTierUpdate(BaseModel):
     tier: DonationTier
