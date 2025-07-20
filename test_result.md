@@ -393,17 +393,17 @@ backend:
         comment: "Fixed critical missing pymysql dependency that was preventing backend startup. Backend was failing with 'ModuleNotFoundError: No module named pymysql' when trying to import aiomysql. Installed pymysql package and verified backend now starts successfully. All services operational after dependency fix."
 
 frontend:
-  - task: "Authentication UI Integration"
-    implemented: false
-    working: "NA"
-    file: "components/Navigation.jsx"
+  - task: "Personal Account Page Simplification & Enhancement"
+    implemented: true
+    working: "NA" 
+    file: "components/pages/AccountPage.jsx"
     stuck_count: 0
     priority: "high"
     needs_retesting: true
     status_history:
       - working: "NA"
         agent: "main"
-        comment: "Ready to implement frontend authentication integration with new backend API endpoints."
+        comment: "Modified AccountPage.jsx to remove profile settings editing functionality and added avatar upload capability with settings section. Changes include: 1) Removed editing functionality for display name and bio, 2) Added avatar upload with camera icon and file picker, 3) Maintained simplified CS2 statistics display (K/D, win rate, matches played), 4) Added comprehensive settings section with notification toggles (push notifications, email notifications) and privacy settings (profile visibility, account security info). Frontend needs testing to verify functionality post-login."
 
   - task: "Multi-language Support"
     implemented: true
