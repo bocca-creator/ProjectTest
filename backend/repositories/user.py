@@ -179,6 +179,9 @@ class UserRepository:
     async def _get_user_by_email_mongodb(self, email: str) -> Optional[User]:
         """Get user by email from MongoDB as fallback"""
         try:
+            mongo_db = get_mongo_db()
+            if not mongo_db:
+                return None
             user_doc = await mongo_db.users.find_one({"email": email})
             if not user_doc:
                 return None
