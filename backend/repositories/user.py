@@ -172,7 +172,7 @@ class UserRepository:
         """Get user by email from MongoDB as fallback"""
         try:
             mongo_db = get_mongo_db()
-            if not mongo_db:
+            if mongo_db is None:
                 return None
             user_doc = await mongo_db.users.find_one({"email": email})
             if not user_doc:
