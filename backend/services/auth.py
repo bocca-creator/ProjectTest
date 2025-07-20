@@ -36,18 +36,31 @@ class AuthService:
 
     def create_access_token(self, user_id: str, username: str, role) -> str:
         """Create a JWT access token"""
-        # Ensure role is a string
-        role_str = role.value if hasattr(role, 'value') else str(role)
+        import logging
+        logger = logging.getLogger(__name__)
         
-        payload = {
-            'user_id': str(user_id),
-            'username': str(username),
-            'role': str(role_str),
-            'type': 'access',
-            'exp': datetime.now(timezone.utc) + self.jwt_expire,
-            'iat': datetime.now(timezone.utc)
-        }
-        return jwt.encode(payload, self.jwt_secret, algorithm='HS256')
+        try:
+            # Ensure role is a string
+            role_str = role.value if hasattr(role, 'value') else str(role)
+            logger.info(f"Creating access token - user_id: {user_id}, username: {username}, role: {role}, role_str: {role_str}")
+            
+            payload = {
+                'user_id': str(user_id),
+                'username': str(username),
+                'role': str(role_str),
+                'type': 'access',
+                'exp': datetime.now(timezone.utc) + self.jwt_expire,
+                'iat': datetime.now(timezone.utc)
+            }
+            
+            logger.info(f"JWT payload created: {payload}")
+            token = jwt.encode(payload, self.jwt_secret, algorithm='HS256')
+            logger.info(f"JWT token created successfully")
+            return token
+            
+        except Exception as e:
+            logger.error(f"Error creating access token: {e}")
+            raise
 
     def create_refresh_token(self, user_id: str) -> str:
         """Create a JWT refresh token"""
