@@ -9,6 +9,7 @@ import CS2LeaderboardModal from './CS2LeaderboardModal';
 const UserMenu = () => {
   const { user, logout } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
 
