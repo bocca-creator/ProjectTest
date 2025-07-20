@@ -150,6 +150,22 @@ const UserMenu = () => {
                   Quick Account
                 </span>
               </button>
+
+              {/* Admin Panel - Only show for admin users */}
+              {user.role === 'admin' && (
+                <button
+                  onClick={() => {
+                    setIsOpen(false);
+                    navigate('/admin');
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors group"
+                >
+                  <Shield className="h-4 w-4 text-red-400 group-hover:text-red-300" />
+                  <span className="text-red-400 group-hover:text-red-300 font-medium">
+                    Admin Panel
+                  </span>
+                </button>
+              )}
             </div>
 
             {/* Logout */}
