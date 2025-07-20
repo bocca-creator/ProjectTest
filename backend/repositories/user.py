@@ -23,6 +23,112 @@ def get_mongo_db():
         return None
 
 class UserRepository:
+    def __init__(self):
+        self.users_collection = None
+        self._init_mongo()
+    
+    def _init_mongo(self):
+        """Initialize MongoDB collection reference"""
+        try:
+            mongo_url = os.environ.get('MONGO_URL', 'mongodb://localhost:27017/projecttest')
+            client = AsyncIOMotorClient(mongo_url)
+            db = client[os.environ.get('DB_NAME', 'projecttest')]
+            self.users_collection = db.users
+        except Exception as e:
+            logger.error(f"Error initializing MongoDB collection: {e}")
+
+    async def get_total_users_count(self) -> int:
+        """Get total number of users"""
+        try:
+            if mysql_db.pool:
+                async with mysql_db.get_connection() as conn:
+                    if not conn:
+                        return 0
+                    async with conn.cursor() as cursor:
+                        await cursor.execute("SELECT COUNT(*) FROM users")
+                        result = await cursor.fetchone()
+                        return result[0] if result else 0
+            else:
+                # MongoDB fallback
+                return await self.users_collection.count_documents({})
+        except Exception as e:
+            logger.error(f"Error getting total users count: {e}")
+            return 0
+    
+    async def get_active_players_count(self) -> int:
+        """Get count of active players (logged in within last 30 days)"""
+        try:
+            from datetime import datetime, timedelta
+            thirty_days_ago = datetime.utcnow() - timedelta(days=30)
+            
+            if mysql_db.pool:
+                async with mysql_db.get_connection() as conn:
+                    if not conn:
+                        return 0
+                    async with conn.cursor() as cursor:
+                        await cursor.execute(
+                            "SELECT COUNT(*) FROM users WHERE last_login >= %s AND is_active = TRUE",
+                            (thirty_days_ago,)
+                        )
+                        result = await cursor.fetchone()
+                        return result[0] if result else 0
+            else:
+                # MongoDB fallback
+                return await self.users_collection.count_documents({
+                    "last_login": {"$gte": thirty_days_ago},
+                    "is_active": True
+                })
+        except Exception as e:
+            logger.error(f"Error getting active players count: {e}")
+            return 0
+    
+    async def update_user_role(self, user_id: str, role: str) -> bool:
+        """Update user role"""
+        try:
+            if mysql_db.pool:
+                async with mysql_db.get_connection() as conn:
+                    if not conn:
+                        return False
+                    async with conn.cursor() as cursor:
+                        await cursor.execute(
+                            "UPDATE users SET role = %s, updated_at = %s WHERE id = %s",
+                            (role, datetime.utcnow(), user_id)
+                        )
+                        return cursor.rowcount > 0
+            else:
+                # MongoDB fallback
+                result = await self.users_collection.update_one(
+                    {"id": user_id},
+                    {"$set": {"role": role, "updated_at": datetime.utcnow()}}
+                )
+                return result.modified_count > 0
+        except Exception as e:
+            logger.error(f"Error updating user role: {e}")
+            return False
+    
+    async def update_user_status(self, user_id: str, is_active: bool) -> bool:
+        """Update user active status"""
+        try:
+            if mysql_db.pool:
+                async with mysql_db.get_connection() as conn:
+                    if not conn:
+                        return False
+                    async with conn.cursor() as cursor:
+                        await cursor.execute(
+                            "UPDATE users SET is_active = %s, updated_at = %s WHERE id = %s",
+                            (is_active, datetime.utcnow(), user_id)
+                        )
+                        return cursor.rowcount > 0
+            else:
+                # MongoDB fallback
+                result = await self.users_collection.update_one(
+                    {"id": user_id},
+                    {"$set": {"is_active": is_active, "updated_at": datetime.utcnow()}}
+                )
+                return result.modified_count > 0
+        except Exception as e:
+            logger.error(f"Error updating user status: {e}")
+            return False
     async def create_user(self, user_data: UserCreate) -> Optional[User]:
         """Create a new user in MySQL database or MongoDB as fallback"""
         # Try MySQL first
