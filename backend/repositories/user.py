@@ -300,6 +300,8 @@ class UserRepository:
 
     def _row_to_user(self, row) -> User:
         """Convert database row to User object"""
+        from models.user import UserRole
+        
         preferences = UserPreferences(
             language=row[15] or "en",
             theme=row[16] or "darkNeon",
@@ -307,6 +309,13 @@ class UserRepository:
             notifications=row[18] if row[18] is not None else True,
             steam_profile_public=row[19] if row[19] is not None else False
         )
+        
+        # Convert role string to UserRole enum
+        role_str = row[7] or "member"
+        try:
+            role = UserRole(role_str)
+        except ValueError:
+            role = UserRole.MEMBER
         
         return User(
             id=row[0],
@@ -316,7 +325,7 @@ class UserRepository:
             display_name=row[4],
             avatar_url=row[5],
             bio=row[6],
-            role=row[7],
+            role=role,
             steam_id=row[8],
             is_active=row[9],
             is_verified=row[10],
