@@ -139,7 +139,7 @@ async def create_admin_user():
                 # Update role to admin in MongoDB
                 from repositories.user import get_mongo_db
                 mongo_db_conn = get_mongo_db()
-                if mongo_db_conn:
+                if mongo_db_conn is not None:
                     await mongo_db_conn.users.update_one(
                         {"id": admin_user.id},
                         {"$set": {"role": UserRole.ADMIN.value}}
