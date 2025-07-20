@@ -286,6 +286,100 @@ const AccountPage = () => {
               </div>
             </div>
 
+            {/* Settings Section */}
+            <div className="mt-8 bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-subtle)] p-6">
+              <h2 className="text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-3 mb-6">
+                <Settings className="h-6 w-6 text-[var(--accent-primary)]" />
+                Settings
+              </h2>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Notifications</h3>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Bell className="h-5 w-5 text-[var(--text-muted)]" />
+                      <div>
+                        <p className="text-[var(--text-primary)] font-medium">Push Notifications</p>
+                        <p className="text-sm text-[var(--text-muted)]">Receive notifications about matches</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleSettingChange('notifications')}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        settings.notifications ? 'bg-[var(--accent-primary)]' : 'bg-[var(--bg-tertiary)]'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          settings.notifications ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Bell className="h-5 w-5 text-[var(--text-muted)]" />
+                      <div>
+                        <p className="text-[var(--text-primary)] font-medium">Email Notifications</p>
+                        <p className="text-sm text-[var(--text-muted)]">Receive email updates</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleSettingChange('emailNotifications')}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        settings.emailNotifications ? 'bg-[var(--accent-primary)]' : 'bg-[var(--bg-tertiary)]'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          settings.emailNotifications ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-medium text-[var(--text-primary)] mb-4">Privacy</h3>
+                  
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <Eye className="h-5 w-5 text-[var(--text-muted)]" />
+                      <div>
+                        <p className="text-[var(--text-primary)] font-medium">Profile Visibility</p>
+                        <p className="text-sm text-[var(--text-muted)]">Make your profile public</p>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => handleSettingChange('privacy')}
+                      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                        settings.privacy ? 'bg-[var(--accent-primary)]' : 'bg-[var(--bg-tertiary)]'
+                      }`}
+                    >
+                      <span
+                        className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                          settings.privacy ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                      />
+                    </button>
+                  </div>
+
+                  <div className="p-4 bg-[var(--bg-tertiary)] rounded-lg border border-[var(--border-subtle)]">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Shield className="h-5 w-5 text-green-400" />
+                      <span className="text-[var(--text-primary)] font-medium">Account Security</span>
+                    </div>
+                    <p className="text-sm text-[var(--text-muted)]">
+                      Your account is secured with JWT authentication
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             {/* Error Display */}
             {error && (
               <div className="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-lg">
