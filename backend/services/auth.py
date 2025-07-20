@@ -64,6 +64,7 @@ class AuthService:
             }
             
             logger.info(f"JWT payload created: {payload}")
+            logger.info(f"JWT secret available: {'YES' if self.jwt_secret else 'NO'}")
             token = jwt.encode(payload, self.jwt_secret, algorithm='HS256')
             logger.info(f"JWT token created successfully")
             return token
