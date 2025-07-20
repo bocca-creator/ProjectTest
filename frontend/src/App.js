@@ -13,6 +13,8 @@ import TeamPage from './components/pages/TeamPage';
 import LeaderboardPage from './components/pages/LeaderboardPage';
 import AccountPage from './components/pages/AccountPage';
 import PlayerDashboard from './components/PlayerDashboard';
+import AdminPanel from './components/AdminPanel';
+import RanksPage from './components/pages/RanksPage';
 
 function App() {
   return (
