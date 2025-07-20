@@ -10,6 +10,8 @@ import FAQPage from './components/pages/FAQPage';
 import ContactPage from './components/pages/ContactPage';
 import AboutPage from './components/pages/AboutPage';
 import TeamPage from './components/pages/TeamPage';
+import LeaderboardPage from './components/pages/LeaderboardPage';
+import AccountPage from './components/pages/AccountPage';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
                 <Route path="/contact" element={<ContactPage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/team" element={<TeamPage />} />
+                <Route path="/leaderboard" element={<LeaderboardPage />} />
+                <Route path="/account" element={<AccountPage />} />
               </Routes>
             </BrowserRouter>
           </div>
