@@ -103,6 +103,10 @@ class AdminRepository:
             
             users = []
             async for user_doc in users_cursor:
+                # Convert ObjectId to string for JSON serialization
+                if "_id" in user_doc:
+                    user_doc["_id"] = str(user_doc["_id"])
+                
                 # Get user's current tier
                 tier_info = await self.get_user_tier_info(user_doc["id"])
                 user_doc["current_tier"] = tier_info
