@@ -33,6 +33,8 @@ function App() {
                 <Route path="/leaderboard" element={<LeaderboardPage />} />
                 <Route path="/account" element={<AccountPage />} />
                 <Route path="/dashboard" element={<PlayerDashboard />} />
+                <Route path="/admin" element={<AdminPanel />} />
+                <Route path="/ranks" element={<RanksPage />} />
               </Routes>
             </BrowserRouter>
           </div>
