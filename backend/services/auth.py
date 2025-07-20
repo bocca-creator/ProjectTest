@@ -34,12 +34,15 @@ class AuthService:
         """Verify a password against its hash"""
         return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
 
-    def create_access_token(self, user_id: str, username: str, role: str) -> str:
+    def create_access_token(self, user_id: str, username: str, role) -> str:
         """Create a JWT access token"""
+        # Ensure role is a string
+        role_str = role.value if hasattr(role, 'value') else str(role)
+        
         payload = {
             'user_id': user_id,
             'username': username,
-            'role': role,
+            'role': role_str,
             'type': 'access',
             'exp': datetime.now(timezone.utc) + self.jwt_expire,
             'iat': datetime.now(timezone.utc)
