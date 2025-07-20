@@ -7,7 +7,7 @@ import ProtectedRoute from './ProtectedRoute';
 import cs2Service from '../services/cs2Service';
 import { 
   User, Target, Trophy, Users, Camera, Settings, Bell, Eye, Shield, 
-  Calendar, Clock, Crosshair, Skull, Award, Activity, Steam,
+  Calendar, Clock, Crosshair, Skull, Award, Activity, Gamepad2,
   Edit3, Mail, Globe, Palette, Trash2, Save, X, ChevronRight,
   BarChart3, History, UserCog, AlertTriangle
 } from 'lucide-react';
