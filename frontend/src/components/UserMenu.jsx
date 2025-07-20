@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { User, Settings, LogOut, ChevronDown } from 'lucide-react';
+import { User, Settings, LogOut, ChevronDown, Trophy, Target } from 'lucide-react';
+import CS2StatsCard from './CS2StatsCard';
+import CS2LeaderboardModal from './CS2LeaderboardModal';
 
 const UserMenu = () => {
   const { user, logout } = useAuth();
