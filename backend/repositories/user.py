@@ -1,12 +1,13 @@
 from typing import Optional, List
 import json
 from datetime import datetime
-from models.user import User, UserCreate, UserUpdate, UserPreferences, CustomTheme, CustomThemeCreate
+from models.user import User, UserCreate, UserUpdate, UserPreferences, CustomTheme, CustomThemeCreate, UserRole
 from database.mysql import mysql_db
 from services.auth import auth_service
 import logging
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
+from typing import Optional, List
 
 logger = logging.getLogger(__name__)
 
