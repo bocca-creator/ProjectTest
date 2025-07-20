@@ -153,69 +153,72 @@ const AccountPage = () => {
                 </div>
               </div>
 
-              {/* CS2 Statistics Section - Minimal */}
+              {/* CS2 Statistics Section */}
               <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-subtle)] p-6">
                 <h2 className="text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-3 mb-6">
-                  <Crosshair className="h-6 w-6 text-[var(--accent-primary)]" />
+                  <Target className="h-6 w-6 text-[var(--accent-primary)]" />
                   CS2 Statistics
                 </h2>
 
                 {loading ? (
                   <div className="space-y-4">
                     {[...Array(3)].map((_, i) => (
-                      <div key={i} className="flex justify-between">
-                        <div className="h-4 bg-[var(--bg-tertiary)] rounded w-24 animate-pulse"></div>
-                        <div className="h-4 bg-[var(--bg-tertiary)] rounded w-16 animate-pulse"></div>
+                      <div key={i} className="bg-[var(--bg-tertiary)] rounded-lg p-4 animate-pulse">
+                        <div className="h-4 bg-[var(--bg-primary)] rounded w-24 mb-2"></div>
+                        <div className="h-8 bg-[var(--bg-primary)] rounded w-16"></div>
                       </div>
                     ))}
                   </div>
                 ) : error ? (
-                  <p className="text-[var(--text-muted)]">{error}</p>
+                  <div className="text-center p-6">
+                    <p className="text-[var(--text-muted)]">{error}</p>
+                  </div>
                 ) : stats ? (
-                  <div className="grid grid-cols-1 gap-4">
-                    <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
+                  <div className="space-y-4">
+                    <div className="bg-[var(--bg-tertiary)] rounded-lg p-4 text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <Target className="h-5 w-5 text-red-400" />
                         <span className="text-sm font-medium text-[var(--text-primary)]">K/D Ratio</span>
                       </div>
                       <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
-                        {stats.stats.kd_ratio || '0.00'}
+                        {stats.stats?.kd_ratio || '0.00'}
                       </div>
                     </div>
 
-                    <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
+                    <div className="bg-[var(--bg-tertiary)] rounded-lg p-4 text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <Trophy className="h-5 w-5 text-yellow-400" />
                         <span className="text-sm font-medium text-[var(--text-primary)]">Win Rate</span>
                       </div>
                       <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
-                        {stats.stats.win_rate || 0}%
+                        {stats.stats?.win_rate || 0}%
                       </div>
                     </div>
 
-                    <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
+                    <div className="bg-[var(--bg-tertiary)] rounded-lg p-4 text-center">
                       <div className="flex items-center justify-center gap-2 mb-2">
                         <Users className="h-5 w-5 text-blue-400" />
                         <span className="text-sm font-medium text-[var(--text-primary)]">Matches Played</span>
                       </div>
                       <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
-                        {stats.stats.matches_played || 0}
+                        {stats.stats?.matches_played || 0}
                       </div>
+                    </div>
+
+                    <div className="pt-4">
+                      <a
+                        href="/leaderboard"
+                        className="block w-full text-center px-4 py-3 bg-[var(--accent-primary)] text-black rounded-lg font-medium hover:bg-[var(--accent-hover)] transition-colors"
+                      >
+                        View Full Leaderboard
+                      </a>
                     </div>
                   </div>
                 ) : (
-                  <p className="text-[var(--text-muted)]">No CS2 statistics available</p>
+                  <div className="text-center p-6">
+                    <p className="text-[var(--text-muted)]">No CS2 statistics available</p>
+                  </div>
                 )}
-
-                {/* Link to Full Leaderboard */}
-                <div className="mt-6 pt-4 border-t border-[var(--border-subtle)]">
-                  <a
-                    href="/leaderboard"
-                    className="block w-full text-center px-4 py-3 bg-[var(--accent-primary)] text-black rounded-lg font-medium hover:bg-[var(--accent-hover)] transition-colors"
-                  >
-                    View Full Leaderboard
-                  </a>
-                </div>
               </div>
             </div>
 
