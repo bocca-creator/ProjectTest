@@ -77,7 +77,6 @@ const AccountPage = () => {
       ...prev,
       [setting]: !prev[setting]
     }));
-    // Here you would save settings to server
   };
 
   return (
