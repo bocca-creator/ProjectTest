@@ -44,13 +44,17 @@ class AuthService:
             role_str = role.value if hasattr(role, 'value') else str(role)
             logger.info(f"Creating access token - user_id: {user_id}, username: {username}, role: {role}, role_str: {role_str}")
             
+            # Create timestamps as integers (Unix timestamps)
+            now = datetime.now(timezone.utc)
+            exp_time = now + self.jwt_expire
+            
             payload = {
                 'user_id': str(user_id),
                 'username': str(username),
                 'role': str(role_str),
                 'type': 'access',
-                'exp': datetime.now(timezone.utc) + self.jwt_expire,
-                'iat': datetime.now(timezone.utc)
+                'exp': int(exp_time.timestamp()),
+                'iat': int(now.timestamp())
             }
             
             logger.info(f"JWT payload created: {payload}")
