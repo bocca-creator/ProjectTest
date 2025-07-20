@@ -102,85 +102,53 @@ const AccountPage = () => {
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {/* Avatar & Profile Section */}
+              {/* Avatar Section */}
               <div className="bg-[var(--bg-secondary)] rounded-xl border border-[var(--border-subtle)] p-6">
                 <h2 className="text-2xl font-semibold text-[var(--text-primary)] flex items-center gap-3 mb-6">
                   <User className="h-6 w-6 text-[var(--accent-primary)]" />
-                  Profile & Avatar
+                  Profile Avatar
                 </h2>
 
-                <div className="space-y-6">
-                  {/* Avatar Upload */}
-                  <div className="flex flex-col items-center">
-                    <div className="relative mb-4">
-                      <div className="w-24 h-24 rounded-full bg-[var(--bg-tertiary)] border-2 border-[var(--border-subtle)] flex items-center justify-center overflow-hidden">
-                        {avatar ? (
-                          <img 
-                            src={avatar} 
-                            alt="Avatar" 
-                            className="w-full h-full object-cover"
-                          />
-                        ) : (
-                          <User className="h-12 w-12 text-[var(--text-muted)]" />
-                        )}
-                      </div>
-                      <label 
-                        htmlFor="avatar-upload" 
-                        className="absolute bottom-0 right-0 bg-[var(--accent-primary)] text-black p-2 rounded-full cursor-pointer hover:bg-[var(--accent-hover)] transition-colors"
-                      >
-                        <Camera className="h-4 w-4" />
-                      </label>
-                      <input
-                        id="avatar-upload"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleAvatarChange}
-                        className="hidden"
-                        disabled={uploading}
-                      />
+                <div className="flex flex-col items-center space-y-4">
+                  <div className="relative">
+                    <div className="w-32 h-32 rounded-full bg-[var(--bg-tertiary)] border-4 border-[var(--border-subtle)] flex items-center justify-center overflow-hidden">
+                      {avatar ? (
+                        <img 
+                          src={avatar} 
+                          alt="Avatar" 
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <User className="h-16 w-16 text-[var(--text-muted)]" />
+                      )}
                     </div>
-                    {uploading && (
-                      <p className="text-sm text-[var(--accent-primary)]">Uploading...</p>
-                    )}
-                    <p className="text-xs text-[var(--text-muted)] text-center">
+                    <label 
+                      htmlFor="avatar-upload" 
+                      className="absolute bottom-2 right-2 bg-[var(--accent-primary)] text-black p-3 rounded-full cursor-pointer hover:bg-[var(--accent-hover)] transition-colors shadow-lg"
+                    >
+                      <Camera className="h-5 w-5" />
+                    </label>
+                    <input
+                      id="avatar-upload"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarChange}
+                      className="hidden"
+                      disabled={uploading}
+                    />
+                  </div>
+                  
+                  {uploading && (
+                    <p className="text-sm text-[var(--accent-primary)]">Uploading avatar...</p>
+                  )}
+                  
+                  <div className="text-center">
+                    <p className="text-lg font-semibold text-[var(--text-primary)]">
+                      {user?.username}
+                    </p>
+                    <p className="text-sm text-[var(--text-muted)]">
                       Click the camera icon to change your avatar
                     </p>
-                  </div>
-
-                  {/* Basic User Info (Read-only) */}
-                  <div className="space-y-4">
-                    <div>
-                      <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                        Username
-                      </label>
-                      <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-primary)]">
-                        {user?.username}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                        Email
-                      </label>
-                      <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg text-[var(--text-primary)]">
-                        {user?.email}
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="block text-sm font-medium text-[var(--text-primary)] mb-2">
-                        Role
-                      </label>
-                      <div className="px-4 py-3 bg-[var(--bg-tertiary)] border border-[var(--border-subtle)] rounded-lg">
-                        <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                          user?.role === 'admin' 
-                            ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' 
-                            : 'bg-[var(--accent-bg)] text-[var(--accent-primary)]'
-                        }`}>
-                          {user?.role?.charAt(0).toUpperCase() + user?.role?.slice(1)}
-                        </span>
-                      </div>
-                    </div>
                   </div>
                 </div>
               </div>
