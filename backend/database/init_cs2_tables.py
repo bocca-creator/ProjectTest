@@ -125,18 +125,30 @@ async def create_admin_user():
         
         admin_user = await user_repository.create_user(admin_data)
         if admin_user:
-            # Update role to admin
-            from models.user import UserUpdate
-            await user_repository.update_user(admin_user.id, UserUpdate())
-            # Manually set role (since UserUpdate doesn't include role)
+            # Update role to admin if using MySQL
             if mysql_db.pool:
+                from models.user import UserUpdate
+                await user_repository.update_user(admin_user.id, UserUpdate())
+                # Manually set role (since UserUpdate doesn't include role)
                 async with mysql_db.pool.acquire() as conn:
                     await conn.execute(
                         "UPDATE users SET role = ? WHERE id = ?",
                         (UserRole.ADMIN.value, admin_user.id)
                     )
+            else:
+                # Update role to admin in MongoDB
+                from motor.motor_asyncio import AsyncIOMotorClient
+                import os
+                mongo_url = os.environ['MONGO_URL']
+                mongo_client = AsyncIOMotorClient(mongo_url)
+                mongo_db_conn = mongo_client[os.environ['DB_NAME']]
+                
+                await mongo_db_conn.users.update_one(
+                    {"id": admin_user.id},
+                    {"$set": {"role": UserRole.ADMIN.value}}
+                )
             
-            logger.info("Admin user created successfully - admin@admin.com / admin")
+            logger.info("Admin user created successfully - admin@admin.com / admin123")
             return admin_user
         
     except Exception as e:
