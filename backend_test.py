@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script for CS2 Statistics System
-Tests CS2 endpoints, authentication, and admin user functionality
+Backend API Testing Script - JWT Authentication Fixes
+Tests JWT token creation, admin authentication, and protected routes
 """
 
 import requests
 import json
 import sys
 import time
+import jwt
 from typing import Dict, Any, Optional
 
 # Configuration
