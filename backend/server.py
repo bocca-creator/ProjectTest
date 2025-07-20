@@ -100,6 +100,15 @@ async def startup_event():
     
     # Initialize MySQL connection
     await mysql_db.connect()
+    
+    # Initialize CS2 tables and admin user
+    try:
+        from database.init_cs2_tables import create_cs2_tables, create_admin_user
+        await create_cs2_tables()
+        await create_admin_user()
+    except Exception as e:
+        logger.warning(f"Could not initialize CS2 tables or admin user: {e}")
+    
     logger.info("Database connections initialized")
 
 @app.on_event("shutdown")
