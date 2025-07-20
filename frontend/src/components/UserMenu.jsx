@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useLanguage } from '../contexts/LanguageContext';
-import { User, Settings, LogOut, ChevronDown, Trophy, Target } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { User, Settings, LogOut, ChevronDown, Trophy, Target, BarChart3 } from 'lucide-react';
 import CS2StatsCard from './CS2StatsCard';
 import CS2LeaderboardModal from './CS2LeaderboardModal';
 
