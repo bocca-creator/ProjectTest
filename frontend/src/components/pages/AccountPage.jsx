@@ -97,7 +97,7 @@ const AccountPage = () => {
                 </h1>
               </div>
               <p className="text-lg text-[var(--text-muted)]">
-                Manage your profile and view your CS2 performance
+                Manage your avatar, settings, and view your CS2 performance
               </p>
             </div>
 
