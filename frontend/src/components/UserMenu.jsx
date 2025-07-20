@@ -65,7 +65,7 @@ const UserMenu = () => {
           />
           
           {/* Menu */}
-          <div className="absolute right-0 mt-2 w-64 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50">
+          <div className="absolute right-0 mt-2 w-80 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50">
             {/* User Info Header */}
             <div className="p-4 border-b border-[var(--border-subtle)]">
               <div className="flex items-center gap-3">
@@ -103,6 +103,11 @@ const UserMenu = () => {
               </div>
             </div>
 
+            {/* CS2 Statistics */}
+            <div className="p-4 border-b border-[var(--border-subtle)]">
+              <CS2StatsCard isCompact={true} />
+            </div>
+
             {/* Menu Items */}
             <div className="py-2">
               <button
@@ -115,6 +120,19 @@ const UserMenu = () => {
                 <User className="h-4 w-4 text-[var(--text-muted)]" />
                 <span className="text-[var(--text-primary)]">
                   {t('user.profile', 'Profile Settings')}
+                </span>
+              </button>
+              
+              <button
+                onClick={() => {
+                  setShowLeaderboard(true);
+                  setIsOpen(false);
+                }}
+                className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors"
+              >
+                <Trophy className="h-4 w-4 text-[var(--text-muted)]" />
+                <span className="text-[var(--text-primary)]">
+                  CS2 Leaderboard
                 </span>
               </button>
               
@@ -169,6 +187,12 @@ const UserMenu = () => {
           </div>
         </>
       )}
+
+      {/* CS2 Leaderboard Modal */}
+      <CS2LeaderboardModal
+        isOpen={showLeaderboard}
+        onClose={() => setShowLeaderboard(false)}
+      />
     </div>
   );
 };
