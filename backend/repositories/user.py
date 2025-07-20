@@ -325,6 +325,36 @@ class UserRepository:
             login_count=row[14],
             preferences=preferences
         )
+    
+    def _doc_to_user(self, doc) -> User:
+        """Convert MongoDB document to User object"""
+        prefs = doc.get("preferences", {})
+        preferences = UserPreferences(
+            language=prefs.get("language", "en"),
+            theme=prefs.get("theme", "darkNeon"),
+            custom_theme=prefs.get("custom_theme"),
+            notifications=prefs.get("notifications", True),
+            steam_profile_public=prefs.get("steam_profile_public", False)
+        )
+        
+        return User(
+            id=doc["id"],
+            username=doc["username"],
+            email=doc["email"],
+            password_hash=doc["password_hash"],
+            display_name=doc.get("display_name"),
+            avatar_url=doc.get("avatar_url"),
+            bio=doc.get("bio"),
+            role=doc.get("role", "member"),
+            steam_id=doc.get("steam_id"),
+            is_active=doc.get("is_active", True),
+            is_verified=doc.get("is_verified", False),
+            created_at=doc.get("created_at"),
+            updated_at=doc.get("updated_at"),
+            last_login=doc.get("last_login"),
+            login_count=doc.get("login_count", 0),
+            preferences=preferences
+        )
 
 class CustomThemeRepository:
     async def create_theme(self, user_id: str, theme_data: CustomThemeCreate) -> Optional[CustomTheme]:
