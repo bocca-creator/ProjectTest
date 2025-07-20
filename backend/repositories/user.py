@@ -174,6 +174,15 @@ class UserRepository:
             return None
 
     async def get_user_by_id(self, user_id: str) -> Optional[User]:
+        """Get user by ID from MySQL database or MongoDB as fallback"""
+        # Try MySQL first
+        if mysql_db.pool:
+            return await self._get_user_by_id_mysql(user_id)
+        else:
+            # Fall back to MongoDB
+            return await self._get_user_by_id_mongodb(user_id)
+    
+    async def _get_user_by_id_mysql(self, user_id: str) -> Optional[User]:
         """Get user by ID from MySQL database"""
         try:
             async with mysql_db.get_connection() as conn:
@@ -198,7 +207,20 @@ class UserRepository:
                     return self._row_to_user(row)
                     
         except Exception as e:
-            logger.error(f"Error getting user by ID: {e}")
+            logger.error(f"Error getting user by ID from MySQL: {e}")
+            return None
+    
+    async def _get_user_by_id_mongodb(self, user_id: str) -> Optional[User]:
+        """Get user by ID from MongoDB as fallback"""
+        try:
+            user_doc = await mongo_db.users.find_one({"id": user_id})
+            if not user_doc:
+                return None
+            
+            return self._doc_to_user(user_doc)
+            
+        except Exception as e:
+            logger.error(f"Error getting user by ID from MongoDB: {e}")
             return None
 
     async def update_user_login(self, user_id: str) -> bool:
