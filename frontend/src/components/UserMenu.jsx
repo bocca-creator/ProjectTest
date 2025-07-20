@@ -115,13 +115,13 @@ const UserMenu = () => {
               <button
                 onClick={() => {
                   setIsOpen(false);
-                  // TODO: Open profile settings
+                  navigate('/dashboard');
                 }}
                 className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors"
               >
-                <User className="h-4 w-4 text-[var(--text-muted)]" />
+                <BarChart3 className="h-4 w-4 text-[var(--text-muted)]" />
                 <span className="text-[var(--text-primary)]">
-                  {t('user.profile', 'Profile Settings')}
+                  Player Dashboard
                 </span>
               </button>
               
@@ -141,13 +141,13 @@ const UserMenu = () => {
               <button
                 onClick={() => {
                   setIsOpen(false);
-                  // TODO: Open account settings
+                  navigate('/account');
                 }}
                 className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors"
               >
-                <Settings className="h-4 w-4 text-[var(--text-muted)]" />
+                <User className="h-4 w-4 text-[var(--text-muted)]" />
                 <span className="text-[var(--text-primary)]">
-                  {t('user.accountSettings', 'Account Settings')}
+                  Quick Account
                 </span>
               </button>
             </div>
