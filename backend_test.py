@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script - JWT Authentication Fixes
-Tests JWT token creation, admin authentication, and protected routes
+Backend API Testing Script - Admin Panel and Tier Endpoints
+Tests admin panel functionality and tier management endpoints
 """
 
 import requests
