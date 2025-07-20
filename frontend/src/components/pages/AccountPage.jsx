@@ -267,7 +267,6 @@ const AccountPage = () => {
                 ) : error ? (
                   <p className="text-[var(--text-muted)]">{error}</p>
                 ) : stats ? (
-                  {/* Minimal Essential Stats Only */}
                   <div className="grid grid-cols-1 gap-4">
                     <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
                       <div className="flex items-center justify-center gap-2 mb-2">
