@@ -193,6 +193,7 @@ export const translations = {
       contact: "Контакти",
       leaderboard: "Рейтинг",
       rankings: "Таблиця лідерів",
+      supportUs: "Підтримати нас",
       account: "Мій акаунт",
       login: "Увійти",
       register: "Реєстрація",
