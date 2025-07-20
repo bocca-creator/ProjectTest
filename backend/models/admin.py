@@ -48,7 +48,7 @@ class ManualStatsUpdate(BaseModel):
 class ManualMatchCreate(BaseModel):
     user_id: str
     map_name: str
-    result: str = Field(..., regex="^(win|loss|draw)$")
+    result: str = Field(..., pattern=r"^(win|loss|draw)$")
     kills: int
     deaths: int
     assists: int
