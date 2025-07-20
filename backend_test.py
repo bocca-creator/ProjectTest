@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script for Authentication System
-Tests all authentication endpoints with proper error handling
+Backend API Testing Script for CS2 Statistics System
+Tests CS2 endpoints, authentication, and admin user functionality
 """
 
 import requests
@@ -16,11 +16,16 @@ API_BASE = f"{BACKEND_URL}/api"
 
 # Test data
 TEST_USER = {
-    "username": "gamemaster2024",
-    "email": "gamemaster@steamthemes.com",
+    "username": "cs2player2024",
+    "email": "cs2player@steamthemes.com",
     "password": "SecurePass123!",
-    "display_name": "Game Master",
+    "display_name": "CS2 Player",
     "language": "en"
+}
+
+ADMIN_USER = {
+    "email": "admin@admin.com",
+    "password": "admin"
 }
 
 class AuthTester:
