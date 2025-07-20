@@ -10,7 +10,7 @@ import sys
 import time
 
 # Configuration
-BACKEND_URL = "https://ecdbfe90-4785-4aeb-8abf-54b11702c7db.preview.emergentagent.com"
+BACKEND_URL = "https://61adaf7b-e94d-4ed3-ad4a-a0cd99fc8a5b.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 class AuthSystemTester:
