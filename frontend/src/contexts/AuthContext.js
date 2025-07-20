@@ -212,6 +212,24 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteAccount = async () => {
+    try {
+      setLoading(true);
+      await api.delete('/api/auth/me');
+      
+      // Clear all local data and logout
+      logout();
+      
+      return { success: true };
+    } catch (error) {
+      console.error('Delete account error:', error);
+      const message = error.response?.data?.detail || 'Account deletion failed';
+      return { success: false, error: message };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const value = {
     user,
     loading,
@@ -221,6 +239,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateProfile,
     getCurrentUser,
+    deleteAccount,
   };
 
   return (
