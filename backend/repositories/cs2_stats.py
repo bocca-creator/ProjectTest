@@ -187,6 +187,79 @@ class CS2StatsRepository:
             logger.error(f"Error fetching leaderboard: {e}")
             return await self._get_mock_leaderboard(stat_type, limit)
 
+    async def get_total_matches_count(self) -> int:
+        """Get total number of matches tracked"""
+        if not mysql_db.pool:
+            # Return mock count when MySQL is not available
+            return 1547  # Mock total matches
+        
+        try:
+            async with mysql_db.pool.acquire() as conn:
+                result = await conn.fetchone("SELECT COUNT(*) FROM cs2_matches")
+                return result[0] if result else 0
+                
+        except Exception as e:
+            logger.error(f"Error getting total matches count: {e}")
+            return 1547  # Mock count on error
+
+    async def get_all_recent_matches(self, limit: int = 50) -> List[dict]:
+        """Get recent matches across all users (admin view)"""
+        if not mysql_db.pool:
+            # Return mock data when MySQL is not available
+            return await self._get_mock_recent_matches_all(limit)
+        
+        try:
+            async with mysql_db.pool.acquire() as conn:
+                # Get recent matches with user info
+                results = await conn.fetchall(
+                    """SELECT m.*, u.username 
+                       FROM cs2_matches m 
+                       JOIN users u ON m.user_id = u.id 
+                       ORDER BY m.date DESC 
+                       LIMIT ?""",
+                    (limit,)
+                )
+                
+                matches = []
+                for result in results:
+                    match_data = dict(result)
+                    matches.append(match_data)
+                
+                return matches
+                
+        except Exception as e:
+            logger.error(f"Error getting all recent matches: {e}")
+            return await self._get_mock_recent_matches_all(limit)
+
+    async def _get_mock_recent_matches_all(self, limit: int) -> List[dict]:
+        """Generate mock recent matches for all users"""
+        import random
+        from models.cs2_stats import CS2Map
+        
+        matches = []
+        usernames = ["AdminUser", "Player1", "ProGamer", "CS2Legend", "SkillMaster", "TopFragger", "ClutchKing"]
+        maps = list(CS2Map)
+        
+        for i in range(min(limit, 25)):
+            match = {
+                "id": f"match_{i}",
+                "user_id": f"user_{i % 7}",
+                "username": random.choice(usernames),
+                "map": random.choice(maps).value,
+                "result": random.choice(["win", "loss", "draw"]),
+                "kills": random.randint(8, 35),
+                "deaths": random.randint(5, 25),
+                "assists": random.randint(2, 15),
+                "headshots": random.randint(3, 18),
+                "damage": random.randint(1200, 3500),
+                "is_mvp": random.choice([True, False, False, False]),  # 25% chance
+                "date": datetime.utcnow() - timedelta(hours=random.randint(1, 72)),
+                "game_mode": "competitive"
+            }
+            matches.append(match)
+        
+        return matches
+
     async def _create_default_stats(self, user_id: str) -> CS2PlayerStats:
         """Create default statistics for a new player"""
         stats = CS2PlayerStats(user_id=user_id)
