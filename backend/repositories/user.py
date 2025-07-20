@@ -232,6 +232,9 @@ class UserRepository:
     async def _get_user_by_id_mongodb(self, user_id: str) -> Optional[User]:
         """Get user by ID from MongoDB as fallback"""
         try:
+            mongo_db = get_mongo_db()
+            if not mongo_db:
+                return None
             user_doc = await mongo_db.users.find_one({"id": user_id})
             if not user_doc:
                 return None
