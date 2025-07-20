@@ -120,7 +120,7 @@ async def create_admin_user():
         admin_data = UserCreate(
             username="admin",
             email="admin@admin.com",
-            password="admin"
+            password="admin123"
         )
         
         admin_user = await user_repository.create_user(admin_data)
