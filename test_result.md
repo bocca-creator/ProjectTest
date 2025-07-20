@@ -755,7 +755,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "CS2 Statistics System Testing Complete - All Tests Passed"
+    - "Admin Panel and Tier Endpoints Testing Complete - All Tests Passed"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
