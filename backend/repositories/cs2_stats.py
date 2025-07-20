@@ -1,5 +1,5 @@
 from typing import Optional, List
-from models.cs2_stats import CS2PlayerStats, CS2Match, CS2StatsUpdate, CS2MatchCreate, CS2Rank, CS2Map, CS2MapStats, CS2WeaponStats
+from models.cs2_stats import CS2PlayerStats, CS2Match, CS2StatsUpdate, CS2MatchCreate, CS2Rank, CS2Map, CS2MapStats, CS2WeaponStats, CS2GameMode
 from database.mysql import mysql_db
 import logging
 from datetime import datetime, timedelta
