@@ -17,6 +17,15 @@ mongo_db = mongo_client[os.environ['DB_NAME']]
 
 class UserRepository:
     async def create_user(self, user_data: UserCreate) -> Optional[User]:
+        """Create a new user in MySQL database or MongoDB as fallback"""
+        # Try MySQL first
+        if mysql_db.pool:
+            return await self._create_user_mysql(user_data)
+        else:
+            # Fall back to MongoDB
+            return await self._create_user_mongodb(user_data)
+    
+    async def _create_user_mysql(self, user_data: UserCreate) -> Optional[User]:
         """Create a new user in MySQL database"""
         try:
             async with mysql_db.get_connection() as conn:
@@ -56,11 +65,62 @@ class UserRepository:
                         user.preferences.notifications, user.preferences.steam_profile_public
                     ))
                     
-                logger.info(f"User created successfully: {user.username}")
+                logger.info(f"User created successfully in MySQL: {user.username}")
                 return user
                 
         except Exception as e:
-            logger.error(f"Error creating user: {e}")
+            logger.error(f"Error creating user in MySQL: {e}")
+            return None
+    
+    async def _create_user_mongodb(self, user_data: UserCreate) -> Optional[User]:
+        """Create a new user in MongoDB as fallback"""
+        try:
+            # Hash the password
+            password_hash = auth_service.hash_password(user_data.password)
+            
+            # Create user object
+            user = User(
+                username=user_data.username,
+                email=user_data.email,
+                password_hash=password_hash,
+                display_name=user_data.display_name or user_data.username,
+                preferences=UserPreferences(language=user_data.language)
+            )
+            
+            # Convert to dict for MongoDB
+            user_dict = {
+                "id": user.id,
+                "username": user.username,
+                "email": user.email,
+                "password_hash": user.password_hash,
+                "display_name": user.display_name,
+                "avatar_url": user.avatar_url,
+                "bio": user.bio,
+                "role": user.role.value,
+                "steam_id": user.steam_id,
+                "is_active": user.is_active,
+                "is_verified": user.is_verified,
+                "created_at": user.created_at,
+                "updated_at": user.updated_at,
+                "last_login": user.last_login,
+                "login_count": user.login_count,
+                "preferences": {
+                    "language": user.preferences.language,
+                    "theme": user.preferences.theme,
+                    "custom_theme": user.preferences.custom_theme,
+                    "notifications": user.preferences.notifications,
+                    "steam_profile_public": user.preferences.steam_profile_public
+                }
+            }
+            
+            # Insert into MongoDB
+            await mongo_db.users.insert_one(user_dict)
+            
+            logger.info(f"User created successfully in MongoDB: {user.username}")
+            return user
+            
+        except Exception as e:
+            logger.error(f"Error creating user in MongoDB: {e}")
             return None
 
     async def get_user_by_email(self, email: str) -> Optional[User]:
