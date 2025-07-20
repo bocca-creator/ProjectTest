@@ -5,15 +5,16 @@ from models.user import User, UserCreate, UserUpdate, UserPreferences, CustomThe
 from database.mysql import mysql_db
 from services.auth import auth_service
 import logging
-from motor.motor_asyncio import AsyncIOMotorClient
-import os
 
 logger = logging.getLogger(__name__)
 
-# MongoDB connection for fallback
-mongo_url = os.environ['MONGO_URL']
-mongo_client = AsyncIOMotorClient(mongo_url)
-mongo_db = mongo_client[os.environ['DB_NAME']]
+# MongoDB connection will be set by server.py
+mongo_db = None
+
+def set_mongo_db(db):
+    """Set MongoDB connection from server.py"""
+    global mongo_db
+    mongo_db = db
 
 class UserRepository:
     async def create_user(self, user_data: UserCreate) -> Optional[User]:
