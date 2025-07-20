@@ -5,7 +5,7 @@ import Navigation from '../Navigation';
 import Footer from '../Footer';
 import ProtectedRoute from '../ProtectedRoute';
 import cs2Service from '../../services/cs2Service';
-import { User, Target, Trophy, Users, Crosshair, Settings, Upload, Camera, Bell, Shield, Eye } from 'lucide-react';
+import { User, Target, Trophy, Users, Camera, Settings, Bell, Eye, Shield } from 'lucide-react';
 
 const AccountPage = () => {
   const { user, updateProfile } = useAuth();
