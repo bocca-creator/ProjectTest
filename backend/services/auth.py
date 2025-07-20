@@ -40,9 +40,9 @@ class AuthService:
         role_str = role.value if hasattr(role, 'value') else str(role)
         
         payload = {
-            'user_id': user_id,
-            'username': username,
-            'role': role_str,
+            'user_id': str(user_id),
+            'username': str(username),
+            'role': str(role_str),
             'type': 'access',
             'exp': datetime.now(timezone.utc) + self.jwt_expire,
             'iat': datetime.now(timezone.utc)
