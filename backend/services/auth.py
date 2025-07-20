@@ -12,6 +12,12 @@ class AuthService:
         self.jwt_refresh_secret = os.environ.get('JWT_REFRESH_SECRET')
         self.jwt_refresh_expire = self._parse_time_string(os.environ.get('JWT_REFRESH_EXPIRE', '7d'))
         self.bcrypt_rounds = int(os.environ.get('BCRYPT_ROUNDS', 12))
+        
+        # Debug logging
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.info(f"AuthService initialized - JWT_SECRET: {'SET' if self.jwt_secret else 'NOT SET'}")
+        logger.info(f"JWT_REFRESH_SECRET: {'SET' if self.jwt_refresh_secret else 'NOT SET'}")
 
     def _parse_time_string(self, time_str: str) -> timedelta:
         """Parse time strings like '15m', '7d', '1h' into timedelta objects"""
