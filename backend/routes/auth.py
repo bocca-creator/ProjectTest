@@ -135,6 +135,8 @@ async def login(login_data: UserLogin):
             login_count=user.login_count + 1
         )
         
+        logger.info(f"User response created successfully for user: {user.username}")
+        
         return TokenResponse(
             access_token=access_token,
             refresh_token=refresh_token,
