@@ -35,7 +35,7 @@ async def register(user_data: UserCreate):
         await user_repository.update_user_login(user.id)
         
         # Create tokens
-        access_token = auth_service.create_access_token(user.id, user.username, user.role.value)
+        access_token = auth_service.create_access_token(user.id, user.username, user.role)
         refresh_token = auth_service.create_refresh_token(user.id)
         
         # Create user response
