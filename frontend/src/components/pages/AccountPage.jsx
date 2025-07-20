@@ -267,73 +267,37 @@ const AccountPage = () => {
                 ) : error ? (
                   <p className="text-[var(--text-muted)]">{error}</p>
                 ) : stats ? (
-                  <div className="space-y-6">
-                    {/* Current Rank */}
+                  {/* Minimal Essential Stats Only */}
+                  <div className="grid grid-cols-1 gap-4">
                     <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
-                      <div 
-                        className="inline-block px-4 py-2 rounded-full text-white font-medium text-lg mb-2"
-                        style={{ backgroundColor: getRankColor(stats.stats.current_rank) }}
-                      >
-                        {stats.stats.current_rank}
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <Target className="h-5 w-5 text-red-400" />
+                        <span className="text-sm font-medium text-[var(--text-primary)]">K/D Ratio</span>
                       </div>
-                      <div className="text-sm text-[var(--text-muted)]">
-                        {stats.stats.rank_rating?.toLocaleString()} RR
+                      <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
+                        {stats.stats.kd_ratio || '0.00'}
                       </div>
                     </div>
 
-                    {/* Essential Stats - Large and prominent */}
-                    <div className="grid grid-cols-1 gap-6">
-                      <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
-                        <div className="flex items-center justify-center gap-2 mb-2">
-                          <Target className="h-5 w-5 text-red-400" />
-                          <span className="text-sm font-medium text-[var(--text-primary)]">K/D Ratio</span>
-                        </div>
-                        <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
-                          {stats.stats.kd_ratio || '0.00'}
-                        </div>
-                        <div className="text-sm text-[var(--text-muted)] mt-1">
-                          {stats.stats.total_kills || 0} Kills / {stats.stats.total_deaths || 0} Deaths
-                        </div>
+                    <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <Trophy className="h-5 w-5 text-yellow-400" />
+                        <span className="text-sm font-medium text-[var(--text-primary)]">Win Rate</span>
                       </div>
-
-                      <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
-                        <div className="flex items-center justify-center gap-2 mb-2">
-                          <Trophy className="h-5 w-5 text-yellow-400" />
-                          <span className="text-sm font-medium text-[var(--text-primary)]">Win Rate</span>
-                        </div>
-                        <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
-                          {stats.stats.win_rate || 0}%
-                        </div>
-                        <div className="text-sm text-[var(--text-muted)] mt-1">
-                          {stats.stats.matches_won || 0} Wins / {stats.stats.matches_lost || 0} Losses
-                        </div>
-                      </div>
-
-                      <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
-                        <div className="flex items-center justify-center gap-2 mb-2">
-                          <Users className="h-5 w-5 text-blue-400" />
-                          <span className="text-sm font-medium text-[var(--text-primary)]">Matches Played</span>
-                        </div>
-                        <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
-                          {stats.stats.matches_played || 0}
-                        </div>
-                        <div className="text-sm text-[var(--text-muted)] mt-1">
-                          Total competitive matches
-                        </div>
+                      <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
+                        {stats.stats.win_rate || 0}%
                       </div>
                     </div>
 
-                    {/* Last Match */}
-                    {stats.stats.last_match_date && (
-                      <div className="pt-4 border-t border-[var(--border-subtle)]">
-                        <div className="flex items-center justify-between">
-                          <span className="text-sm text-[var(--text-muted)]">Last Match</span>
-                          <span className="text-sm font-medium text-[var(--text-primary)]">
-                            {new Date(stats.stats.last_match_date).toLocaleDateString()}
-                          </span>
-                        </div>
+                    <div className="text-center p-4 bg-[var(--bg-tertiary)] rounded-lg">
+                      <div className="flex items-center justify-center gap-2 mb-2">
+                        <Users className="h-5 w-5 text-blue-400" />
+                        <span className="text-sm font-medium text-[var(--text-primary)]">Matches Played</span>
                       </div>
-                    )}
+                      <div className="text-3xl font-bold text-[var(--accent-primary)] font-mono">
+                        {stats.stats.matches_played || 0}
+                      </div>
+                    </div>
                   </div>
                 ) : (
                   <p className="text-[var(--text-muted)]">No CS2 statistics available</p>
