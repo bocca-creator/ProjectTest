@@ -11,7 +11,7 @@ import time
 from typing import Dict, Any, Optional
 
 # Configuration
-BACKEND_URL = "https://61adaf7b-e94d-4ed3-ad4a-a0cd99fc8a5b.preview.emergentagent.com"
+BACKEND_URL = "https://ad04f95e-8dd7-49a6-a649-9120065379fa.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test data
