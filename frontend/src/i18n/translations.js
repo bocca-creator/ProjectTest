@@ -200,7 +200,9 @@ export const translations = {
       login: "Увійти",
       register: "Реєстрація",
       logout: "Вийти",
-      profile: "Профіль"
+      profile: "Профіль",
+      menu: "Меню",
+      navigation: "Навігація"
     },
     
     // Hero Section
