@@ -10,7 +10,9 @@ import AuthModal from './AuthModal';
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDesktopMenuOpen, setIsDesktopMenuOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const menuRef = useRef(null);
   const navigate = useNavigate();
   const location = useLocation();
   const { t } = useLanguage();
@@ -31,7 +33,36 @@ const Navigation = () => {
     e.preventDefault();
     navigate(path);
     setIsMenuOpen(false);
+    setIsDesktopMenuOpen(false);
   };
+
+  // Close menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsDesktopMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Close menu on escape key
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsDesktopMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
 
   return (
     <>
