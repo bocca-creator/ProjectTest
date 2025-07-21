@@ -443,8 +443,17 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-stats {
   display: flex;
-  gap: 40px;
+  gap: 20px;
   margin-bottom: 40px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .hero-stats {
+    gap: 40px;
+    justify-content: flex-start;
+  }
 }
 
 .stat-item {
