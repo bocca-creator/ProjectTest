@@ -68,37 +68,62 @@ const Navigation = () => {
     <>
       <nav className="navigation">
         <div className="nav-container">
-          {/* Mobile menu button */}
-          <button 
-            className="mobile-menu-btn"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-
-          {/* Logo */}
+          {/* Left section - Logo */}
           <div className="nav-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <div className="logo-text">ProjectTest</div>
             <div className="logo-subtitle">Gaming Community</div>
           </div>
 
-          {/* Desktop menu */}
-          <div className="nav-menu desktop-menu">
-            {menuItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavigation(item.path, e)}
-                className={`nav-item ${location.pathname === item.path ? 'active' : ''}`}
+          {/* Center section - Desktop dropdown menu button */}
+          <div className="nav-center">
+            <div className="desktop-menu-wrapper" ref={menuRef}>
+              <button 
+                className="desktop-menu-btn"
+                onClick={() => setIsDesktopMenuOpen(!isDesktopMenuOpen)}
               >
-                {item.name}
-              </a>
-            ))}
+                <Menu size={20} />
+                <span>{t('nav.menu')}</span>
+                <ChevronDown 
+                  size={16} 
+                  className={`dropdown-arrow ${isDesktopMenuOpen ? 'open' : ''}`}
+                />
+              </button>
+
+              {/* Desktop dropdown menu */}
+              {isDesktopMenuOpen && (
+                <>
+                  <div className="menu-overlay" onClick={() => setIsDesktopMenuOpen(false)}></div>
+                  <div className="desktop-dropdown-menu">
+                    <div className="dropdown-header">
+                      <h3>{t('nav.navigation')}</h3>
+                      <button 
+                        className="dropdown-close"
+                        onClick={() => setIsDesktopMenuOpen(false)}
+                      >
+                        <X size={20} />
+                      </button>
+                    </div>
+                    <div className="dropdown-items">
+                      {menuItems.map((item) => (
+                        <a
+                          key={item.name}
+                          href={item.href}
+                          onClick={(e) => handleNavigation(item.path, e)}
+                          className={`dropdown-item ${location.pathname === item.path ? 'active' : ''}`}
+                        >
+                          {item.name}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
 
           {/* Right section - Controls and User */}
           <div className="nav-right">
-            {/* Theme and Language controls - now properly positioned */}
+            {/* Theme and Language controls */}
             <div className="nav-controls">
               <LanguageSwitcher className="desktop-language-switcher" />
               <ThemeSwitcher className="desktop-theme-switcher" />
@@ -127,52 +152,78 @@ const Navigation = () => {
                 </button>
               )}
             </div>
+
+            {/* Mobile menu button */}
+            <button 
+              className="mobile-menu-btn"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
           </div>
         </div>
 
-        {/* Mobile menu */}
+        {/* Mobile slide menu from left */}
         {isMenuOpen && (
-          <div className="mobile-menu">
-            {menuItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavigation(item.path, e)}
-                className={`mobile-nav-item ${location.pathname === item.path ? 'active' : ''}`}
-              >
-                {item.name}
-              </a>
-            ))}
-            
-            {/* Mobile Controls Section */}
-            <div className="mobile-controls-section">
-              <div className="mobile-control-group">
-                <div className="mobile-control-label">{t('settings.language')}</div>
-                <LanguageSwitcher className="mobile-language-switcher" />
-              </div>
-              
-              <div className="mobile-control-group">
-                <div className="mobile-control-label">{t('settings.theme')}</div>
-                <ThemeSwitcher className="mobile-theme-switcher" />
-              </div>
-            </div>
-
-            {/* Mobile Authentication */}
-            {!isAuthenticated && (
-              <div className="mobile-auth-section p-4 border-t border-[var(--border-subtle)]">
+          <>
+            <div className="mobile-menu-overlay" onClick={() => setIsMenuOpen(false)}></div>
+            <div className="mobile-slide-menu">
+              <div className="mobile-menu-header">
+                <div className="mobile-logo">
+                  <div className="logo-text">ProjectTest</div>
+                  <div className="logo-subtitle">Gaming Community</div>
+                </div>
                 <button 
-                  onClick={() => {
-                    setAuthModalOpen(true);
-                    setIsMenuOpen(false);
-                  }}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)] text-black font-medium transition-colors"
+                  className="mobile-menu-close"
+                  onClick={() => setIsMenuOpen(false)}
                 >
-                  <LogIn size={18} />
-                  {t('nav.login')} / {t('nav.register')}
+                  <X size={24} />
                 </button>
               </div>
-            )}
-          </div>
+              
+              <div className="mobile-menu-items">
+                {menuItems.map((item) => (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => handleNavigation(item.path, e)}
+                    className={`mobile-menu-item ${location.pathname === item.path ? 'active' : ''}`}
+                  >
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+              
+              {/* Mobile Controls Section */}
+              <div className="mobile-controls-section">
+                <div className="mobile-control-group">
+                  <div className="mobile-control-label">{t('settings.language')}</div>
+                  <LanguageSwitcher className="mobile-language-switcher" />
+                </div>
+                
+                <div className="mobile-control-group">
+                  <div className="mobile-control-label">{t('settings.theme')}</div>
+                  <ThemeSwitcher className="mobile-theme-switcher" />
+                </div>
+              </div>
+
+              {/* Mobile Authentication */}
+              {!isAuthenticated && (
+                <div className="mobile-auth-section">
+                  <button 
+                    onClick={() => {
+                      setAuthModalOpen(true);
+                      setIsMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-[var(--accent-primary)] hover:bg-[var(--accent-hover)] text-black font-medium transition-colors"
+                  >
+                    <LogIn size={18} />
+                    {t('nav.login')} / {t('nav.register')}
+                  </button>
+                </div>
+              )}
+            </div>
+          </>
         )}
       </nav>
 
