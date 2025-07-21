@@ -81,13 +81,87 @@ code {
     }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-    }
-  body {
-    @apply bg-background text-foreground;
-    }
+/* Universal overflow prevention */
+.homepage,
+.hero-section,
+.main-content,
+.content-container,
+.left-column,
+.right-column,
+.announcements-list,
+.announcement-card,
+.discord-widget,
+.reviews-section,
+.social-media-bar,
+.footer {
+  overflow-x: hidden;
+  max-width: 100%;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+/* Ensure all text containers don't overflow */
+.announcement-title,
+.announcement-content,
+.review-comment,
+.discord-info,
+.social-name,
+.social-info {
+  max-width: 100%;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* Flexible images and media */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prevent table overflow */
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+/* Flexible grid and flex containers */
+.hero-content,
+.hero-stats,
+.hero-actions,
+.nav-menu,
+.nav-right,
+.nav-controls,
+.footer-top,
+.footer-bottom {
+  min-width: 0;
+  flex-shrink: 1;
+}
+
+/* Text overflow handling */
+.logo-text,
+.nav-item,
+.button,
+.btn-primary,
+.btn-secondary,
+.btn-ghost {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+/* Allow wrapping for buttons on very small screens */
+@media (max-width: 480px) {
+  .logo-text,
+  .nav-item,
+  .button,
+  .btn-primary,
+  .btn-secondary,
+  .btn-ghost {
+    white-space: normal;
+    word-break: break-word;
+  }
 }
 
 /* Main Content Styles */
