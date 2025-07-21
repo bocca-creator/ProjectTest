@@ -485,6 +485,14 @@ h1, h2, h3, h4, h5, h6 {
 .hero-actions {
   display: flex;
   gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .hero-actions {
+    justify-content: flex-start;
+  }
 }
 
 .hero-btn {
