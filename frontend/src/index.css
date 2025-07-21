@@ -164,6 +164,15 @@ table {
   }
 }
 
+@layer base {
+  * {
+    @apply border-border;
+    }
+  body {
+    @apply bg-background text-foreground;
+    }
+}
+
 /* Main Content Styles */
 .main-content {
   max-width: 1200px;
