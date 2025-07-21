@@ -2463,6 +2463,10 @@ h1, h2, h3, h4, h5, h6 {
   .footer-container {
     padding: 40px 12px 20px;
   }
+
+  .mobile-slide-menu {
+    width: 280px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2470,12 +2474,8 @@ h1, h2, h3, h4, h5, h6 {
     display: block;
   }
 
-  .desktop-menu {
+  .desktop-menu-wrapper {
     display: none;
-  }
-
-  .mobile-menu {
-    display: block;
   }
 
   .hero-content {
@@ -2588,7 +2588,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 16px;
   }
 
-  /* Hide theme and language controls on very small screens */
+  /* Hide theme and language controls on mobile */
   .nav-controls {
     display: none;
   }
@@ -2627,6 +2627,16 @@ h1, h2, h3, h4, h5, h6 {
   
   .login-btn span {
     display: none;
+  }
+
+  .desktop-menu-btn {
+    min-width: 120px;
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .mobile-slide-menu {
+    width: 260px;
   }
 }
 
