@@ -2209,6 +2209,28 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Responsive Design */
+@media (max-width: 640px) {
+  .nav-container {
+    padding: 0 12px;
+  }
+  
+  .hero-container {
+    padding: 0 12px;
+  }
+  
+  .main-content {
+    padding: 0 12px;
+  }
+  
+  .content-container {
+    padding: 0 12px;
+  }
+  
+  .footer-container {
+    padding: 40px 12px 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .mobile-menu-btn {
     display: block;
@@ -2330,5 +2352,57 @@ h1, h2, h3, h4, h5, h6 {
   .popular-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+
+  /* Hide theme and language controls on very small screens */
+  .nav-controls {
+    display: none;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1023px) {
+  .nav-controls {
+    gap: 8px;
+  }
+  
+  .nav-right {
+    gap: 12px;
+  }
+}
+
+/* Additional responsive fixes */
+@media (max-width: 480px) {
+  .hero-title .title-highlight {
+    font-size: 32px;
+  }
+  
+  .hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+  
+  .login-btn {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+  
+  .login-btn span {
+    display: none;
+  }
+}
+
+/* Large screens optimization */
+@media (min-width: 1200px) {
+  .nav-container,
+  .hero-container,
+  .main-content,
+  .content-container,
+  .footer-container {
+    max-width: 1200px;
   }
 }
