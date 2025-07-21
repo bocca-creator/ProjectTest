@@ -6,7 +6,7 @@ Simple test to debug registration issue
 import requests
 import json
 
-BACKEND_URL = "https://ad04f95e-8dd7-49a6-a649-9120065379fa.preview.emergentagent.com"
+BACKEND_URL = "https://62e07c51-5bd0-49d4-aacc-d7cf6010e3bd.preview.emergentagent.com"
 API_BASE = f"{BACKEND_URL}/api"
 
 # Test data
