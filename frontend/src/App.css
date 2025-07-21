@@ -2233,6 +2233,15 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
+@media (max-width: 480px) {
+  .theme-dropdown,
+  .language-dropdown {
+    max-width: calc(100vw - 16px);
+    left: -8px;
+    right: -8px;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 640px) {
   .nav-container {
