@@ -15,7 +15,9 @@ export const translations = {
       login: "Login",
       register: "Register",
       logout: "Logout",
-      profile: "Profile"
+      profile: "Profile",
+      menu: "Menu",
+      navigation: "Navigation"
     },
     
     // Hero Section
