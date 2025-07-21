@@ -1000,6 +1000,28 @@ code {
 }
 
 /* Responsive Design */
+@media (max-width: 640px) {
+  .main-content {
+    margin-top: 40px;
+    padding: 0 12px;
+  }
+  
+  .content-container {
+    gap: 24px;
+    padding: 0;
+  }
+  
+  .announcement-card {
+    padding: 16px;
+  }
+  
+  .discord-widget,
+  .reviews-section,
+  .social-media-bar {
+    padding: 16px;
+  }
+}
+
 @media (max-width: 768px) {
   .content-container {
     grid-template-columns: 1fr;
@@ -1046,5 +1068,37 @@ code {
   .legal-links {
     flex-direction: column;
     gap: 8px;
+  }
+}
+
+/* Additional small screen optimizations */
+@media (max-width: 480px) {
+  .section-header h2 {
+    font-size: 20px;
+  }
+  
+  .discord-widget .widget-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .review-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .social-link {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+  }
+}
+
+/* Large screens */
+@media (min-width: 1200px) {
+  .main-content {
+    padding: 0 24px;
   }
 }
