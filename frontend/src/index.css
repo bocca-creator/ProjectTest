@@ -645,9 +645,17 @@ code {
 .footer-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 60px 24px 30px;
+  padding: 60px 16px 30px;
   position: relative;
   z-index: 1;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .footer-container {
+    padding: 60px 24px 30px;
+  }
 }
 
 .footer-top {
