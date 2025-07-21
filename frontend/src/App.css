@@ -174,7 +174,15 @@ h1, h2, h3, h4, h5, h6 {
 .nav-right {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .nav-right {
+    gap: 16px;
+  }
 }
 
 .nav-controls {
