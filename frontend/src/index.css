@@ -150,6 +150,7 @@ code {
 /* Left Column - Announcements */
 .left-column {
   min-width: 0;
+  width: 100%;
 }
 
 .announcements-list {
