@@ -211,7 +211,15 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-menu {
   display: flex;
-  gap: 32px;
+  gap: 16px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+@media (min-width: 1024px) {
+  .nav-menu {
+    gap: 32px;
+  }
 }
 
 .nav-item {
