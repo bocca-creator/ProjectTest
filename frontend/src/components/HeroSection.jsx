@@ -28,18 +28,24 @@ const HeroSection = () => {
             <div className="hero-stats">
               <div className="stat-item">
                 <Users size={20} />
-                <span className="stat-number">{formatNumber(2847)}</span>
-                <span className="stat-label">{t('hero.activePlayersLabel')}</span>
+                <div className="stat-content">
+                  <span className="stat-number">{formatNumber(2847)}</span>
+                  <span className="stat-label">{t('hero.activePlayersLabel')}</span>
+                </div>
               </div>
               <div className="stat-item">
                 <Target size={20} />
-                <span className="stat-number">{formatNumber(156)}</span>
-                <span className="stat-label">{t('hero.onlineNowLabel')}</span>
+                <div className="stat-content">
+                  <span className="stat-number">{formatNumber(156)}</span>
+                  <span className="stat-label">{t('hero.onlineNowLabel')}</span>
+                </div>
               </div>
               <div className="stat-item">
                 <Zap size={20} />
-                <span className="stat-number">24/7</span>
-                <span className="stat-label">{t('hero.serverUptimeLabel')}</span>
+                <div className="stat-content">
+                  <span className="stat-number">24/7</span>
+                  <span className="stat-label">{t('hero.serverUptimeLabel')}</span>
+                </div>
               </div>
             </div>
 
