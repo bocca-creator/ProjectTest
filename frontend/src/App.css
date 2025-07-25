@@ -1749,20 +1749,23 @@ h1, h2, h3, h4, h5, h6 {
   text-align: center;
   width: 100%;
   max-width: 800px;
+  margin: 0 auto;
 }
 
 .summary-stats {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 48px;
   flex-wrap: wrap;
 }
 
 .summary-stat {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 12px;
+  white-space: nowrap;
 }
 
 .summary-number {
