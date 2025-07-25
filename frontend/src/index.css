@@ -282,14 +282,18 @@ table {
   grid-template-columns: 1fr;
   gap: 32px;
   align-items: start;
+  justify-items: center;
   width: 100%;
   min-width: 0;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 @media (min-width: 1024px) {
   .content-container {
     grid-template-columns: 2fr 1fr;
     gap: 48px;
+    justify-items: stretch;
   }
 }
 
