@@ -1599,7 +1599,7 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: 16px;
 }
 
-.stat-item {
+.server-stats .stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1607,7 +1607,7 @@ h1, h2, h3, h4, h5, h6 {
   flex: 1;
 }
 
-.stat-item svg {
+.server-stats .stat-item svg {
   color: var(--accent-primary);
 }
 
