@@ -71,7 +71,7 @@ const Navigation = () => {
           {/* Left section - Logo */}
           <div className="nav-logo" onClick={() => navigate('/')} style={{ cursor: 'pointer' }}>
             <div className="logo-text">ProjectTest</div>
-            <div className="logo-subtitle">Gaming Community</div>
+            <div className="logo-subtitle">CS2 Game Servers</div>
           </div>
 
           {/* Center section - Desktop dropdown menu button */}
