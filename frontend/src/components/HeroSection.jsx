@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, Users, Gamepad2, Zap } from 'lucide-react';
+import { Shield, Users, Target, Zap } from 'lucide-react';
 import { useLanguage } from '../contexts/LanguageContext';
 
 const HeroSection = () => {
