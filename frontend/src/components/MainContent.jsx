@@ -47,8 +47,12 @@ const MainContent = ({ announcements, reviews, discordData }) => {
   };
 
   return (
-    <main className="main-content">
-      <div className="content-container">
+    <>
+      {/* CS2 Servers Section */}
+      <CS2Servers />
+      
+      <main className="main-content">
+        <div className="content-container">
         {/* Left Column - Announcements */}
         <div className="left-column">
           <div className="section-header">
