@@ -1816,6 +1816,10 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
   }
   
+  .summary-stat {
+    justify-content: center;
+  }
+  
   .map-rotation {
     margin-bottom: 12px;
   }
@@ -1832,6 +1836,28 @@ h1, h2, h3, h4, h5, h6 {
   
   .cs2-servers-section {
     padding: 0 16px;
+  }
+  
+  .stat-card {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  
+  .stat-card .stat-content {
+    align-items: center;
+  }
+  
+  .mini-stat {
+    justify-content: center;
+  }
+  
+  .stat-item {
+    justify-content: center;
+  }
+  
+  .stat-item .stat-content {
+    align-items: center;
   }
 }
 
