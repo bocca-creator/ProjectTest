@@ -53,13 +53,13 @@ export const translations = {
     
     // Project Rules
     rules: {
-      title: "Project Rules",
-      respectMembers: "Respect all community members",
-      noCheating: "No cheating or exploiting",
-      fairPlay: "Follow fair play guidelines", 
-      civilCommunication: "Keep communications civil",
-      reportSuspicious: "Report suspicious activities",
-      readFullRules: "Read Full Rules"
+      title: "CS2 Server Rules",
+      respectMembers: "Respect all players on the server",
+      noCheating: "No cheating, hacking, or exploits",
+      fairPlay: "Play fair - no griefing or team killing", 
+      civilCommunication: "Use voice/text chat responsibly",
+      reportSuspicious: "Report cheaters and rule violations",
+      readFullRules: "Read Full Server Rules"
     },
     
     // Discord Section
