@@ -32,7 +32,7 @@ const HeroSection = () => {
                 <span className="stat-label">{t('hero.activePlayersLabel')}</span>
               </div>
               <div className="stat-item">
-                <Gamepad2 size={20} />
+                <Target size={20} />
                 <span className="stat-number">{formatNumber(156)}</span>
                 <span className="stat-label">{t('hero.onlineNowLabel')}</span>
               </div>
