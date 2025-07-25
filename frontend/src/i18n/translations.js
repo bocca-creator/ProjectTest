@@ -23,13 +23,32 @@ export const translations = {
     // Hero Section
     hero: {
       welcome: "Welcome to",
-      subtitle: "GAMING COMMUNITY",
-      description: "Join the ultimate cyberpunk gaming experience. Connect with players, compete in tournaments, and dominate the digital battlefield.",
-      joinCommunity: "Join Community",
-      viewServers: "View Servers",
+      subtitle: "CS2 GAME SERVERS",
+      description: "Experience premium Counter-Strike 2 gameplay on our high-performance servers. Join competitive matches, climb rankings, and dominate the battlefield.",
+      joinCommunity: "Join Server",
+      viewServers: "Browse Servers",
       activePlayersLabel: "ACTIVE PLAYERS",
       onlineNowLabel: "ONLINE NOW", 
       serverUptimeLabel: "SERVER UPTIME"
+    },
+    
+    // Servers Section
+    servers: {
+      title: "CS2 Game Servers",
+      subtitle: "Choose your battlefield",
+      serverStatus: "Server Status",
+      playersOnline: "Players Online",
+      mapRotation: "Map Rotation",
+      gameMode: "Game Mode",
+      serverLocation: "Location",
+      ping: "Ping",
+      connect: "Connect",
+      playerCount: "players",
+      serverFull: "Server Full",
+      maxPlayers: "Max Players",
+      currentMap: "Current Map",
+      nextMap: "Next Map",
+      timeLeft: "Time Left"
     },
     
     // Project Rules
