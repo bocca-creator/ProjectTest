@@ -227,13 +227,32 @@ export const translations = {
     // Hero Section
     hero: {
       welcome: "Ласкаво просимо до",
-      subtitle: "ІГРОВА СПІЛЬНОТА",
-      description: "Приєднуйтесь до найкращого кіберпанк ігрового досвіду. Спілкуйтесь з гравцями, беріть участь у турнірах та домінуйте на цифровому полі бою.",
-      joinCommunity: "Приєднатися",
+      subtitle: "CS2 ІГРОВІ СЕРВЕРИ",
+      description: "Відчуйте преміум ігровий процес Counter-Strike 2 на наших високопродуктивних серверах. Приєднуйтесь до змагальних матчів, піднімайтесь в рейтингу та домінуйте на полі бою.",
+      joinCommunity: "Приєднатися до сервера",
       viewServers: "Переглянути сервери",
       activePlayersLabel: "АКТИВНІ ГРАВЦІ",
       onlineNowLabel: "ОНЛАЙН ЗАРАЗ",
       serverUptimeLabel: "ЧАС РОБОТИ СЕРВЕРА"
+    },
+    
+    // Servers Section
+    servers: {
+      title: "CS2 Ігрові Сервери",
+      subtitle: "Оберіть своє поле бою",
+      serverStatus: "Статус Сервера",
+      playersOnline: "Гравці Онлайн",
+      mapRotation: "Ротація Карт",
+      gameMode: "Режим Гри",
+      serverLocation: "Розташування",
+      ping: "Пінг",
+      connect: "Підключитися",
+      playerCount: "гравців",
+      serverFull: "Сервер Заповнений",
+      maxPlayers: "Максимум Гравців",
+      currentMap: "Поточна Карта",
+      nextMap: "Наступна Карта",
+      timeLeft: "Залишилось Часу"
     },
     
     // Project Rules
