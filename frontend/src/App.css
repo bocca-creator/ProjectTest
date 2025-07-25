@@ -615,14 +615,23 @@ h1, h2, h3, h4, h5, h6 {
   grid-template-columns: 1fr;
   gap: 40px;
   align-items: center;
+  justify-items: center;
   width: 100%;
   min-width: 0;
+  text-align: center;
 }
 
 @media (min-width: 1024px) {
   .hero-content {
     grid-template-columns: 1fr 400px;
     gap: 60px;
+    text-align: left;
+    justify-items: stretch;
+  }
+  
+  .hero-text {
+    justify-self: end;
+    text-align: left;
   }
 }
 
