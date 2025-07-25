@@ -171,7 +171,7 @@ const Navigation = () => {
               <div className="mobile-menu-header">
                 <div className="mobile-logo">
                   <div className="logo-text">ProjectTest</div>
-                  <div className="logo-subtitle">Gaming Community</div>
+                  <div className="logo-subtitle">CS2 Game Servers</div>
                 </div>
                 <button 
                   className="mobile-menu-close"
