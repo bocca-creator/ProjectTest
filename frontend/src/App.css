@@ -1785,10 +1785,12 @@ h1, h2, h3, h4, h5, h6 {
   .servers-grid {
     grid-template-columns: 1fr;
     gap: 16px;
+    padding: 0 16px;
   }
   
   .server-card {
     padding: 16px;
+    max-width: 100%;
   }
   
   .server-stats {
@@ -1798,6 +1800,7 @@ h1, h2, h3, h4, h5, h6 {
   .summary-stats {
     flex-direction: column;
     gap: 24px;
+    align-items: center;
   }
   
   .map-rotation {
@@ -1806,11 +1809,16 @@ h1, h2, h3, h4, h5, h6 {
   
   .rotation-maps {
     gap: 4px;
+    justify-content: center;
   }
   
   .rotation-map {
     font-size: 9px;
     padding: 3px 6px;
+  }
+  
+  .cs2-servers-section {
+    padding: 0 16px;
   }
 }
 
