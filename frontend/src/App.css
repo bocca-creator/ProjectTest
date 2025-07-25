@@ -2260,8 +2260,9 @@ h1, h2, h3, h4, h5, h6 {
 
 .mini-stat {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
+  gap: 8px;
 }
 
 .mini-stat-number {
@@ -2269,6 +2270,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 700;
   color: var(--accent-primary);
   font-family: 'JetBrains Mono', monospace;
+  white-space: nowrap;
 }
 
 .mini-stat-label {
@@ -2276,6 +2278,7 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 1px;
+  white-space: nowrap;
 }
 
 /* Team Page */
