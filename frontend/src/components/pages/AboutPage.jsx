@@ -139,8 +139,10 @@ const AboutPage = () => {
             {stats.map((stat, index) => (
               <div key={index} className="stat-card">
                 <div className="stat-number">{stat.number}</div>
-                <div className="stat-label">{stat.label}</div>
-                <div className="stat-subtext">{stat.subtext}</div>
+                <div className="stat-content">
+                  <div className="stat-label">{stat.label}</div>
+                  <div className="stat-subtext">{stat.subtext}</div>
+                </div>
               </div>
             ))}
           </div>
