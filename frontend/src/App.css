@@ -1738,12 +1738,15 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 16px;
   padding: 32px;
   text-align: center;
+  width: 100%;
+  max-width: 800px;
 }
 
 .summary-stats {
   display: flex;
   justify-content: center;
   gap: 48px;
+  flex-wrap: wrap;
 }
 
 .summary-stat {
