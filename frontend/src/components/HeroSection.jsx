@@ -46,7 +46,7 @@ const HeroSection = () => {
             <div className="hero-actions">
               <button className="btn-primary hero-btn">
                 {t('hero.joinCommunity')}
-                <Zap size={18} />
+                <Target size={18} />
               </button>
               <button className="btn-secondary hero-btn">
                 {t('hero.viewServers')}
