@@ -220,7 +220,7 @@ const MainContent = ({ announcements, reviews, discordData }) => {
           </div>
         </div>
       </div>
-    </main>
+    </>
   );
 };
 
