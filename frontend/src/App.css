@@ -1825,21 +1825,28 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 480px) {
   .servers-grid {
     grid-template-columns: 1fr;
+    padding: 0 8px;
   }
   
   .server-header {
     flex-direction: column;
     gap: 12px;
-    align-items: flex-start;
+    align-items: center;
+    text-align: center;
   }
   
   .server-stats {
     flex-wrap: wrap;
     gap: 8px;
+    justify-content: center;
   }
   
   .stat-item {
     min-width: calc(50% - 4px);
+  }
+  
+  .cs2-servers-section {
+    padding: 0 8px;
   }
 }
 
