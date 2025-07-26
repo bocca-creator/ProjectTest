@@ -2944,8 +2944,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
-/* Mobile responsive adjustments */
-@media (max-width: 768px) {
   .nav-controls {
     display: none;
   }
@@ -2978,7 +2976,44 @@ h1, h2, h3, h4, h5, h6 {
   .servers-stats-container {
     padding: 0 16px;
   }
-}
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .desktop-menu-wrapper {
+    display: none;
+  }
+
+  .hero-content {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    text-align: center;
+  }
+
+  .title-highlight {
+    font-size: 40px;
+  }
+
+  .hero-stats {
+    justify-content: center;
+  }
+
+  .nav-container {
+    padding: 0 16px;
+  }
+
+  .faq-layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .faq-sidebar {
+    position: static;
+  }
+
+  .category-list {
+    flex-direction: row;
 
 @media (max-width: 480px) {
   .theme-dropdown,
