@@ -2051,53 +2051,8 @@ h1, h2, h3, h4, h5, h6 {
     gap: 16px;
   }
 }
-    flex-direction: column;
-    gap: 24px;
-    align-items: center;
-  }
-  
-  .summary-stat {
-    justify-content: center;
-  }
-  
-  .map-rotation {
-    margin-bottom: 12px;
-  }
-  
-  .rotation-maps {
-    gap: 4px;
-    justify-content: center;
-  }
-  
-  .rotation-map {
-    font-size: 9px;
-    padding: 3px 6px;
-  }
-  
-  .cs2-servers-section {
-    padding: 0 16px;
-  }
-  
-  .stat-card {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
-  }
-  
-  .stat-card .stat-content {
-    align-items: center;
-  }
-  
-  .mini-stat {
-    justify-content: center;
-  }
-  
-  .stat-item {
-    justify-content: center;
-  }
-  
-  .stat-item .stat-content {
-    align-items: center;
+
+@media (max-width: 480px) {
   }
 }
 
