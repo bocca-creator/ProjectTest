@@ -3014,6 +3014,92 @@ h1, h2, h3, h4, h5, h6 {
 
   .category-list {
     flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .intro-highlights {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .mission-content {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    text-align: center;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .timeline::before {
+    left: 16px;
+  }
+
+  .timeline-marker {
+    width: 48px;
+    height: 48px;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .cta-card {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 32px 24px;
+  }
+
+  .cta-stats {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  .overview-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  .members-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .cta-actions,
+  .join-actions,
+  .help-actions,
+  .info-actions {
+    flex-direction: column;
+  }
+
+  .methods-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .popular-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* Hide theme and language controls on mobile */
+  .nav-controls {
+    display: none;
+  }
+}
 
 @media (max-width: 480px) {
   .theme-dropdown,
