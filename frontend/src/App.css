@@ -2876,17 +2876,6 @@ h1, h2, h3, h4, h5, h6 {
   height: 40px; /* Fixed height for consistent positioning */
 }
 
-@media (max-width: 768px) {
-  .theme-toggle-btn,
-  .language-toggle-btn {
-    min-width: 80px;
-    max-width: 120px;
-    padding: 6px 8px;
-    font-size: 12px;
-    height: 36px;
-  }
-}
-
 .theme-toggle-btn:hover,
 .language-toggle-btn:hover {
   border-color: var(--accent-primary);
