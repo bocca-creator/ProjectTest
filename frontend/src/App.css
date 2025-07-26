@@ -2944,15 +2944,63 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
-  .nav-controls {
-    display: none;
+/* Mobile responsive adjustments for servers section */
+@media (max-width: 768px) {
+  .summary-stats {
+    flex-direction: column;
+    gap: 32px;
+    padding: 24px;
   }
   
-  .theme-dropdown,
-  .language-dropdown {
-    left: 0;
-    right: 0;
-    max-width: calc(100vw - 32px);
+  .summary-number {
+    font-size: 28px;
+  }
+  
+  .servers-grid {
+    grid-template-columns: 1fr;
+    max-width: 450px;
+  }
+  
+  .servers-header-container,
+  .servers-cards-container,
+  .servers-stats-container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .summary-stats {
+    gap: 24px;
+    padding: 20px;
+  }
+  
+  .summary-number {
+    font-size: 24px;
+  }
+  
+  .summary-stat {
+    gap: 4px;
+  }
+  
+  .servers-grid {
+    max-width: 100%;
+  }
+  
+  .cs2-servers-section .section-subtitle {
+    font-size: 14px;
+    padding: 0 16px;
+  }
+}
+
+/* Tablet responsive adjustments */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .servers-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 900px;
+  }
+  
+  .summary-stats {
+    gap: 80px;
   }
 }
 
