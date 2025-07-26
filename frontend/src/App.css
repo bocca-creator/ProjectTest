@@ -3266,38 +3266,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-@media (max-width: 480px) {
-  .theme-dropdown,
-  .language-dropdown {
-    max-width: calc(100vw - 16px);
-    left: -8px;
-    right: -8px;
-  }
-  
-  /* Servers section small mobile adjustments */
-  .summary-stats {
-    gap: 24px;
-    padding: 20px;
-  }
-  
-  .summary-number {
-    font-size: 24px;
-  }
-  
-  .summary-stat {
-    gap: 4px;
-  }
-  
-  .servers-grid {
-    max-width: 100%;
-  }
-  
-  .cs2-servers-section .section-subtitle {
-    font-size: 14px;
-    padding: 0 16px;
-  }
-}
-
 /* Tablet responsive adjustments */
 @media (min-width: 769px) and (max-width: 1024px) {
   .servers-grid {
