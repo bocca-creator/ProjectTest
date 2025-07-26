@@ -2053,10 +2053,6 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 480px) {
-  }
-}
-
-@media (max-width: 480px) {
   .servers-grid {
     grid-template-columns: 1fr;
     padding: 0 8px;
