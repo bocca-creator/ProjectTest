@@ -2944,8 +2944,20 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Mobile responsive adjustments */
 @media (max-width: 768px) {
-/* Mobile responsive adjustments for servers section */
+/* Mobile responsive adjustments */
 @media (max-width: 768px) {
+  .nav-controls {
+    display: none;
+  }
+  
+  .theme-dropdown,
+  .language-dropdown {
+    left: 0;
+    right: 0;
+    max-width: calc(100vw - 32px);
+  }
+  
+  /* Servers section mobile adjustments */
   .summary-stats {
     flex-direction: column;
     gap: 32px;
@@ -2969,6 +2981,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 480px) {
+  .theme-dropdown,
+  .language-dropdown {
+    max-width: calc(100vw - 16px);
+    left: -8px;
+    right: -8px;
+  }
+  
+  /* Servers section small mobile adjustments */
   .summary-stats {
     gap: 24px;
     padding: 20px;
