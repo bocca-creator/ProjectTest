@@ -1488,20 +1488,30 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* CS2 Servers Section */
+/* CS2 Servers Section - Perfect Centering and Sequential Layout */
 .cs2-servers-section {
   margin: 80px 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
+  width: 100%;
+  min-height: auto;
+}
+
+/* Centered Header Container */
+.servers-header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 48px;
 }
 
 .cs2-servers-section .section-header {
   text-align: center;
-  margin-bottom: 48px;
   max-width: 800px;
+  margin: 0 auto;
 }
 
 .cs2-servers-section .section-subtitle {
@@ -1509,16 +1519,92 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 16px;
   margin-bottom: 24px;
   text-align: center;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Centered Server Cards Container */
+.servers-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 60px;
 }
 
 .servers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: 24px;
-  margin-bottom: 48px;
   max-width: 1200px;
   width: 100%;
   justify-items: center;
+  align-items: start;
+}
+
+/* Centered Statistics Container */
+.servers-stats-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.servers-summary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+.summary-stats {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  padding: 32px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.summary-stats::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-primary);
+}
+
+.summary-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.summary-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-shadow: 0 0 10px rgba(218, 255, 1, 0.3);
+}
+
+.summary-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
 }
 
 .server-card {
