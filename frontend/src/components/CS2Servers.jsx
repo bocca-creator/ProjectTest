@@ -88,13 +88,17 @@ const CS2Servers = () => {
 
   return (
     <section className="cs2-servers-section">
-      <div className="content-container">
+      {/* Centered Header Section */}
+      <div className="servers-header-container">
         <div className="section-header">
-          <h2>{t('servers.title')}</h2>
-          <p className="section-subtitle">{t('servers.subtitle')}</p>
+          <h2>CS2 Game Servers</h2>
+          <p className="section-subtitle">Join our high-performance Counter-Strike 2 servers with optimal ping and 24/7 uptime</p>
           <div className="header-line"></div>
         </div>
+      </div>
 
+      {/* Centered Server Cards Section */}
+      <div className="servers-cards-container">
         <div className="servers-grid">
           {servers.map((server) => (
             <div key={server.id} className="server-card">
@@ -177,24 +181,27 @@ const CS2Servers = () => {
             </div>
           ))}
         </div>
+      </div>
 
+      {/* Centered Statistics Summary Section */}
+      <div className="servers-stats-container">
         <div className="servers-summary">
           <div className="summary-stats">
             <div className="summary-stat">
               <span className="summary-number">
                 {servers.reduce((total, server) => total + server.players, 0)}
               </span>
-              <span className="summary-label">{t('servers.playersOnline')}</span>
+              <span className="summary-label">PLAYERS ONLINE</span>
             </div>
             <div className="summary-stat">
               <span className="summary-number">{servers.length}</span>
-              <span className="summary-label">Active Servers</span>
+              <span className="summary-label">ACTIVE SERVERS</span>
             </div>
             <div className="summary-stat">
               <span className="summary-number">
                 {Math.round(servers.reduce((total, server) => total + server.ping, 0) / servers.length)}ms
               </span>
-              <span className="summary-label">Avg Ping</span>
+              <span className="summary-label">AVG PING</span>
             </div>
           </div>
         </div>
