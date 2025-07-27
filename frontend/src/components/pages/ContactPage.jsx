@@ -114,209 +114,216 @@ const ContactPage = () => {
         </div>
       </section>
 
-      {/* Contact Methods */}
-      <section className="contact-methods">
+      {/* Page Content - Sequential and Centered */}
+      <main className="page-content">
         <div className="content-container">
-          <h2>How Can We Help You?</h2>
-          <div className="methods-grid">
-            {contactMethods.map((method, index) => {
-              const IconComponent = method.icon;
-              return (
-                <div key={index} className="method-card">
-                  <IconComponent size={32} />
-                  <h3>{method.title}</h3>
-                  <p>{method.description}</p>
-                  <div className="method-detail">{method.detail}</div>
-                  <div className="response-time">
-                    <Clock size={14} />
-                    {method.responseTime}
+          
+          {/* Contact Methods Section */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>How Can We Help You?</h2>
+            </div>
+            <div className="methods-grid">
+              {contactMethods.map((method, index) => {
+                const IconComponent = method.icon;
+                return (
+                  <div key={index} className="method-card">
+                    <IconComponent size={32} />
+                    <h3>{method.title}</h3>
+                    <p>{method.description}</p>
+                    <div className="method-detail">{method.detail}</div>
+                    <div className="response-time">
+                      <Clock size={14} />
+                      {method.responseTime}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Contact Form Section */}
+          <div className="sequential-section">
+            <div className="form-container">
+              <div className="section-header">
+                <h2>Submit a Support Ticket</h2>
+                <p className="section-subtitle">Provide detailed information to help us assist you better</p>
+              </div>
+
+              {submitStatus === 'success' && (
+                <div className="success-message">
+                  <CheckCircle size={20} />
+                  <div>
+                    <h4>Ticket Submitted Successfully!</h4>
+                    <p>We've received your message and will respond within the expected timeframe based on priority level.</p>
                   </div>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+              )}
 
-      {/* Contact Form */}
-      <main className="contact-form-section">
-        <div className="content-container">
-          <div className="form-container">
-            <div className="form-header">
-              <h2>Submit a Support Ticket</h2>
-              <p>Provide detailed information to help us assist you better</p>
-            </div>
+              <form onSubmit={handleSubmit} className="contact-form">
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="name">Full Name *</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="Enter your full name"
+                      className="form-input"
+                    />
+                  </div>
 
-            {submitStatus === 'success' && (
-              <div className="success-message">
-                <CheckCircle size={20} />
-                <div>
-                  <h4>Ticket Submitted Successfully!</h4>
-                  <p>We've received your message and will respond within the expected timeframe based on priority level.</p>
+                  <div className="form-group">
+                    <label htmlFor="email">Email Address *</label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                      placeholder="your.email@example.com"
+                      className="form-input"
+                    />
+                  </div>
                 </div>
-              </div>
-            )}
 
-            <form onSubmit={handleSubmit} className="contact-form">
-              <div className="form-row">
                 <div className="form-group">
-                  <label htmlFor="name">Full Name *</label>
+                  <label htmlFor="subject">Subject *</label>
                   <input
                     type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
                     onChange={handleInputChange}
                     required
-                    placeholder="Enter your full name"
+                    placeholder="Brief description of your issue"
                     className="form-input"
                   />
                 </div>
 
+                <div className="form-row">
+                  <div className="form-group">
+                    <label htmlFor="category">Category *</label>
+                    <select
+                      id="category"
+                      name="category"
+                      value={formData.category}
+                      onChange={handleInputChange}
+                      className="form-select"
+                    >
+                      {categories.map(cat => (
+                        <option key={cat.value} value={cat.value}>
+                          {cat.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label htmlFor="priority">Priority Level</label>
+                    <select
+                      id="priority"
+                      name="priority"
+                      value={formData.priority}
+                      onChange={handleInputChange}
+                      className="form-select"
+                    >
+                      {priorities.map(priority => (
+                        <option key={priority.value} value={priority.value}>
+                          {priority.label} ({priority.time})
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
                 <div className="form-group">
-                  <label htmlFor="email">Email Address *</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                  <label htmlFor="message">Detailed Message *</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
                     onChange={handleInputChange}
                     required
-                    placeholder="your.email@example.com"
-                    className="form-input"
+                    rows={6}
+                    placeholder="Please provide as much detail as possible about your issue, including steps to reproduce, error messages, or specific questions..."
+                    className="form-textarea"
                   />
+                  <div className="character-count">
+                    {formData.message.length}/2000 characters
+                  </div>
                 </div>
-              </div>
 
-              <div className="form-group">
-                <label htmlFor="subject">Subject *</label>
-                <input
-                  type="text"
-                  id="subject"
-                  name="subject"
-                  value={formData.subject}
-                  onChange={handleInputChange}
-                  required
-                  placeholder="Brief description of your issue"
-                  className="form-input"
-                />
-              </div>
+                <div className="priority-info">
+                  <div className="priority-display">
+                    <span>Selected Priority: </span>
+                    <span 
+                      className="priority-badge"
+                      style={{ 
+                        color: priorities.find(p => p.value === formData.priority)?.color,
+                        borderColor: priorities.find(p => p.value === formData.priority)?.color
+                      }}
+                    >
+                      {priorities.find(p => p.value === formData.priority)?.label}
+                    </span>
+                    <span className="expected-response">
+                      Expected response: {priorities.find(p => p.value === formData.priority)?.time}
+                    </span>
+                  </div>
+                </div>
 
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="category">Category *</label>
-                  <select
-                    id="category"
-                    name="category"
-                    value={formData.category}
-                    onChange={handleInputChange}
-                    className="form-select"
+                <div className="form-actions">
+                  <button 
+                    type="submit" 
+                    disabled={isSubmitting}
+                    className="btn-primary submit-btn"
                   >
-                    {categories.map(cat => (
-                      <option key={cat.value} value={cat.value}>
-                        {cat.label}
-                      </option>
-                    ))}
-                  </select>
+                    {isSubmitting ? (
+                      <>
+                        <div className="spinner"></div>
+                        Submitting...
+                      </>
+                    ) : (
+                      <>
+                        <Send size={18} />
+                        Submit Ticket
+                      </>
+                    )}
+                  </button>
                 </div>
-
-                <div className="form-group">
-                  <label htmlFor="priority">Priority Level</label>
-                  <select
-                    id="priority"
-                    name="priority"
-                    value={formData.priority}
-                    onChange={handleInputChange}
-                    className="form-select"
-                  >
-                    {priorities.map(priority => (
-                      <option key={priority.value} value={priority.value}>
-                        {priority.label} ({priority.time})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="form-group">
-                <label htmlFor="message">Detailed Message *</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  required
-                  rows={6}
-                  placeholder="Please provide as much detail as possible about your issue, including steps to reproduce, error messages, or specific questions..."
-                  className="form-textarea"
-                />
-                <div className="character-count">
-                  {formData.message.length}/2000 characters
-                </div>
-              </div>
-
-              <div className="priority-info">
-                <div className="priority-display">
-                  <span>Selected Priority: </span>
-                  <span 
-                    className="priority-badge"
-                    style={{ 
-                      color: priorities.find(p => p.value === formData.priority)?.color,
-                      borderColor: priorities.find(p => p.value === formData.priority)?.color
-                    }}
-                  >
-                    {priorities.find(p => p.value === formData.priority)?.label}
-                  </span>
-                  <span className="expected-response">
-                    Expected response: {priorities.find(p => p.value === formData.priority)?.time}
-                  </span>
-                </div>
-              </div>
-
-              <div className="form-actions">
-                <button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="btn-primary submit-btn"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="spinner"></div>
-                      Submitting...
-                    </>
-                  ) : (
-                    <>
-                      <Send size={18} />
-                      Submit Ticket
-                    </>
-                  )}
-                </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
 
-          {/* Support Info */}
-          <div className="support-info">
-            <div className="info-card">
-              <h3>Before You Submit</h3>
-              <ul>
-                <li>Check our <a href="/faq">FAQ page</a> for quick answers</li>
-                <li>Review <a href="/rules">community rules</a> for policy questions</li>
-                <li>Include screenshots or error messages when reporting bugs</li>
-                <li>Be specific about when the issue occurred</li>
-                <li>Mention your username and affected servers if relevant</li>
-              </ul>
-            </div>
+          {/* Support Info Section */}
+          <div className="sequential-section">
+            <div className="support-info">
+              <div className="info-card">
+                <h3>Before You Submit</h3>
+                <ul>
+                  <li>Check our <a href="/faq">FAQ page</a> for quick answers</li>
+                  <li>Review <a href="/rules">community rules</a> for policy questions</li>
+                  <li>Include screenshots or error messages when reporting bugs</li>
+                  <li>Be specific about when the issue occurred</li>
+                  <li>Mention your username and affected servers if relevant</li>
+                </ul>
+              </div>
 
-            <div className="info-card">
-              <h3>Emergency Contact</h3>
-              <p>For urgent security issues or serious rule violations:</p>
-              <div className="emergency-contact">
-                <strong>Discord: </strong>
-                <span>@Admin (mention in #emergency channel)</span>
+              <div className="info-card">
+                <h3>Emergency Contact</h3>
+                <p>For urgent security issues or serious rule violations:</p>
+                <div className="emergency-contact">
+                  <strong>Discord: </strong>
+                  <span>@Admin (mention in #emergency channel)</span>
+                </div>
               </div>
             </div>
           </div>
+
         </div>
       </main>
 
