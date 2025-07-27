@@ -112,173 +112,176 @@ const AboutPage = () => {
         </div>
         <div className="hero-container">
           <div className="hero-content">
-            <div className="hero-text">
-              <h1 className="hero-title">About ProjectTest</h1>
-              <p className="hero-description">
-                We're building the future of competitive gaming communities. Born from a passion for cyberpunk aesthetics 
-                and fair competition, ProjectTest brings together players who demand excellence, integrity, and innovation.
-              </p>
-              <div className="hero-cta">
-                <button className="btn-primary" onClick={() => window.location.href = '/'}>
-                  Join Community
-                </button>
-                <button className="btn-secondary" onClick={() => window.location.href = '/contact'}>
-                  Get in Touch
-                </button>
-              </div>
+            <h1 className="hero-title">About ProjectTest</h1>
+            <p className="hero-description">
+              We're building the future of competitive gaming communities. Born from a passion for cyberpunk aesthetics 
+              and fair competition, ProjectTest brings together players who demand excellence, integrity, and innovation.
+            </p>
+            <div className="hero-cta">
+              <button className="btn-primary" onClick={() => window.location.href = '/'}>
+                Join Community
+              </button>
+              <button className="btn-secondary" onClick={() => window.location.href = '/contact'}>
+                Get in Touch
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="stats-section">
+      {/* Page Content - Sequential and Centered */}
+      <main className="page-content">
         <div className="content-container">
-          <h2>Community by the Numbers</h2>
-          <div className="stats-grid">
-            {stats.map((stat, index) => (
-              <div key={index} className="stat-card">
-                <div className="stat-number">{stat.number}</div>
-                <div className="stat-content">
-                  <div className="stat-label">{stat.label}</div>
-                  <div className="stat-subtext">{stat.subtext}</div>
+          
+          {/* Stats Section */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>Community by the Numbers</h2>
+            </div>
+            <div className="stats-grid">
+              {stats.map((stat, index) => (
+                <div key={index} className="stat-card">
+                  <div className="stat-number">{stat.number}</div>
+                  <div className="stat-content">
+                    <div className="stat-label">{stat.label}</div>
+                    <div className="stat-subtext">{stat.subtext}</div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Mission Statement */}
-      <section className="mission-section">
-        <div className="content-container">
-          <div className="mission-content">
-            <div className="mission-text">
+          {/* Mission Statement */}
+          <div className="sequential-section">
+            <div className="section-header">
               <h2>Our Mission</h2>
-              <p className="mission-statement">
-                To create the ultimate cyberpunk gaming community where players can compete at the highest level, 
-                forge lasting friendships, and push the boundaries of what's possible in competitive gaming.
-              </p>
-              <p className="mission-description">
-                We believe gaming is more than entertainment—it's a platform for connection, growth, and achievement. 
-                ProjectTest provides the infrastructure, community, and opportunities for gamers to reach their full potential 
-                while maintaining the integrity and spirit of fair competition.
-              </p>
             </div>
-            <div className="mission-visual">
-              <div className="cyber-emblem">
-                <Gamepad2 size={64} />
+            <div className="mission-content">
+              <div className="mission-text">
+                <p className="mission-statement">
+                  To create the ultimate cyberpunk gaming community where players can compete at the highest level, 
+                  forge lasting friendships, and push the boundaries of what's possible in competitive gaming.
+                </p>
+                <p className="mission-description">
+                  We believe gaming is more than entertainment—it's a platform for connection, growth, and achievement. 
+                  ProjectTest provides the infrastructure, community, and opportunities for gamers to reach their full potential 
+                  while maintaining the integrity and spirit of fair competition.
+                </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="features-section">
-        <div className="content-container">
-          <h2>What Sets Us Apart</h2>
-          <div className="features-grid">
-            {features.map((feature, index) => {
-              const IconComponent = feature.icon;
-              return (
-                <div key={index} className="feature-card">
-                  <div className="feature-icon">
-                    <IconComponent size={32} />
-                  </div>
-                  <h3>{feature.title}</h3>
-                  <p>{feature.description}</p>
-                  <div className="feature-stat">{feature.stats}</div>
+              <div className="mission-visual">
+                <div className="cyber-emblem">
+                  <Gamepad2 size={64} />
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Timeline Section */}
-      <section className="timeline-section">
-        <div className="content-container">
-          <h2>Our Journey</h2>
-          <div className="timeline">
-            {milestones.map((milestone, index) => {
-              const IconComponent = milestone.icon;
-              return (
-                <div key={index} className="timeline-item">
-                  <div className="timeline-marker">
-                    <IconComponent size={24} />
-                  </div>
-                  <div className="timeline-content">
-                    <div className="timeline-year">{milestone.year}</div>
-                    <h3>{milestone.title}</h3>
-                    <p>{milestone.description}</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Values Section */}
-      <section className="values-section">
-        <div className="content-container">
-          <h2>Our Core Values</h2>
-          <div className="values-grid">
-            {values.map((value, index) => {
-              const IconComponent = value.icon;
-              return (
-                <div key={index} className="value-card">
-                  <div className="value-header">
-                    <IconComponent size={28} />
-                    <h3>{value.title}</h3>
-                  </div>
-                  <p>{value.description}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Join Community CTA */}
-      <section className="cta-section">
-        <div className="content-container">
-          <div className="cta-card">
-            <div className="cta-content">
-              <h2>Ready to Join ProjectTest?</h2>
-              <p>
-                Become part of our growing community and experience competitive gaming like never before. 
-                Connect with players, join tournaments, and make your mark in the cyberpunk gaming world.
-              </p>
-              <div className="cta-actions">
-                <button className="btn-primary" onClick={() => window.location.href = '/'}>
-                  <Users size={18} />
-                  Join Now
-                </button>
-                <button className="btn-secondary" onClick={() => window.location.href = '/rules'}>
-                  <Shield size={18} />
-                  Read Rules
-                </button>
-              </div>
-            </div>
-            <div className="cta-stats">
-              <div className="mini-stat">
-                <span className="mini-stat-number">2,847</span>
-                <span className="mini-stat-label">Members</span>
-              </div>
-              <div className="mini-stat">
-                <span className="mini-stat-number">156</span>
-                <span className="mini-stat-label">Online</span>
-              </div>
-              <div className="mini-stat">
-                <span className="mini-stat-number">4.8★</span>
-                <span className="mini-stat-label">Rating</span>
               </div>
             </div>
           </div>
+
+          {/* Features Section */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>What Sets Us Apart</h2>
+            </div>
+            <div className="features-grid">
+              {features.map((feature, index) => {
+                const IconComponent = feature.icon;
+                return (
+                  <div key={index} className="feature-card">
+                    <div className="feature-icon">
+                      <IconComponent size={32} />
+                    </div>
+                    <h3>{feature.title}</h3>
+                    <p>{feature.description}</p>
+                    <div className="feature-stat">{feature.stats}</div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Timeline Section */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>Our Journey</h2>
+            </div>
+            <div className="timeline">
+              {milestones.map((milestone, index) => {
+                const IconComponent = milestone.icon;
+                return (
+                  <div key={index} className="timeline-item">
+                    <div className="timeline-marker">
+                      <IconComponent size={24} />
+                    </div>
+                    <div className="timeline-content">
+                      <div className="timeline-year">{milestone.year}</div>
+                      <h3>{milestone.title}</h3>
+                      <p>{milestone.description}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Values Section */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>Our Core Values</h2>
+            </div>
+            <div className="values-grid">
+              {values.map((value, index) => {
+                const IconComponent = value.icon;
+                return (
+                  <div key={index} className="value-card">
+                    <div className="value-header">
+                      <IconComponent size={28} />
+                      <h3>{value.title}</h3>
+                    </div>
+                    <p>{value.description}</p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Join Community CTA */}
+          <div className="sequential-section">
+            <div className="cta-card">
+              <div className="cta-content">
+                <h2>Ready to Join ProjectTest?</h2>
+                <p>
+                  Become part of our growing community and experience competitive gaming like never before. 
+                  Connect with players, join tournaments, and make your mark in the cyberpunk gaming world.
+                </p>
+                <div className="cta-actions">
+                  <button className="btn-primary" onClick={() => window.location.href = '/'}>
+                    <Users size={18} />
+                    Join Now
+                  </button>
+                  <button className="btn-secondary" onClick={() => window.location.href = '/rules'}>
+                    <Shield size={18} />
+                    Read Rules
+                  </button>
+                </div>
+              </div>
+              <div className="cta-stats">
+                <div className="mini-stat">
+                  <span className="mini-stat-number">2,847</span>
+                  <span className="mini-stat-label">Members</span>
+                </div>
+                <div className="mini-stat">
+                  <span className="mini-stat-number">156</span>
+                  <span className="mini-stat-label">Online</span>
+                </div>
+                <div className="mini-stat">
+                  <span className="mini-stat-number">4.8★</span>
+                  <span className="mini-stat-label">Rating</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </section>
+      </main>
 
       <Footer />
     </div>
