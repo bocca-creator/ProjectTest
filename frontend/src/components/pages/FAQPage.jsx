@@ -161,93 +161,97 @@ const FAQPage = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <main className="faq-content">
+      {/* Page Content - Sequential and Centered */}
+      <main className="page-content">
         <div className="content-container">
-          <div className="faq-layout">
-            {/* Categories Sidebar */}
-            <div className="faq-sidebar">
-              <h3>Categories</h3>
-              <div className="category-list">
-                {categories.map((category) => {
-                  const IconComponent = category.icon;
-                  const count = category.id === 'all' ? faqs.length : faqs.filter(faq => faq.category === category.id).length;
-                  
-                  return (
-                    <button
-                      key={category.id}
-                      onClick={() => setActiveCategory(category.id)}
-                      className={`category-item ${activeCategory === category.id ? 'active' : ''}`}
-                    >
-                      <IconComponent size={18} />
-                      <span>{category.name}</span>
-                      <span className="count">{count}</span>
-                    </button>
-                  );
-                })}
-              </div>
+          
+          {/* Categories Section */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>Browse by Category</h2>
             </div>
+            <div className="category-list">
+              {categories.map((category) => {
+                const IconComponent = category.icon;
+                const count = category.id === 'all' ? faqs.length : faqs.filter(faq => faq.category === category.id).length;
+                
+                return (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`category-item ${activeCategory === category.id ? 'active' : ''}`}
+                  >
+                    <IconComponent size={18} />
+                    <span>{category.name}</span>
+                    <span className="count">{count}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
-            {/* FAQ Content */}
-            <div className="faq-main">
-              {!searchTerm && activeCategory === 'all' && (
-                <div className="popular-section">
-                  <h2>Popular Questions</h2>
-                  <div className="popular-grid">
-                    {popularFAQs.map((faq) => (
-                      <div key={faq.id} className="popular-faq-card" onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}>
-                        <h4>{faq.question}</h4>
-                        <p>{faq.answer.substring(0, 100)}...</p>
-                        <span className="read-more">Click to read full answer</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <div className="faq-list">
-                <div className="faq-list-header">
-                  <h2>
-                    {activeCategory === 'all' ? 'All Questions' : categories.find(c => c.id === activeCategory)?.name}
-                  </h2>
-                  <span className="result-count">{filteredFAQs.length} questions</span>
-                </div>
-
-                {filteredFAQs.length === 0 && (
-                  <div className="no-results">
-                    <HelpCircle size={48} />
-                    <h3>No questions found</h3>
-                    <p>Try adjusting your search terms or select a different category.</p>
-                  </div>
-                )}
-
-                {filteredFAQs.map((faq) => (
-                  <div key={faq.id} className="faq-item">
-                    <div 
-                      className="faq-question"
-                      onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}
-                    >
-                      <h3>{faq.question}</h3>
-                      <div className="faq-meta">
-                        {faq.popular && <span className="popular-badge">Popular</span>}
-                        <ChevronDown 
-                          size={20} 
-                          className={`expand-icon ${expandedFAQ === faq.id ? 'expanded' : ''}`} 
-                        />
-                      </div>
-                    </div>
-                    
-                    <div className={`faq-answer ${expandedFAQ === faq.id ? 'expanded' : ''}`}>
-                      <p>{faq.answer}</p>
-                    </div>
+          {/* Popular Questions */}
+          {!searchTerm && activeCategory === 'all' && (
+            <div className="sequential-section">
+              <div className="section-header">
+                <h2>Popular Questions</h2>
+              </div>
+              <div className="popular-grid">
+                {popularFAQs.map((faq) => (
+                  <div key={faq.id} className="popular-faq-card" onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}>
+                    <h4>{faq.question}</h4>
+                    <p>{faq.answer.substring(0, 100)}...</p>
+                    <span className="read-more">Click to read full answer</span>
                   </div>
                 ))}
               </div>
             </div>
+          )}
+
+          {/* FAQ List */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>
+                {activeCategory === 'all' ? 'All Questions' : categories.find(c => c.id === activeCategory)?.name}
+              </h2>
+              <span className="result-count">{filteredFAQs.length} questions</span>
+            </div>
+
+            {filteredFAQs.length === 0 && (
+              <div className="no-results">
+                <HelpCircle size={48} />
+                <h3>No questions found</h3>
+                <p>Try adjusting your search terms or select a different category.</p>
+              </div>
+            )}
+
+            <div className="faq-list">
+              {filteredFAQs.map((faq) => (
+                <div key={faq.id} className="faq-item">
+                  <div 
+                    className="faq-question"
+                    onClick={() => setExpandedFAQ(expandedFAQ === faq.id ? null : faq.id)}
+                  >
+                    <h3>{faq.question}</h3>
+                    <div className="faq-meta">
+                      {faq.popular && <span className="popular-badge">Popular</span>}
+                      <ChevronDown 
+                        size={20} 
+                        className={`expand-icon ${expandedFAQ === faq.id ? 'expanded' : ''}`} 
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className={`faq-answer ${expandedFAQ === faq.id ? 'expanded' : ''}`}>
+                    <p>{faq.answer}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Still Need Help Section */}
-          <div className="help-section">
+          <div className="sequential-section">
             <div className="help-card">
               <h3>Still Need Help?</h3>
               <p>Can't find what you're looking for? Our support team is ready to assist you.</p>
@@ -261,6 +265,7 @@ const FAQPage = () => {
               </div>
             </div>
           </div>
+
         </div>
       </main>
 
