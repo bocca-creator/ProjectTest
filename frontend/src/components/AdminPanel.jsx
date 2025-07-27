@@ -616,8 +616,8 @@ const UserManagementCard = ({ user, onUpdateRole, onUpdateStatus, onAssignTier, 
         <div className="flex items-center gap-4 flex-1">
           {/* Avatar */}
           <div className="w-10 h-10 rounded-full bg-[var(--accent-primary)] flex items-center justify-center text-black font-bold">
-            {user.avatar_url ? (
-              <img src={user.avatar_url} alt={user.username} className="w-10 h-10 rounded-full object-cover" />
+            {user.avatar ? (
+              <img src={user.avatar} alt={user.username} className="w-10 h-10 rounded-full object-cover" />
             ) : (
               user.username.charAt(0).toUpperCase()
             )}
