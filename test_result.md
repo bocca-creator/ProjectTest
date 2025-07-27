@@ -672,6 +672,20 @@ agent_communication:
 user_problem_statement: "зроби щоб аватарки відображались правильно і перевір чи в всіх елемтах де є посилання на другі сторінки працують"
 
 backend:
+  - task: "Avatar Update Functionality Fix"
+    implemented: true
+    working: true
+    file: "repositories/user.py"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: false
+        agent: "testing"
+        comment: "Avatar update functionality was broken due to missing MongoDB fallback in user repository update_user method."
+      - working: true
+        agent: "testing"  
+        comment: "CRITICAL FIX APPLIED: Added MongoDB fallback implementation for user updates including avatar_url. Split update_user into MySQL and MongoDB implementations. Avatar updates now work correctly when MySQL is unavailable."
   - task: "JWT Authentication Fixes Verification"
     implemented: true
     working: true
