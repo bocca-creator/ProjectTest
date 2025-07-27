@@ -2235,16 +2235,7 @@ h1, h2, h3, h4, h5, h6 {
     height: 36px;
   }
 
-  .nav-controls {
-    display: none;
-  }
-  
-  .theme-dropdown,
-  .language-dropdown {
-    left: 0;
-    right: 0;
-    max-width: calc(100vw - 32px);
-  }
+
 
   .mobile-menu-btn {
     display: block;
