@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Backend API Testing Script - Admin Panel and Tier Endpoints
-Tests admin panel functionality and tier management endpoints
+Backend API Testing Script - Avatar Functionality and Authentication Endpoints
+Tests avatar functionality across all authentication and user management endpoints
 """
 
 import requests
 import json
 import sys
 import time
+import base64
 from typing import Dict, Any, Optional
 
 # Configuration
@@ -19,6 +20,16 @@ ADMIN_USER = {
     "email": "admin@admin.com",
     "password": "admin123"
 }
+
+TEST_USER = {
+    "username": "avatartest",
+    "email": "avatartest@example.com",
+    "password": "testpass123",
+    "display_name": "Avatar Test User"
+}
+
+# Sample base64 avatar data (small 1x1 pixel PNG)
+SAMPLE_AVATAR_BASE64 = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChAI9jU77zgAAAABJRU5ErkJggg=="
 
 class AdminPanelTester:
     def __init__(self):
