@@ -53,101 +53,101 @@ const MainContent = ({ announcements, reviews, discordData }) => {
       
       <main className="main-content">
         <div className="content-container">
-        {/* Left Column - Announcements */}
-        <div className="left-column">
-          <div className="section-header">
-            <h2>{t('announcements.title')}</h2>
-            <div className="header-line"></div>
-          </div>
-          
-          <div className="announcements-list">
-            {announcements.map((announcement) => (
-              <div 
-                key={announcement.id} 
-                className={`announcement-card ${announcement.pinned ? 'pinned' : ''}`}
-              >
-                <div className="card-header">
-                  <div className="announcement-meta">
-                    <span className="announcement-icon">
-                      {getAnnouncementIcon(announcement.type)}
-                    </span>
-                    <div className="meta-info">
-                      <h3 className="announcement-title">
-                        {announcement.pinned && <Pin size={16} className="pin-icon" />}
-                        {announcement.title}
-                      </h3>
-                      <div className="meta-details">
-                        <span className="author">{announcement.author}</span>
-                        <span className="separator">•</span>
-                        <span className="timestamp">{formatTimestamp(announcement.timestamp)}</span>
-                        <span className="type-badge type-{announcement.type}">{announcement.type}</span>
+          {/* Announcements Section - Centered */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>{t('announcements.title')}</h2>
+              <div className="header-line"></div>
+            </div>
+            
+            <div className="announcements-list">
+              {announcements.map((announcement) => (
+                <div 
+                  key={announcement.id} 
+                  className={`announcement-card ${announcement.pinned ? 'pinned' : ''}`}
+                >
+                  <div className="card-header">
+                    <div className="announcement-meta">
+                      <span className="announcement-icon">
+                        {getAnnouncementIcon(announcement.type)}
+                      </span>
+                      <div className="meta-info">
+                        <h3 className="announcement-title">
+                          {announcement.pinned && <Pin size={16} className="pin-icon" />}
+                          {announcement.title}
+                        </h3>
+                        <div className="meta-details">
+                          <span className="author">{announcement.author}</span>
+                          <span className="separator">•</span>
+                          <span className="timestamp">{formatTimestamp(announcement.timestamp)}</span>
+                          <span className="type-badge type-{announcement.type}">{announcement.type}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="card-content">
-                  <p className="announcement-content">{announcement.content}</p>
-                  <div className="card-actions">
-                    <button className="btn-ghost small">Read More</button>
-                    <button className="btn-ghost small">
-                      <MessageSquare size={14} />
-                      Comments
-                    </button>
+                  <div className="card-content">
+                    <p className="announcement-content">{announcement.content}</p>
+                    <div className="card-actions">
+                      <button className="btn-ghost small">Read More</button>
+                      <button className="btn-ghost small">
+                        <MessageSquare size={14} />
+                        Comments
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Right Column - Discord, Reviews, Social */}
-        <div className="right-column">
-          {/* Discord Widget */}
-          <div className="discord-widget">
-            <div className="widget-header">
-              <div className="discord-logo">
-                <div className="discord-icon"></div>
-                <span>Discord Server</span>
-              </div>
-              <div className="online-indicator">
-                <div className="online-dot"></div>
-                <span>{discordData.onlineMembers} online</span>
-              </div>
-            </div>
-            
-            <div className="discord-info">
-              <h3>{discordData.serverName}</h3>
-              <p>{discordData.totalMembers.toLocaleString()} members</p>
-            </div>
-
-            <div className="discord-channels">
-              <h4>Active Channels</h4>
-              {discordData.channels.slice(0, 3).map((channel, index) => (
-                <div key={index} className={`channel-item ${channel.active ? 'active' : ''}`}>
-                  <span className="channel-name"># {channel.name}</span>
-                  <span className="channel-count">{channel.memberCount}</span>
-                </div>
               ))}
             </div>
-
-            <div className="discord-activity">
-              <h4>Recent Activity</h4>
-              {discordData.recentMessages.slice(0, 2).map((message, index) => (
-                <div key={index} className="activity-item">
-                  <span className="username">{message.username}</span>
-                  <span className="message">{message.message}</span>
-                  <span className="time">{message.timestamp}</span>
-                </div>
-              ))}
-            </div>
-
-            <button className="btn-primary discord-join">
-              Join Discord Server
-            </button>
           </div>
 
-          {/* User Reviews Section */}
-          <div className="reviews-section">
+          {/* Discord Widget Section - Centered */}
+          <div className="sequential-section">
+            <div className="discord-widget">
+              <div className="widget-header">
+                <div className="discord-logo">
+                  <div className="discord-icon"></div>
+                  <span>Discord Server</span>
+                </div>
+                <div className="online-indicator">
+                  <div className="online-dot"></div>
+                  <span>{discordData.onlineMembers} online</span>
+                </div>
+              </div>
+              
+              <div className="discord-info">
+                <h3>{discordData.serverName}</h3>
+                <p>{discordData.totalMembers.toLocaleString()} members</p>
+              </div>
+
+              <div className="discord-channels">
+                <h4>Active Channels</h4>
+                {discordData.channels.slice(0, 3).map((channel, index) => (
+                  <div key={index} className={`channel-item ${channel.active ? 'active' : ''}`}>
+                    <span className="channel-name"># {channel.name}</span>
+                    <span className="channel-count">{channel.memberCount}</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="discord-activity">
+                <h4>Recent Activity</h4>
+                {discordData.recentMessages.slice(0, 2).map((message, index) => (
+                  <div key={index} className="activity-item">
+                    <span className="username">{message.username}</span>
+                    <span className="message">{message.message}</span>
+                    <span className="time">{message.timestamp}</span>
+                  </div>
+                ))}
+              </div>
+
+              <button className="btn-primary discord-join">
+                Join Discord Server
+              </button>
+            </div>
+          </div>
+
+          {/* User Reviews Section - Centered */}
+          <div className="sequential-section">
             <div className="section-header">
               <h3>Community Reviews</h3>
               <div className="review-stats">
@@ -187,9 +187,11 @@ const MainContent = ({ announcements, reviews, discordData }) => {
             <button className="btn-secondary">Write a Review</button>
           </div>
 
-          {/* Social Media Bar */}
-          <div className="social-media-bar">
-            <h3>Follow Us</h3>
+          {/* Social Media Section - Centered */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h3>Follow Us</h3>
+            </div>
             <div className="social-links">
               {mockData.socialMedia.map((social, index) => (
                 <a
@@ -211,15 +213,15 @@ const MainContent = ({ announcements, reviews, discordData }) => {
             </div>
           </div>
 
-          {/* Theme Editor */}
-          <div className="theme-editor-section">
-            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-4">
-              {t('themes.title')}
-            </h3>
+          {/* Theme Editor Section - Centered */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h3>{t('themes.title')}</h3>
+            </div>
             <ThemeEditor />
           </div>
+
         </div>
-      </div>
       </main>
     </>
   );
