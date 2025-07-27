@@ -3365,3 +3365,127 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 1200px;
   }
 }
+
+/* Announcements - Centered Layout */
+.announcements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.announcement-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.announcement-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+.announcement-card.pinned {
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 20px rgba(218, 255, 1, 0.1);
+}
+
+.announcement-card.pinned::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--accent-primary);
+}
+
+/* Discord Widget - Centered */
+.discord-widget {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 24px;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+.discord-widget::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #5865F2;
+}
+
+/* Reviews Section - Centered */
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.review-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.review-card:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+}
+
+/* Social Links - Centered */
+.social-links {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.social-link:hover {
+  border-color: var(--accent-primary);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* Theme Editor - Centered */
+.theme-editor-section {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
