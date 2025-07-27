@@ -175,130 +175,136 @@ const TeamPage = () => {
         </div>
       </section>
 
-      {/* Team Overview */}
-      <section className="team-overview">
+      {/* Page Content - Sequential and Centered */}
+      <main className="page-content">
         <div className="content-container">
-          <div className="overview-grid">
-            {departments.map((dept, index) => (
-              <div key={index} className="department-card">
-                <div className="dept-header">
-                  <h3 style={{ color: dept.color }}>{dept.name}</h3>
-                  <span className="member-count">{dept.memberCount} member{dept.memberCount !== 1 ? 's' : ''}</span>
+          
+          {/* Team Overview */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>Department Overview</h2>
+            </div>
+            <div className="overview-grid">
+              {departments.map((dept, index) => (
+                <div key={index} className="department-card">
+                  <div className="dept-header">
+                    <h3 style={{ color: dept.color }}>{dept.name}</h3>
+                    <span className="member-count">{dept.memberCount} member{dept.memberCount !== 1 ? 's' : ''}</span>
+                  </div>
+                  <p>{dept.description}</p>
+                  <div className="dept-bar" style={{ backgroundColor: `${dept.color}20`, borderLeft: `3px solid ${dept.color}` }}></div>
                 </div>
-                <p>{dept.description}</p>
-                <div className="dept-bar" style={{ backgroundColor: `${dept.color}20`, borderLeft: `3px solid ${dept.color}` }}></div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
 
-      {/* Team Members */}
-      <main className="team-members">
-        <div className="content-container">
-          <h2>Core Team Members</h2>
-          <div className="members-grid">
-            {teamMembers.map((member) => (
-              <div key={member.id} className="member-card">
-                <div className="member-header">
-                  <img src={member.avatar} alt={member.name} className="member-avatar" />
-                  <div className="member-status">
-                    <div style={getStatusDot(member.status)}></div>
-                    <span>{member.status}</span>
+          {/* Team Members */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h2>Core Team Members</h2>
+            </div>
+            <div className="members-grid">
+              {teamMembers.map((member) => (
+                <div key={member.id} className="member-card">
+                  <div className="member-header">
+                    <img src={member.avatar} alt={member.name} className="member-avatar" />
+                    <div className="member-status">
+                      <div style={getStatusDot(member.status)}></div>
+                      <span>{member.status}</span>
+                    </div>
+                  </div>
+
+                  <div className="member-info">
+                    <h3>{member.name}</h3>
+                    <div className="member-role">
+                      {getRoleIcon(member.role)}
+                      <span>{member.role}</span>
+                    </div>
+                    <div className="member-title">{member.title}</div>
+                    
+                    <p className="member-description">{member.description}</p>
+
+                    <div className="member-specialties">
+                      <h4>Specialties</h4>
+                      <div className="specialties-tags">
+                        {member.specialties.map((specialty, index) => (
+                          <span key={index} className="specialty-tag">{specialty}</span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="member-achievements">
+                      <h4>Achievements</h4>
+                      <ul>
+                        {member.achievements.map((achievement, index) => (
+                          <li key={index}>{achievement}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="member-meta">
+                      <div className="join-date">
+                        <span>Joined: {member.joinDate}</span>
+                      </div>
+                    </div>
+
+                    <div className="member-contact">
+                      <h4>Contact</h4>
+                      <div className="contact-methods">
+                        {member.contact.discord && (
+                          <div className="contact-item">
+                            <MessageSquare size={16} />
+                            <span>{member.contact.discord}</span>
+                          </div>
+                        )}
+                        {member.contact.email && (
+                          <div className="contact-item">
+                            <Mail size={16} />
+                            <span>{member.contact.email}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <div className="member-info">
-                  <h3>{member.name}</h3>
-                  <div className="member-role">
-                    {getRoleIcon(member.role)}
-                    <span>{member.role}</span>
-                  </div>
-                  <div className="member-title">{member.title}</div>
-                  
-                  <p className="member-description">{member.description}</p>
-
-                  <div className="member-specialties">
-                    <h4>Specialties</h4>
-                    <div className="specialties-tags">
-                      {member.specialties.map((specialty, index) => (
-                        <span key={index} className="specialty-tag">{specialty}</span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="member-achievements">
-                    <h4>Achievements</h4>
-                    <ul>
-                      {member.achievements.map((achievement, index) => (
-                        <li key={index}>{achievement}</li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="member-meta">
-                    <div className="join-date">
-                      <span>Joined: {member.joinDate}</span>
-                    </div>
-                  </div>
-
-                  <div className="member-contact">
-                    <h4>Contact</h4>
-                    <div className="contact-methods">
-                      {member.contact.discord && (
-                        <div className="contact-item">
-                          <MessageSquare size={16} />
-                          <span>{member.contact.discord}</span>
-                        </div>
-                      )}
-                      {member.contact.email && (
-                        <div className="contact-item">
-                          <Mail size={16} />
-                          <span>{member.contact.email}</span>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
+          {/* Join Team CTA */}
+          <div className="sequential-section">
+            <div className="join-team-card">
+              <h2>Want to Join Our Team?</h2>
+              <p>
+                We're always looking for passionate individuals who share our vision of building 
+                the best gaming community. Whether you're interested in moderation, event organization, 
+                development, or community management, we'd love to hear from you.
+              </p>
+              <div className="requirements">
+                <h3>What We Look For:</h3>
+                <ul>
+                  <li>Passion for gaming and community building</li>
+                  <li>Experience in relevant areas (moderation, development, events)</li>
+                  <li>Commitment to fair play and community values</li>
+                  <li>Active participation in ProjectTest community</li>
+                  <li>Ability to work collaboratively in a team environment</li>
+                </ul>
+              </div>
+              <div className="join-actions">
+                <button className="btn-primary" onClick={() => window.location.href = '/contact'}>
+                  <Mail size={18} />
+                  Apply Now
+                </button>
+                <button className="btn-secondary" onClick={() => window.location.href = '/'}>
+                  <Users size={18} />
+                  Join Community First
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
       </main>
-
-      {/* Join Team CTA */}
-      <section className="join-team-section">
-        <div className="content-container">
-          <div className="join-team-card">
-            <h2>Want to Join Our Team?</h2>
-            <p>
-              We're always looking for passionate individuals who share our vision of building 
-              the best gaming community. Whether you're interested in moderation, event organization, 
-              development, or community management, we'd love to hear from you.
-            </p>
-            <div className="requirements">
-              <h3>What We Look For:</h3>
-              <ul>
-                <li>Passion for gaming and community building</li>
-                <li>Experience in relevant areas (moderation, development, events)</li>
-                <li>Commitment to fair play and community values</li>
-                <li>Active participation in ProjectTest community</li>
-                <li>Ability to work collaboratively in a team environment</li>
-              </ul>
-            </div>
-            <div className="join-actions">
-              <button className="btn-primary" onClick={() => window.location.href = '/contact'}>
-                <Mail size={18} />
-                Apply Now
-              </button>
-              <button className="btn-secondary" onClick={() => window.location.href = '/'}>
-                <Users size={18} />
-                Join Community First
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
 
       <Footer />
     </div>
