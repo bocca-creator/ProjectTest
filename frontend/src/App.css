@@ -1369,6 +1369,9 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 16px;
   padding: 32px;
   text-align: center;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .help-actions {
@@ -1376,6 +1379,73 @@ h1, h2, h3, h4, h5, h6 {
   gap: 16px;
   justify-content: center;
   margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+/* Contact & FAQ Page Additional Styles - Centered */
+.methods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.form-container {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 32px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.support-info {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* FAQ Page Additional Styles - Centered */
+.category-list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.popular-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.search-container {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 /* Contact Page */
