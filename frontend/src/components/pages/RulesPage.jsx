@@ -198,93 +198,100 @@ const RulesPage = () => {
         </div>
       </section>
 
-      {/* Rules Content */}
-      <main className="rules-content">
+      {/* Rules Content - Sequential and Centered */}
+      <main className="page-content">
         <div className="content-container">
-          <div className="rules-introduction">
-            <div className="intro-card">
+          
+          {/* Introduction Section */}
+          <div className="sequential-section">
+            <div className="section-header">
               <h2>Before You Begin</h2>
-              <p>
+              <p className="section-subtitle">
                 Welcome to ProjectTest! These rules are designed to maintain a positive gaming environment. 
                 By participating in our community, you agree to follow these guidelines. Ignorance of rules is not an excuse for violations.
               </p>
-              <div className="intro-highlights">
-                <div className="highlight-item">
-                  <CheckCircle size={20} style={{ color: 'var(--success)' }} />
-                  <span>Rules apply to all community platforms</span>
-                </div>
-                <div className="highlight-item">
-                  <CheckCircle size={20} style={{ color: 'var(--success)' }} />
-                  <span>Admins have final discretion on rule interpretation</span>
-                </div>
-                <div className="highlight-item">
-                  <CheckCircle size={20} style={{ color: 'var(--success)' }} />
-                  <span>Rules may be updated - check regularly</span>
-                </div>
+            </div>
+            <div className="intro-highlights">
+              <div className="highlight-item">
+                <CheckCircle size={20} style={{ color: 'var(--success)' }} />
+                <span>Rules apply to all community platforms</span>
+              </div>
+              <div className="highlight-item">
+                <CheckCircle size={20} style={{ color: 'var(--success)' }} />
+                <span>Admins have final discretion on rule interpretation</span>
+              </div>
+              <div className="highlight-item">
+                <CheckCircle size={20} style={{ color: 'var(--success)' }} />
+                <span>Rules may be updated - check regularly</span>
               </div>
             </div>
           </div>
 
-          <div className="rules-sections">
-            {rulesSections.map((section) => {
-              const IconComponent = section.icon;
-              const isExpanded = expandedSection === section.id;
+          {/* Rules Sections */}
+          <div className="sequential-section">
+            <div className="rules-sections">
+              {rulesSections.map((section) => {
+                const IconComponent = section.icon;
+                const isExpanded = expandedSection === section.id;
 
-              return (
-                <div key={section.id} className="rules-section">
-                  <div 
-                    className="section-header" 
-                    onClick={() => setExpandedSection(isExpanded ? null : section.id)}
-                  >
-                    <div className="section-title">
-                      <IconComponent size={24} style={{ color: section.color }} />
-                      <h3>{section.title}</h3>
-                      <span className="rule-count">{section.rules.length} rules</span>
+                return (
+                  <div key={section.id} className="rules-section">
+                    <div 
+                      className="section-header" 
+                      onClick={() => setExpandedSection(isExpanded ? null : section.id)}
+                    >
+                      <div className="section-title">
+                        <IconComponent size={24} style={{ color: section.color }} />
+                        <h3>{section.title}</h3>
+                        <span className="rule-count">{section.rules.length} rules</span>
+                      </div>
+                      <div className={`expand-arrow ${isExpanded ? 'expanded' : ''}`}>
+                        ▼
+                      </div>
                     </div>
-                    <div className={`expand-arrow ${isExpanded ? 'expanded' : ''}`}>
-                      ▼
-                    </div>
-                  </div>
 
-                  <div className={`section-content ${isExpanded ? 'expanded' : ''}`}>
-                    {section.rules.map((rule) => (
-                      <div key={rule.number} className="rule-item">
-                        <div className="rule-header">
-                          <div className="rule-number">{rule.number}</div>
-                          <div className="rule-title-section">
-                            <h4 className="rule-title">{rule.title}</h4>
-                            <div 
-                              className="rule-severity"
-                              style={{ color: getSeverityColor(rule.severity) }}
-                            >
-                              {getSeverityIcon(rule.severity)}
-                              <span>{rule.severity}</span>
+                    <div className={`section-content ${isExpanded ? 'expanded' : ''}`}>
+                      {section.rules.map((rule) => (
+                        <div key={rule.number} className="rule-item">
+                          <div className="rule-header">
+                            <div className="rule-number">{rule.number}</div>
+                            <div className="rule-title-section">
+                              <h4 className="rule-title">{rule.title}</h4>
+                              <div 
+                                className="rule-severity"
+                                style={{ color: getSeverityColor(rule.severity) }}
+                              >
+                                {getSeverityIcon(rule.severity)}
+                                <span>{rule.severity}</span>
+                              </div>
                             </div>
                           </div>
+                          <p className="rule-description">{rule.description}</p>
                         </div>
-                        <p className="rule-description">{rule.description}</p>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="rules-footer-info">
-            <div className="info-card">
-              <h3>Need Help or Have Questions?</h3>
-              <p>If you're unsure about any rule or need clarification, don't hesitate to contact our admin team.</p>
-              <div className="info-actions">
-                <button className="btn-primary" onClick={() => window.location.href = '/contact'}>
-                  Contact Admins
-                </button>
-                <button className="btn-secondary" onClick={() => window.location.href = '/faq'}>
-                  View FAQ
-                </button>
-              </div>
+                );
+              })}
             </div>
           </div>
+
+          {/* Footer Info Section */}
+          <div className="sequential-section">
+            <div className="section-header">
+              <h3>Need Help or Have Questions?</h3>
+              <p className="section-subtitle">If you're unsure about any rule or need clarification, don't hesitate to contact our admin team.</p>
+            </div>
+            <div className="info-actions">
+              <button className="btn-primary" onClick={() => window.location.href = '/contact'}>
+                Contact Admins
+              </button>
+              <button className="btn-secondary" onClick={() => window.location.href = '/faq'}>
+                View FAQ
+              </button>
+            </div>
+          </div>
+
         </div>
       </main>
 
