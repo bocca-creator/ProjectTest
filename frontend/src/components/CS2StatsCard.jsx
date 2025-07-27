@@ -110,38 +110,38 @@ const CS2StatsCard = ({ userId = null, isCompact = false }) => {
 
   if (isCompact) {
     return (
-      <div className="bg-[var(--bg-secondary)] border border-[var(--border-subtle)] rounded-lg p-3">
-        <div className="flex items-center justify-between mb-2">
-          <div className="flex items-center gap-2">
-            <Crosshair className="h-4 w-4 text-[var(--accent-primary)]" />
-            <span className="text-sm font-medium text-[var(--text-primary)]">CS2</span>
+      <div className="cs2-stats-compact">
+        <div className="cs2-stats-header">
+          <div className="cs2-stats-title">
+            <Crosshair className="cs2-icon" />
+            <span className="cs2-title-text">CS2</span>
           </div>
           <div 
-            className="text-xs px-2 py-1 rounded-full text-white font-medium"
+            className="cs2-rank-badge"
             style={{ backgroundColor: getRankColor(playerStats.current_rank) }}
           >
             {playerStats.current_rank}
           </div>
         </div>
         
-        <div className="grid grid-cols-3 gap-2 text-center">
-          <div>
-            <div className="text-lg font-bold text-[var(--accent-primary)] font-mono">
+        <div className="cs2-stats-grid">
+          <div className="cs2-stat-item">
+            <div className="cs2-stat-value">
               {playerStats.kd_ratio || '0.00'}
             </div>
-            <div className="text-xs text-[var(--text-muted)]">K/D</div>
+            <div className="cs2-stat-label">K/D</div>
           </div>
-          <div>
-            <div className="text-lg font-bold text-[var(--accent-primary)] font-mono">
+          <div className="cs2-stat-item">
+            <div className="cs2-stat-value">
               {playerStats.win_rate || 0}%
             </div>
-            <div className="text-xs text-[var(--text-muted)]">Win Rate</div>
+            <div className="cs2-stat-label">Win Rate</div>
           </div>
-          <div>
-            <div className="text-lg font-bold text-[var(--accent-primary)] font-mono">
+          <div className="cs2-stat-item">
+            <div className="cs2-stat-value">
               {playerStats.matches_played || 0}
             </div>
-            <div className="text-xs text-[var(--text-muted)]">Matches</div>
+            <div className="cs2-stat-label">Matches</div>
           </div>
         </div>
       </div>
