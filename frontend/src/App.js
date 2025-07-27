@@ -16,6 +16,7 @@ import PlayerDashboard from './components/PlayerDashboard';
 import AdminPanel from './components/AdminPanel';
 import RanksPage from './components/pages/RanksPage';
 import SidebarDemo from './components/pages/SidebarDemo';
+import SidebarPreview from './components/pages/SidebarPreview';
 
 function App() {
   return (
