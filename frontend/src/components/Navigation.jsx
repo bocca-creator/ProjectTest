@@ -23,6 +23,7 @@ const Navigation = () => {
     { name: t('nav.leaderboard'), href: '/leaderboard', path: '/leaderboard' },
     { name: t('nav.supportUs'), href: '/ranks', path: '/ranks' },
     { name: 'Sidebar Demo', href: '/sidebar-demo', path: '/sidebar-demo' },
+    { name: 'Sidebar Preview', href: '/sidebar-preview', path: '/sidebar-preview' },
     { name: t('nav.rules'), href: '/rules', path: '/rules' },
     { name: t('nav.faq'), href: '/faq', path: '/faq' },
     { name: t('nav.about'), href: '/about', path: '/about' },
