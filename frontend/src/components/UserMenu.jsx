@@ -31,9 +31,9 @@ const UserMenu = () => {
       >
         {/* Avatar */}
         <div className="h-8 w-8 rounded-full bg-[var(--accent-primary)] flex items-center justify-center text-black font-medium">
-          {user.avatar_url ? (
+          {user.avatar ? (
             <img
-              src={user.avatar_url}
+              src={user.avatar}
               alt={user.display_name || user.username}
               className="h-8 w-8 rounded-full object-cover"
             />
