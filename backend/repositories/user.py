@@ -366,6 +366,15 @@ class UserRepository:
 
     async def update_user(self, user_id: str, user_data: UserUpdate) -> Optional[User]:
         """Update user information"""
+        # Try MySQL first
+        if mysql_db.pool:
+            return await self._update_user_mysql(user_id, user_data)
+        else:
+            # Fall back to MongoDB
+            return await self._update_user_mongodb(user_id, user_data)
+    
+    async def _update_user_mysql(self, user_id: str, user_data: UserUpdate) -> Optional[User]:
+        """Update user information in MySQL"""
         try:
             async with mysql_db.get_connection() as conn:
                 if not conn:
@@ -415,7 +424,53 @@ class UserRepository:
                     return await self.get_user_by_id(user_id)
                     
         except Exception as e:
-            logger.error(f"Error updating user: {e}")
+            logger.error(f"Error updating user in MySQL: {e}")
+            return None
+    
+    async def _update_user_mongodb(self, user_id: str, user_data: UserUpdate) -> Optional[User]:
+        """Update user information in MongoDB as fallback"""
+        try:
+            mongo_db = get_mongo_db()
+            if mongo_db is None:
+                return None
+            
+            # Build update document
+            update_doc = {"updated_at": datetime.utcnow()}
+            
+            if user_data.display_name is not None:
+                update_doc["display_name"] = user_data.display_name
+            
+            if user_data.bio is not None:
+                update_doc["bio"] = user_data.bio
+            
+            if user_data.avatar_url is not None:
+                update_doc["avatar_url"] = user_data.avatar_url
+            
+            if user_data.preferences:
+                update_doc["preferences"] = {
+                    "language": user_data.preferences.language,
+                    "theme": user_data.preferences.theme,
+                    "custom_theme": user_data.preferences.custom_theme,
+                    "notifications": user_data.preferences.notifications,
+                    "steam_profile_public": user_data.preferences.steam_profile_public
+                }
+            
+            # Update user in MongoDB
+            result = await mongo_db.users.update_one(
+                {"id": user_id},
+                {"$set": update_doc}
+            )
+            
+            if result.modified_count > 0:
+                logger.info(f"User updated successfully in MongoDB: {user_id}")
+                # Return updated user
+                return await self.get_user_by_id(user_id)
+            else:
+                logger.warning(f"No user found to update in MongoDB: {user_id}")
+                return None
+                
+        except Exception as e:
+            logger.error(f"Error updating user in MongoDB: {e}")
             return None
 
     def _row_to_user(self, row) -> User:
