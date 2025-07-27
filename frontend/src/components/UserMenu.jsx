@@ -67,16 +67,16 @@ const UserMenu = () => {
           />
           
           {/* Menu */}
-          <div className="absolute right-0 mt-2 w-80 bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg shadow-lg z-50">
+          <div className="user-menu-dropdown">
             {/* User Info Header */}
-            <div className="p-4 border-b border-[var(--border-subtle)]">
-              <div className="flex items-center gap-3">
-                <div className="h-10 w-10 rounded-full bg-[var(--accent-primary)] flex items-center justify-center text-black font-medium">
+            <div className="user-menu-header">
+              <div className="user-menu-profile">
+                <div className="user-menu-avatar">
                   {user.avatar_url ? (
                     <img
                       src={user.avatar_url}
                       alt={user.display_name || user.username}
-                      className="h-10 w-10 rounded-full object-cover"
+                      className="w-full h-full rounded-full object-cover"
                     />
                   ) : (
                     <span>
@@ -84,19 +84,19 @@ const UserMenu = () => {
                     </span>
                   )}
                 </div>
-                <div className="flex-1">
-                  <p className="font-medium text-[var(--text-primary)]">
+                <div className="user-menu-info">
+                  <div className="user-menu-name">
                     {user.display_name || user.username}
-                  </p>
-                  <p className="text-sm text-[var(--text-muted)]">
+                  </div>
+                  <div className="user-menu-email">
                     {user.email}
-                  </p>
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-[var(--accent-bg)] text-[var(--accent-primary)] capitalize">
+                  </div>
+                  <div className="user-menu-badges">
+                    <span className="user-menu-badge badge-role">
                       {user.role}
                     </span>
                     {user.steam_id && (
-                      <span className="text-xs px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-400">
+                      <span className="user-menu-badge badge-steam">
                         Steam Linked
                       </span>
                     )}
@@ -106,23 +106,21 @@ const UserMenu = () => {
             </div>
 
             {/* CS2 Statistics */}
-            <div className="p-4 border-b border-[var(--border-subtle)]">
+            <div className="user-menu-stats">
               <CS2StatsCard isCompact={true} />
             </div>
 
             {/* Menu Items */}
-            <div className="py-2">
+            <div className="user-menu-navigation">
               <button
                 onClick={() => {
                   setIsOpen(false);
                   navigate('/dashboard');
                 }}
-                className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors"
+                className="user-menu-item"
               >
-                <BarChart3 className="h-4 w-4 text-[var(--text-muted)]" />
-                <span className="text-[var(--text-primary)]">
-                  Player Dashboard
-                </span>
+                <BarChart3 />
+                <span>Player Dashboard</span>
               </button>
               
               <button
@@ -130,12 +128,10 @@ const UserMenu = () => {
                   setShowLeaderboard(true);
                   setIsOpen(false);
                 }}
-                className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors"
+                className="user-menu-item"
               >
-                <Trophy className="h-4 w-4 text-[var(--text-muted)]" />
-                <span className="text-[var(--text-primary)]">
-                  CS2 Leaderboard
-                </span>
+                <Trophy />
+                <span>CS2 Leaderboard</span>
               </button>
               
               <button
@@ -143,12 +139,10 @@ const UserMenu = () => {
                   setIsOpen(false);
                   navigate('/account');
                 }}
-                className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors"
+                className="user-menu-item"
               >
-                <User className="h-4 w-4 text-[var(--text-muted)]" />
-                <span className="text-[var(--text-primary)]">
-                  Quick Account
-                </span>
+                <User />
+                <span>Quick Account</span>
               </button>
 
               {/* Admin Panel - Only show for admin users */}
@@ -158,47 +152,43 @@ const UserMenu = () => {
                     setIsOpen(false);
                     navigate('/admin');
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--bg-tertiary)] transition-colors group"
+                  className="user-menu-item admin"
                 >
-                  <Shield className="h-4 w-4 text-red-400 group-hover:text-red-300" />
-                  <span className="text-red-400 group-hover:text-red-300 font-medium">
-                    Admin Panel
-                  </span>
+                  <Shield />
+                  <span>Admin Panel</span>
                 </button>
               )}
             </div>
 
             {/* Logout */}
-            <div className="border-t border-[var(--border-subtle)] py-2">
+            <div className="user-menu-footer">
               <button
                 onClick={handleLogout}
-                className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-[var(--error)]/10 transition-colors group"
+                className="user-menu-logout"
               >
-                <LogOut className="h-4 w-4 text-[var(--text-muted)] group-hover:text-[var(--error)]" />
-                <span className="text-[var(--text-primary)] group-hover:text-[var(--error)]">
-                  {t('auth.signOut', 'Sign Out')}
-                </span>
+                <LogOut />
+                <span>{t('auth.signOut', 'Sign Out')}</span>
               </button>
             </div>
 
             {/* User Stats */}
-            <div className="border-t border-[var(--border-subtle)] p-4">
-              <div className="grid grid-cols-2 gap-4 text-center">
-                <div>
-                  <p className="text-lg font-bold text-[var(--accent-primary)]">
+            <div className="user-menu-user-stats">
+              <div className="user-stats-grid">
+                <div className="user-stat-item">
+                  <div className="user-stat-value">
                     {user.login_count || 0}
-                  </p>
-                  <p className="text-xs text-[var(--text-muted)]">
+                  </div>
+                  <div className="user-stat-label">
                     {t('user.logins', 'Logins')}
-                  </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="text-lg font-bold text-[var(--accent-primary)]">
+                <div className="user-stat-item">
+                  <div className="user-stat-value">
                     {user.last_login ? new Date(user.last_login).toLocaleDateString() : 'Never'}
-                  </p>
-                  <p className="text-xs text-[var(--text-muted)]">
+                  </div>
+                  <div className="user-stat-label">
                     {t('user.lastLogin', 'Last Login')}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
