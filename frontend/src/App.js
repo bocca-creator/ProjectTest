@@ -38,6 +38,7 @@ function App() {
                 <Route path="/admin" element={<AdminPanel />} />
                 <Route path="/ranks" element={<RanksPage />} />
                 <Route path="/sidebar-demo" element={<SidebarDemo />} />
+                <Route path="/sidebar-preview" element={<SidebarPreview />} />
               </Routes>
             </BrowserRouter>
           </div>
