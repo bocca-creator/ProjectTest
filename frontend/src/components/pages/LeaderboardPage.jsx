@@ -197,24 +197,42 @@ const LeaderboardPage = () => {
                           </div>
                           
                           {/* Player Info */}
-                          <div className="flex flex-col">
-                            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1">
-                              {entry.display_name || entry.username}
-                              {isAuthenticated && user?.username === entry.username && (
-                                <span className="ml-2 px-2 py-1 bg-[var(--accent-primary)] text-black text-xs rounded-full font-medium">
-                                  You
+                          <div className="flex items-center gap-4">
+                            {/* Avatar */}
+                            <div className="w-12 h-12 rounded-full bg-[var(--accent-primary)] flex items-center justify-center text-black font-bold">
+                              {entry.avatar ? (
+                                <img 
+                                  src={entry.avatar} 
+                                  alt={entry.display_name || entry.username}
+                                  className="w-12 h-12 rounded-full object-cover"
+                                />
+                              ) : (
+                                <span className="text-lg">
+                                  {(entry.display_name || entry.username).charAt(0).toUpperCase()}
                                 </span>
                               )}
-                            </h3>
-                            <p className="text-[var(--text-muted)]">@{entry.username}</p>
-                            {entry.rank <= 3 && (
-                              <div className="flex items-center gap-2 mt-1">
-                                <div className="h-1 w-1 rounded-full bg-[var(--accent-primary)]"></div>
-                                <span className="text-xs text-[var(--accent-primary)] font-medium">
-                                  {entry.rank === 1 ? 'Champion' : entry.rank === 2 ? 'Runner-up' : 'Third Place'}
-                                </span>
-                              </div>
-                            )}
+                            </div>
+                            
+                            {/* Player Details */}
+                            <div className="flex flex-col">
+                              <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-1">
+                                {entry.display_name || entry.username}
+                                {isAuthenticated && user?.username === entry.username && (
+                                  <span className="ml-2 px-2 py-1 bg-[var(--accent-primary)] text-black text-xs rounded-full font-medium">
+                                    You
+                                  </span>
+                                )}
+                              </h3>
+                              <p className="text-[var(--text-muted)]">@{entry.username}</p>
+                              {entry.rank <= 3 && (
+                                <div className="flex items-center gap-2 mt-1">
+                                  <div className="h-1 w-1 rounded-full bg-[var(--accent-primary)]"></div>
+                                  <span className="text-xs text-[var(--accent-primary)] font-medium">
+                                    {entry.rank === 1 ? 'Champion' : entry.rank === 2 ? 'Runner-up' : 'Third Place'}
+                                  </span>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
 
