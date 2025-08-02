@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Navigation from '../Navigation';
 import Footer from '../Footer';
 import { Shield, AlertTriangle, CheckCircle, Users, Gamepad2, MessageSquare, Ban, Eye, Clock } from 'lucide-react';
+import { useLanguage } from '../../contexts/LanguageContext';
 
 const RulesPage = () => {
   const [user, setUser] = useState(null);
   const [expandedSection, setExpandedSection] = useState(null);
+  const { t, currentLanguage } = useLanguage();
 
   const handleLogin = (userData) => {
     setUser(userData);
@@ -15,272 +17,547 @@ const RulesPage = () => {
     setUser(null);
   };
 
-  const rulesSections = [
-    {
-      id: 'communication',
-      title: 'Правила общения',
-      icon: MessageSquare,
-      color: 'var(--accent-primary)',
-      rules: [
+  // Define rules based on current language
+  const getRulesData = () => {
+    if (currentLanguage === 'uk') {
+      return [
         {
-          number: '1',
-          title: 'Неприемлемое поведение',
-          description: 'Запрещены все формы неприемлемого поведения: оскорбления, унижение, угрозы, троллинг, флейм, а также любые проявления буллинга.',
-          severity: 'critical',
-          punishment: 'Мут',
-          duration: '4 часа'
+          id: 'communication',
+          title: 'Правила спілкування',
+          icon: MessageSquare,
+          color: 'var(--accent-primary)',
+          rules: [
+            {
+              number: '1',
+              title: 'Неприйнятна поведінка',
+              description: 'Заборонені всі форми неприйнятної поведінки: образи, приниження, погрози, тролінг, флейм, а також будь-які прояви булінгу.',
+              severity: 'critical',
+              punishment: 'Мут',
+              duration: '4 години'
+            },
+            {
+              number: '2',
+              title: 'Спам',
+              description: 'Заборонено багаторазове повторення однієї і тієї ж фрази в голосовому або текстовому чаті (спам).',
+              severity: 'high',
+              punishment: 'Мут',
+              duration: '4 години'
+            },
+            {
+              number: '3',
+              title: 'Расизм і дискримінація',
+              description: 'Заборонені прояви расизму, нацизму, сексизму, підбурювання до міжнаціональної ворожнечі, а також політичні обговорення.',
+              severity: 'critical',
+              punishment: 'Бан',
+              duration: '1 день'
+            },
+            {
+              number: '4',
+              title: 'Згадування рідних',
+              description: 'Не допускається згадування рідних у будь-якому контексті.',
+              severity: 'critical',
+              punishment: 'Мут',
+              duration: 'Тиждень'
+            },
+            {
+              number: '5',
+              title: 'Вікові обмеження для голосового чату',
+              description: 'Заборонено використання голосового чату особам молодше 15 років. Виняток: якщо вони поводяться адекватно, не порушують правила, надають ігрову інформацію і не зловживають голосовим чатом.',
+              severity: 'high',
+              punishment: 'Мут',
+              duration: 'Місяць'
+            },
+            {
+              number: '6',
+              title: 'SoundPad і зміна голосу',
+              description: 'Використання SoundPad і аналогічних програм, а також використання мікрофонів, що видають гучні, фонічні звуки і програм для зміни голосу заборонені.',
+              severity: 'medium',
+              punishment: 'Мут',
+              duration: '4 години'
+            },
+            {
+              number: '7',
+              title: 'Випрошування',
+              description: 'Заборонено просити що-небудь у інших Гравців або Адміністрації проекту, за винятком, коли йдеться про дроп.',
+              severity: 'medium',
+              punishment: 'Мут',
+              duration: '4 години'
+            },
+            {
+              number: '8',
+              title: 'Моніторинг чатів',
+              description: 'Заборонено моніторити голосові/текстові чати, а також використовувати сторонні програми для цього.',
+              severity: 'critical',
+              punishment: 'Бан',
+              duration: '1 день'
+            }
+          ]
         },
         {
-          number: '2',
-          title: 'Спам',
-          description: 'Запрещено многократное повторение одной и той же фразы в голосовом или текстовом чате (спам).',
-          severity: 'high',
-          punishment: 'Мут',
-          duration: '4 часа'
+          id: 'identity',
+          title: 'Ідентичність і представлення',
+          icon: Users,
+          color: 'var(--accent-blue)',
+          rules: [
+            {
+              number: '9',
+              title: 'Видавання себе за адміністратора',
+              description: 'Заборонено представляти себе Адміністратором або використовувати чужу особу в ніку, чаті, ярликах зброї і таб-тегах. Не можна використовувати префікси або ніки, що належать Адміністраторам або Керівному складу проекту.',
+              severity: 'critical',
+              punishment: 'Бан',
+              duration: 'Тиждень'
+            },
+            {
+              number: '10',
+              title: 'Образливі ніки і аватари',
+              description: 'Заборонено встановлювати образливі аватари, ніки, теги кланів і ярлики на зброю.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: '1 день'
+            },
+            {
+              number: '11',
+              title: 'Зловживання командами',
+              description: 'Заборонено зловживання командами report, votekick, voteban і votemute з метою прискорити реакцію Адміністрації або привернути увагу без достатніх підстав.',
+              severity: 'medium',
+              punishment: 'Бан',
+              duration: '4 години'
+            }
+          ]
         },
         {
-          number: '3',
-          title: 'Расизм и дискриминация',
-          description: 'Запрещены проявления расизма, нацизма, сексизма, подстрекательство к межнациональной розни, а также политические обсуждения.',
-          severity: 'critical',
-          punishment: 'Бан',
-          duration: '1 день'
+          id: 'advertising',
+          title: 'Реклама і торгівля',
+          icon: Ban,
+          color: 'var(--accent-purple)',
+          rules: [
+            {
+              number: '12',
+              title: 'Реклама і торгівля',
+              description: 'Заборонена будь-яка реклама сторонніх ресурсів, стримінгових майданчиків і продажів, обмін, покупка або трейдинг будь-яких речей, надання послуг за реальну валюту. За поширення інформації про інші сервери і ігрові проекти - бан назавжди.',
+              severity: 'critical',
+              punishment: 'Бан',
+              duration: 'Тиждень'
+            }
+          ]
         },
         {
-          number: '4',
-          title: 'Упоминание родных',
-          description: 'Не допускается упоминание родных в любом контексте.',
-          severity: 'critical',
-          punishment: 'Мут',
-          duration: 'Неделя'
+          id: 'administration',
+          title: 'Взаємодія з адміністрацією',
+          icon: Shield,
+          color: 'var(--accent-orange)',
+          rules: [
+            {
+              number: '13',
+              title: 'Покидання сервера після порушення',
+              description: 'Після порушення правил заборонено покидати сервер з метою уникнути покарання.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: 'Тиждень'
+            },
+            {
+              number: '14',
+              title: 'Ігнорування адміністратора',
+              description: 'Заборонено ігнорувати вимоги Адміністратора.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: '1 день'
+            },
+            {
+              number: '15',
+              title: 'Образа адміністрації',
+              description: 'Заборонено ображати Адміністрацію проекту, а також обговорювати, засуджувати або критикувати їх дії.',
+              severity: 'medium',
+              punishment: 'Мут',
+              duration: '4 години'
+            },
+            {
+              number: '16',
+              title: 'Критика проекту',
+              description: 'Заборонені негативні висловлювання і деструктивна критика на адресу проекту в будь-якій формі.',
+              severity: 'medium',
+              punishment: 'Бан',
+              duration: '4 години'  
+            },
+            {
+              number: '17',
+              title: 'Провокації і особисті дані',
+              description: 'Заборонено провокувати гравців на дії, що порушують правила проекту, а також обговорювати особисті дані або події, що стосуються реального життя.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: '1 день'
+            },
+            {
+              number: '18',
+              title: 'Розкриття присутності адміністрації',
+              description: 'Заборонено розкриття присутності Адміністрації на сервері.',
+              severity: 'medium',
+              punishment: 'Мут',
+              duration: '4 години'
+            },
+            {
+              number: '19',
+              title: 'Експлуатація недопрацювань',
+              description: 'Заборонена експлуатація недопрацювань у правилах або провокаційна поведінка щодо Адміністрації.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: '1 день'
+            },
+            {
+              number: '23',
+              title: 'Звернення до адміністратора',
+              description: 'Заборонено звертатися до Адміністратора без поважної причини, а також створювати перешкоди і відволікати від виконання їх обов\'язків.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: '1 день'
+            }
+          ]
         },
         {
-          number: '5',
-          title: 'Возрастные ограничения для голосового чата',
-          description: 'Запрещено использование голосового чата лицам младше 15 лет. Исключение: если они ведут себя адекватно, не нарушают правила, предоставляют игровую информацию и не злоупотребляют голосовым чатом.',
-          severity: 'high',
-          punishment: 'Мут',
-          duration: 'Месяц'
+          id: 'gameplay',
+          title: 'Ігровий процес',
+          icon: Gamepad2,
+          color: 'var(--success)',
+          rules: [
+            {
+              number: '20',
+              title: 'Заборонене ПО',
+              description: 'Заборонено використовувати будь-яке ПО, заборонене офіційним розробником Valve.',
+              severity: 'critical',
+              punishment: 'Бан',
+              duration: 'Назавжди'
+            },
+            {
+              number: '21',
+              title: 'Баги і глітчі',
+              description: 'Забороняється використовувати баги і глітчі.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: '1 день'
+            },
+            {
+              number: '22',
+              title: 'Заважання команді',
+              description: 'Заборонено відхилятися від виконання завдань і здійснювати дії, не пов\'язані з цілями гри, а також заважати гравцям своєї команди, включаючи навмисне заважання і перешкоджання, такі як біганина за союзниками і постійне заважання їх діям, стрільба, осліплення і т. д.',
+              severity: 'medium',
+              punishment: 'Бан',
+              duration: '1 година'
+            }
+          ]
         },
         {
-          number: '6',
-          title: 'SoundPad и изменение голоса',
-          description: 'Использование SoundPad и аналогичных программ, а также использование микрофонов, издающих громкие, фонящие звуки и программ для изменения голоса запрещены.',
-          severity: 'medium',
-          punishment: 'Мут',
-          duration: '4 часа'
-        },
-        {
-          number: '7',
-          title: 'Попрошайничество',
-          description: 'Запрещено просить что-либо у других Игроков или Администрации проекта, за исключением, когда речь идет о дропе.',
-          severity: 'medium',
-          punishment: 'Мут',
-          duration: '4 часа'
-        },
-        {
-          number: '8',
-          title: 'Мониторинг чатов',
-          description: 'Запрещено мониторить голосовые/текстовые чаты, а также использовать сторонние программы для этого.',
-          severity: 'critical',
-          punishment: 'Бан',
-          duration: '1 день'
+          id: 'additional',
+          title: 'Додаткові положення',
+          icon: Eye,
+          color: 'var(--text-muted)',
+          rules: [
+            {
+              number: '24',
+              title: 'Права адміністраторів',
+              description: 'Адміністратори мають право застосовувати різні форми покарання відповідно до характеру порушення, включаючи як м\'які, так і більш суворі заходи, якщо це необхідно. У разі необхідності Адміністратор повинен поінформувати Куратора і Модератора про ситуацію.',
+              severity: 'info',
+              punishment: 'За рішенням',
+              duration: 'За ситуацією'
+            },
+            {
+              number: '25',
+              title: 'Обхід блокувань',
+              description: 'Заборонений обхід будь-яких блокувань за допомогою інших акаунтів Steam.',
+              severity: 'critical',
+              punishment: 'Бан',
+              duration: 'Назавжди'
+            },
+            {
+              number: '26',
+              title: 'VAC блокування',
+              description: 'Заборонено грати маючи акаунти з блокуванням VAC, тривалістю менше 3 місяців.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: 'До закінчення терміну'
+            },
+            {
+              number: '27',
+              title: 'Після видалення читів',
+              description: 'Щоб грати на сервері після видалення читів, необхідно почекати 3 місяці.',
+              severity: 'high',
+              punishment: 'Бан',
+              duration: '3 місяці'
+            }
+          ]
         }
-      ]
-    },
-    {
-      id: 'identity',
-      title: 'Идентичность и представление',
-      icon: Users,
-      color: 'var(--accent-blue)',
-      rules: [
+      ];
+    } else {
+      // English rules
+      return [
         {
-          number: '9',
-          title: 'Выдача себя за администратора',
-          description: 'Запрещено представлять себя Администратором или использовать чужую личность в нике, чате, ярлыках оружия и таб-тегах. Нельзя использовать префиксы или ники, принадлежащие Администраторам или Руководящему составу проекта.',
-          severity: 'critical',
-          punishment: 'Бан',
-          duration: 'Неделя'
+          id: 'communication',
+          title: 'Communication Rules',
+          icon: MessageSquare,
+          color: 'var(--accent-primary)',
+          rules: [
+            {
+              number: '1',
+              title: 'Unacceptable Behavior',
+              description: 'All forms of unacceptable behavior are prohibited: insults, humiliation, threats, trolling, flaming, as well as any manifestations of bullying.',
+              severity: 'critical',
+              punishment: 'Mute',
+              duration: '4 hours'
+            },
+            {
+              number: '2',
+              title: 'Spam',
+              description: 'Repeated repetition of the same phrase in voice or text chat (spam) is prohibited.',
+              severity: 'high',
+              punishment: 'Mute',
+              duration: '4 hours'
+            },
+            {
+              number: '3',
+              title: 'Racism and Discrimination',
+              description: 'Manifestations of racism, Nazism, sexism, incitement to ethnic hatred, as well as political discussions are prohibited.',
+              severity: 'critical',
+              punishment: 'Ban',
+              duration: '1 day'
+            },
+            {
+              number: '4',
+              title: 'Family Mentions',
+              description: 'Mentioning family members in any context is not allowed.',
+              severity: 'critical',
+              punishment: 'Mute',
+              duration: '1 week'
+            },
+            {
+              number: '5',
+              title: 'Age Restrictions for Voice Chat',
+              description: 'Use of voice chat is prohibited for persons under 15 years of age. Exception: if they behave adequately, do not violate rules, provide game information and do not abuse voice chat.',
+              severity: 'high',
+              punishment: 'Mute',
+              duration: '1 month'
+            },
+            {
+              number: '6',
+              title: 'SoundPad and Voice Modification',
+              description: 'Use of SoundPad and similar programs, as well as microphones that produce loud, distorted sounds and voice modification programs are prohibited.',
+              severity: 'medium',
+              punishment: 'Mute',
+              duration: '4 hours'
+            },
+            {
+              number: '7',
+              title: 'Begging',
+              description: 'It is prohibited to ask for anything from other Players or Project Administration, except when it comes to drops.',
+              severity: 'medium',
+              punishment: 'Mute',
+              duration: '4 hours'
+            },
+            {
+              number: '8',
+              title: 'Chat Monitoring',
+              description: 'It is prohibited to monitor voice/text chats, as well as use third-party programs for this purpose.',
+              severity: 'critical',
+              punishment: 'Ban',
+              duration: '1 day'
+            }
+          ]
         },
         {
-          number: '10',
-          title: 'Оскорбительные ники и аватары',
-          description: 'Запрещено устанавливать оскорбительные аватары, ники, теги кланов и ярлыки на оружие.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: '1 день'
+          id: 'identity',
+          title: 'Identity and Representation',
+          icon: Users,
+          color: 'var(--accent-blue)',
+          rules: [
+            {
+              number: '9',
+              title: 'Impersonating Administrator',
+              description: 'It is prohibited to represent yourself as an Administrator or use someone else\'s identity in nickname, chat, weapon labels and tab-tags. You cannot use prefixes or nicknames belonging to Administrators or Management staff of the project.',
+              severity: 'critical',
+              punishment: 'Ban',
+              duration: '1 week'
+            },
+            {
+              number: '10',
+              title: 'Offensive Nicknames and Avatars',
+              description: 'It is prohibited to set offensive avatars, nicknames, clan tags and weapon labels.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '1 day'
+            },
+            {
+              number: '11',
+              title: 'Command Abuse',
+              description: 'Abuse of report, votekick, voteban and votemute commands to speed up Administration reaction or attract attention without sufficient grounds is prohibited.',
+              severity: 'medium',
+              punishment: 'Ban',
+              duration: '4 hours'
+            }
+          ]
         },
         {
-          number: '11',
-          title: 'Злоупотребление командами',
-          description: 'Запрещено злоупотребление командами report, votekick, voteban и votemute с целью ускорить реакцию Администрации или привлечь внимание без достаточных оснований.',
-          severity: 'medium',
-          punishment: 'Бан',
-          duration: '4 часа'
+          id: 'advertising',
+          title: 'Advertising and Trading',
+          icon: Ban,
+          color: 'var(--accent-purple)',
+          rules: [
+            {
+              number: '12',
+              title: 'Advertising and Trading',
+              description: 'Any advertising of third-party resources, streaming platforms and sales, exchange, purchase or trading of any items, providing services for real currency is prohibited. For distributing information about other servers and gaming projects - permanent ban.',
+              severity: 'critical',
+              punishment: 'Ban',
+              duration: '1 week'
+            }
+          ]
+        },
+        {
+          id: 'administration',
+          title: 'Administration Interaction',
+          icon: Shield,
+          color: 'var(--accent-orange)',
+          rules: [
+            {
+              number: '13',
+              title: 'Leaving Server After Violation',
+              description: 'After violating rules, it is prohibited to leave the server to avoid punishment.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '1 week'
+            },
+            {
+              number: '14',
+              title: 'Ignoring Administrator',
+              description: 'It is prohibited to ignore Administrator requirements.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '1 day'
+            },
+            {
+              number: '15',
+              title: 'Insulting Administration',
+              description: 'It is prohibited to insult Project Administration, as well as discuss, condemn or criticize their actions.',
+              severity: 'medium',
+              punishment: 'Mute',
+              duration: '4 hours'
+            },
+            {
+              number: '16',
+              title: 'Project Criticism',
+              description: 'Negative statements and destructive criticism towards the project in any form are prohibited.',
+              severity: 'medium',
+              punishment: 'Ban',
+              duration: '4 hours'
+            },
+            {
+              number: '17',
+              title: 'Provocations and Personal Data',
+              description: 'It is prohibited to provoke players to actions that violate project rules, as well as discuss personal data or events related to real life.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '1 day'
+            },
+            {
+              number: '18',
+              title: 'Disclosure of Administration Presence',
+              description: 'Disclosure of Administration presence on the server is prohibited.',
+              severity: 'medium',
+              punishment: 'Mute',
+              duration: '4 hours'
+            },
+            {
+              number: '19',
+              title: 'Rule Exploitation',
+              description: 'Exploitation of rule flaws or provocative behavior towards Administration is prohibited.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '1 day'
+            },
+            {
+              number: '23',
+              title: 'Contacting Administrator',
+              description: 'It is prohibited to contact Administrator without valid reason, as well as create obstacles and distract from performing their duties.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '1 day'
+            }
+          ]
+        },
+        {
+          id: 'gameplay',
+          title: 'Gameplay',
+          icon: Gamepad2,
+          color: 'var(--success)',
+          rules: [
+            {
+              number: '20',
+              title: 'Prohibited Software',
+              description: 'It is prohibited to use any software prohibited by the official Valve developer.',
+              severity: 'critical',
+              punishment: 'Ban',
+              duration: 'Permanent'
+            },
+            {
+              number: '21',
+              title: 'Bugs and Glitches',
+              description: 'Using bugs and glitches is prohibited.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '1 day'
+            },
+            {
+              number: '22',
+              title: 'Team Interference',
+              description: 'It is prohibited to deviate from completing tasks and perform actions unrelated to game objectives, as well as interfere with your team players, including intentional interference and obstruction, such as running after allies and constantly interfering with their actions, shooting, blinding, etc.',
+              severity: 'medium',
+              punishment: 'Ban',
+              duration: '1 hour'
+            }
+          ]
+        },
+        {
+          id: 'additional',
+          title: 'Additional Provisions',
+          icon: Eye,
+          color: 'var(--text-muted)',
+          rules: [
+            {
+              number: '24',
+              title: 'Administrator Rights',
+              description: 'Administrators have the right to apply various forms of punishment in accordance with the nature of the violation, including both mild and more severe measures, if necessary. If necessary, the Administrator must inform the Curator and Moderator about the situation.',
+              severity: 'info',
+              punishment: 'By decision',
+              duration: 'By situation'
+            },
+            {
+              number: '25',
+              title: 'Bypass Blocks',
+              description: 'Bypassing any blocks using other Steam accounts is prohibited.',
+              severity: 'critical',
+              punishment: 'Ban',
+              duration: 'Permanent'
+            },
+            {
+              number: '26',
+              title: 'VAC Blocks',
+              description: 'It is prohibited to play with accounts that have VAC blocks less than 3 months old.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: 'Until expiration'
+            },
+            {
+              number: '27',
+              title: 'After Removing Cheats',
+              description: 'To play on the server after removing cheats, you need to wait 3 months.',
+              severity: 'high',
+              punishment: 'Ban',
+              duration: '3 months'
+            }
+          ]
         }
-      ]
-    },
-    {
-      id: 'advertising',
-      title: 'Реклама и торговля',
-      icon: Ban,
-      color: 'var(--accent-purple)',
-      rules: [
-        {
-          number: '12',
-          title: 'Реклама и торговля',
-          description: 'Запрещена любая реклама посторонних ресурсов, стриминговых площадок и продаж, обмен, покупка или трейдинг любых вещей, предоставление услуг за реальную валюту. За распространение информации о других серверах и игровых проектах - бан навсегда.',
-          severity: 'critical',
-          punishment: 'Бан',
-          duration: 'Неделя'
-        }
-      ]
-    },
-    {
-      id: 'administration',
-      title: 'Взаимодействие с администрацией',
-      icon: Shield,
-      color: 'var(--accent-orange)',
-      rules: [
-        {
-          number: '13',
-          title: 'Покидание сервера после нарушения',
-          description: 'После нарушения правил запрещено покидать сервер с целью избежания наказания.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: 'Неделя'
-        },
-        {
-          number: '14',
-          title: 'Игнорирование администратора',
-          description: 'Запрещено игнорировать требования Администратора.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: '1 день'
-        },
-        {
-          number: '15',
-          title: 'Оскорбление администрации',
-          description: 'Запрещено оскорблять Администрацию проекта, а также обсуждать, осуждать или критиковать их действия.',
-          severity: 'medium',
-          punishment: 'Мут',
-          duration: '4 часа'
-        },
-        {
-          number: '16',
-          title: 'Критика проекта',
-          description: 'Запрещены негативные высказывания и деструктивная критика в адрес проекта в любой форме.',
-          severity: 'medium',
-          punishment: 'Бан',
-          duration: '4 часа'  
-        },
-        {
-          number: '17',
-          title: 'Провокации и личные данные',
-          description: 'Запрещено провоцировать игроков на действия, нарушающие правила проекта, а также обсуждать личные данные или события, касающиеся реальной жизни.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: '1 день'
-        },
-        {
-          number: '18',
-          title: 'Раскрытие присутствия администрации',
-          description: 'Запрещено раскрытие присутствия Администрации на сервере.',
-          severity: 'medium',
-          punishment: 'Мут',
-          duration: '4 часа'
-        },
-        {
-          number: '19',
-          title: 'Эксплуатация недоработок',
-          description: 'Запрещена эксплуатация недоработок в правилах или провокационное поведение в отношении Администрации.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: '1 день'
-        },
-        {
-          number: '23',
-          title: 'Обращение к администратору',
-          description: 'Запрещено обращаться к Администратору без уважительной причины, а также создавать препятствия и отвлекать от выполнения их обязанностей.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: '1 день'
-        }
-      ]
-    },
-    {
-      id: 'gameplay',
-      title: 'Игровой процесс',
-      icon: Gamepad2,
-      color: 'var(--success)',
-      rules: [
-        {
-          number: '20',
-          title: 'Запрещенное ПО',
-          description: 'Запрещено использовать любое ПО, запрещенное официальным разработчиком Valve.',
-          severity: 'critical',
-          punishment: 'Бан',
-          duration: 'Навсегда'
-        },
-        {
-          number: '21',
-          title: 'Баги и глитчи',
-          description: 'Запрещается использовать баги и глитчи.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: '1 день'
-        },
-        {
-          number: '22',
-          title: 'Мешание команде',
-          description: 'Запрещено отклоняться от выполнения заданий и совершать действия, не связанные с целями игры, а также мешать игрокам своей команды, включая намеренное мешание и препятствование, такие как беготня за союзниками и постоянное мешание их действиям, стрельба, ослепление и т. д.',
-          severity: 'medium',
-          punishment: 'Бан',
-          duration: '1 час'
-        }
-      ]
-    },
-    {
-      id: 'additional',
-      title: 'Дополнительные положения',
-      icon: Eye,
-      color: 'var(--text-muted)',
-      rules: [
-        {
-          number: '24',
-          title: 'Права администраторов',
-          description: 'Администраторы вправе применять различные формы наказания в соответствии с характером нарушения, включая как мягкие, так и более строгие меры, если это необходимо. В случае необходимости Администратор должен проинформировать Куратора и Модератора о ситуации.',
-          severity: 'info',
-          punishment: 'По решению',
-          duration: 'По ситуации'
-        },
-        {
-          number: '25',
-          title: 'Обход блокировок',
-          description: 'Запрещен обход любых блокировок с помощью других аккаунтов Steam.',
-          severity: 'critical',
-          punishment: 'Бан',
-          duration: 'Навсегда'
-        },
-        {
-          number: '26',
-          title: 'VAC блокировки',
-          description: 'Запрещено играть имея аккаунты с блокировкой VAC, длительностью менее 3 месяца.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: 'До истечения срока'
-        },
-        {
-          number: '27',
-          title: 'После удаления читов',
-          description: 'Чтобы играть на сервере после удаления читов, необходимо подождать 3 месяца.',
-          severity: 'high',
-          punishment: 'Бан',
-          duration: '3 месяца'
-        }
-      ]
+      ];
     }
-  ];
+  };
+
+  const rulesSections = getRulesData();
 
   const getSeverityColor = (severity) => {
     switch (severity) {
@@ -304,6 +581,47 @@ const RulesPage = () => {
     }
   };
 
+  const getLocalizedText = (key) => {
+    const texts = {
+      en: {
+        title: 'Server Rules',
+        description: 'Guidelines and regulations that ensure fair play and respectful behavior for all ProjectTest community members.',
+        welcome: 'Welcome to ProjectTest Community',
+        welcomeDesc: 'These rules are designed to ensure a fair, safe, and enjoyable gaming environment for everyone. Violation of any of these rules may result in punishments including temporary or permanent bans.',
+        fairPlay: 'Fair Play',
+        safeEnvironment: 'Safe Environment',
+        respectOthers: 'Respect Others',
+        rulesTitle: 'Rules & Regulations',
+        rulesSubtitle: 'Please read through all sections carefully. Ignorance of the rules is not an excuse for breaking them.',
+        helpTitle: 'Questions about rules?',
+        helpDesc: 'If you have questions about the rules or need clarification, contact the server administration.',
+        contactAdmins: 'Contact Administration',
+        viewFaq: 'View FAQ',
+        punishment: 'Punishment',
+        duration: 'Duration'
+      },
+      uk: {
+        title: 'Правила сервера',
+        description: 'Правила та положення, які забезпечують комфортну гру для всіх учасників спільноти ProjectTest',
+        welcome: 'Ласкаво просимо до спільноти ProjectTest',
+        welcomeDesc: 'Ці правила створені для забезпечення справедливої, безпечної та приємної ігрової середи для всіх. Порушення будь-якого з цих правил може призвести до покарання, включаючи тимчасові або постійні бани.',
+        fairPlay: 'Чесна гра',
+        safeEnvironment: 'Безпечна середа',
+        respectOthers: 'Повага до гравців',
+        rulesTitle: 'Свід правил',
+        rulesSubtitle: 'Ознайомтеся з усіма розділами правил. Незнання правил не звільняє від відповідальності.',
+        helpTitle: 'Питання по правилах?',
+        helpDesc: 'Якщо у вас є питання по правилах або потрібні роз\'яснення, зверніться до адміністрації сервера.',
+        contactAdmins: 'Зв\'язатися з адміністрацією',
+        viewFaq: 'Переглянути FAQ',
+        punishment: 'Покарання',
+        duration: 'Тривалість'
+      }
+    };
+    
+    return texts[currentLanguage]?.[key] || texts.en[key];
+  };
+
   return (
     <div className="rules-page">
       <Navigation user={user} onLogin={handleLogin} onLogout={handleLogout} />
@@ -316,9 +634,9 @@ const RulesPage = () => {
         <div className="hero-container">
           <div className="hero-content">
             <Shield size={48} className="hero-icon" />
-            <h1 className="hero-title">Правила сервера</h1>
+            <h1 className="hero-title">{getLocalizedText('title')}</h1>
             <p className="hero-description">
-              Правила и положения, которые обеспечивают комфортную игру для всех участников сообщества ProjectTest
+              {getLocalizedText('description')}
             </p>
           </div>
         </div>
@@ -332,21 +650,21 @@ const RulesPage = () => {
           <div className="sequential-section">
             <div className="rules-introduction">
               <div className="intro-card">
-                <h2>Добро пожаловать в сообщество ProjectTest</h2>
-                <p>Эти правила созданы для обеспечения справедливой, безопасной и приятной игровой среды для всех. Нарушение любого из этих правил может привести к наказанию, включая временные или постоянные баны.</p>
+                <h2>{getLocalizedText('welcome')}</h2>
+                <p>{getLocalizedText('welcomeDesc')}</p>
                 
                 <div className="intro-highlights">
                   <div className="highlight-item">
                     <CheckCircle size={16} />
-                    <span>Честная игра</span>
+                    <span>{getLocalizedText('fairPlay')}</span>
                   </div>
                   <div className="highlight-item">
                     <Shield size={16} />
-                    <span>Безопасная среда</span>
+                    <span>{getLocalizedText('safeEnvironment')}</span>
                   </div>
                   <div className="highlight-item">
                     <Users size={16} />
-                    <span>Уважение к игрокам</span>
+                    <span>{getLocalizedText('respectOthers')}</span>
                   </div>
                 </div>
               </div>
@@ -356,8 +674,8 @@ const RulesPage = () => {
           {/* Rules Sections */}
           <div className="sequential-section">
             <div className="section-header">
-              <h2>Свод правил</h2>
-              <p className="section-subtitle">Ознакомьтесь со всеми разделами правил. Незнание правил не освобождает от ответственности.</p>
+              <h2>{getLocalizedText('rulesTitle')}</h2>
+              <p className="section-subtitle">{getLocalizedText('rulesSubtitle')}</p>
             </div>
             
             <div className="rules-sections">
@@ -405,11 +723,11 @@ const RulesPage = () => {
                             <div className="rule-punishment">
                               <div className="punishment-info">
                                 <Ban size={14} style={{ color: 'var(--error)' }} />
-                                <span><strong>Наказание:</strong> {rule.punishment}</span>
+                                <span><strong>{getLocalizedText('punishment')}:</strong> {rule.punishment}</span>
                               </div>
                               <div className="duration-info">
                                 <Clock size={14} style={{ color: 'var(--warning)' }} />
-                                <span><strong>Длительность:</strong> {rule.duration}</span>
+                                <span><strong>{getLocalizedText('duration')}:</strong> {rule.duration}</span>
                               </div>
                             </div>
                           )}
@@ -426,14 +744,14 @@ const RulesPage = () => {
           <div className="sequential-section">
             <div className="rules-footer-info">
               <div className="info-card">
-                <h3>Вопросы по правилам?</h3>
-                <p>Если у вас есть вопросы по правилам или нужны разъяснения, обратитесь к администрации сервера.</p>
+                <h3>{getLocalizedText('helpTitle')}</h3>
+                <p>{getLocalizedText('helpDesc')}</p>
                 <div className="info-actions">
                   <button className="btn-primary" onClick={() => window.location.href = '/contact'}>
-                    Связаться с администрацией
+                    {getLocalizedText('contactAdmins')}
                   </button>
                   <button className="btn-secondary" onClick={() => window.location.href = '/faq'}>
-                    Просмотреть FAQ
+                    {getLocalizedText('viewFaq')}
                   </button>
                 </div>
               </div>
