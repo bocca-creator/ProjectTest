@@ -795,17 +795,17 @@ backend:
           comment: "Authentication middleware correctly validates JWT tokens and rejects unauthorized requests. HTTPBearer security scheme working as expected."
 
 frontend:
-  - task: "Avatar Display Consistency Fix"
+  - task: "FAQ Page Public Offer Agreement Replacement"
     implemented: true
     working: true
-    file: "components/UserMenu.jsx, components/AdminPanel.jsx, components/pages/LeaderboardPage.jsx"
+    file: "components/pages/FAQPage.jsx, App.css"
     stuck_count: 0
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
       - working: true
         agent: "main"
-        comment: "Fixed avatar field inconsistency across all components. Changed all references from 'avatar_url' to 'avatar' for consistency with PlayerDashboard implementation. Added avatar display to LeaderboardPage for better user experience. All avatar displays now work properly with base64 images and fallback to user initials."
+        comment: "Successfully replaced all FAQ content with comprehensive Public Offer Agreement in Ukrainian. Removed FAQ search functionality, categories, and questions. Added complete legal document with 9 sections covering general terms, services, rights/obligations, payments, liability, privacy, contract changes, termination, and final provisions. Added comprehensive CSS styling following existing design system. Maintained navigation and footer as requested."
 
   - task: "Navigation Links Verification"
     implemented: true
