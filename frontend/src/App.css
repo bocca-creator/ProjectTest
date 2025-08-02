@@ -5068,6 +5068,24 @@ p {
 
 /* ===== PUBLIC OFFER AGREEMENT STYLES ===== */
 
+/* FAQ Page Hero Content Override - Always Centered */
+.faq-page .hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center !important;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-page .hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .offer-document {
   max-width: 900px;
   margin: 0 auto;
