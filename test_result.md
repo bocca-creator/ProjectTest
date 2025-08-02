@@ -669,7 +669,7 @@ agent_communication:
   - agent: "testing"
     message: "🎉 COMPREHENSIVE FRONTEND TESTING COMPLETED SUCCESSFULLY! 🎉 Fixed Steam icon import issue (replaced with Gamepad2). All major CS2 application features thoroughly tested and working: ✅ Authentication System - Admin login (admin@admin.com/admin123) working perfectly ✅ Player Dashboard - All 4 tabs fully functional (Overview with 8 stat cards, Account Info with avatar upload and profile editing, Settings with toggles and selectors, Match History with recent matches) ✅ Settings Functionality - Notification toggles, theme switching, language selection, privacy settings, delete account option ✅ Leaderboard System - 7 stat type selectors, refresh functionality, proper loading states ✅ User Menu - 4 menu items working, CS2 stats card display, navigation functionality ✅ Protected Routes - Correctly requiring authentication, logout working ✅ Mobile Responsiveness - Dashboard accessible on mobile (390px), tablet (768px), desktop (1920px) ✅ Error Handling - No console errors, proper authentication session management ✅ Cross-browser Compatibility - Theme consistency, responsive design elements detected. The CS2 application frontend is production-ready with all requested features implemented and thoroughly tested!"
 
-user_problem_statement: "зроби щоб аватарки відображались правильно і перевір чи в всіх елемтах де є посилання на другі сторінки працують"
+user_problem_statement: "видали все з сторінки FAQ там має бути тільки публічний договір оферти"
 
 backend:
   - task: "Avatar Update Functionality Fix"
